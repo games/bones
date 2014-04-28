@@ -8,7 +8,7 @@ abstract class Component extends Sprite {
   bool _invalidate = true;
 
   invalidate() => _invalidate = true;
-  repaint() {}
+  repaint() => _invalidate = false;
 
   @override
   render(RenderState renderState) {
