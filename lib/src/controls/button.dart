@@ -36,6 +36,9 @@ class Button extends InteractiveObject {
       _currentState = val;
     }
   }
+  set overState(DisplayObject val) => _overState = val;
+  set downState(DisplayObject val) => _downState = val;
+  set hitTestState(DisplayObject val) => _hitTestState = val;
 
   Rectangle<num> getBoundsTransformed(Matrix matrix, [Rectangle<num> returnRectangle]) {
     if (_currentState != null) {
@@ -126,7 +129,6 @@ class Button2 extends Component {
     addChild(txt);
   }
 }
-
 
 
 
