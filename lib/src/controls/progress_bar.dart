@@ -39,6 +39,8 @@ class ProgressBar extends Component {
     _maximum = val;
     invalidate();
   }
+  
+  get percent => (_value - _minimum) / (_maximum - _minimum);
 
   @override
   repaint() {
@@ -63,7 +65,7 @@ class LinearProgressBarRenderer implements ProgressBarRenderer {
         ..rect(0, 0, _width, _height)
         ..fillColor(0x33000000)
         ..beginPath()
-        ..rect(0, 0, _width * (bar.value - bar.minimum) / (bar.maximum - bar.minimum), _height)
+        ..rect(0, 0, _width * bar.percent, _height)
         ..fillColor(0xffffcc00);
   }
 }
@@ -72,21 +74,24 @@ class CountdownRenderer implements ProgressBarRenderer {
   int _size;
   int _border;
   TextField _label;
+  num _halfSize;
 
-  CountdownRenderer([this._size = 120, this._border = 10]);
+  CountdownRenderer([this._size = 120, this._border = 10]) {
+    _halfSize = _size / 2;
+  }
 
   @override
   render(ProgressBar bar) {
     bar.graphics
         ..clear()
         ..beginPath()
-        ..arc(_size / 2, _size / 2, _size / 2, 0, Math.PI * 2, false)
+        ..arc(_halfSize, _halfSize, _halfSize, 0, TWO_PI, false)
         ..fillColor(ColorHelper.fromRgba(0, 0, 0, 0.5))
         ..beginPath()
-        ..arc(_size / 2, _size / 2, _size / 2 - _border, 0, Math.PI * 2, false)
+        ..arc(_halfSize, _halfSize, _halfSize - _border, 0, TWO_PI, false)
         ..strokeColor(0xff999999, _border)
         ..beginPath()
-        ..arc(_size / 2, _size / 2, _size / 2 - _border, -Math.PI / 2, Math.PI * 2 * (bar.value / bar.maximum) - Math.PI / 2, false)
+        ..arc(_halfSize, _halfSize, _halfSize - _border, -Math.PI / 2, TWO_PI * bar.percent - Math.PI / 2, false)
         ..strokeColor(0xffffcc00, _border);
     if (_label == null) {
       _label = new TextField()

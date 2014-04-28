@@ -17,3 +17,6 @@ part 'src/controls/progress_bar.dart';
 part 'src/controls/button.dart';
 part 'src/controls/scale9.dart';
 
+
+
+const TWO_PI = Math.PI * 2;
