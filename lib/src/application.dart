@@ -58,13 +58,13 @@ class Application {
       screen.focus();
     }
   }
-  
+
+  InjectionMapping map(Type type, [String name = ""]) => _injector.map(type, name);
   take(Type t, [String name = ""]) => _injector.get(t, name);
 
   Screen get screen => _screens.last;
   Stage get stage => _stage;
 }
-
 
 
 
