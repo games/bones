@@ -1,0 +1,6 @@
+name:  valorzhong_bones
+description:  A simple ui component based on Stagexl
+
+dependencies:
+  stagexl: any
+  valorzhong_injector: any
