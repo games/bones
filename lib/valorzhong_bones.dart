@@ -19,4 +19,8 @@ part 'src/controls/scale9.dart';
 
 
 
+
+
 const TWO_PI = Math.PI * 2;
+
+capitalize(String str) => str[0].toUpperCase() + str.substring(1);
