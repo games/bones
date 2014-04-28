@@ -31,6 +31,11 @@ abstract class Container extends Component {
     return _bounds.height;
   }
 
+  Rectangle get bounds {
+    _prepareBounds();
+    return _bounds;
+  }
+
   _prepareBounds() {
     if (_bounds == null) {
       setSize(super.width, super.height);
