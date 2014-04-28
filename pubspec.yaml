@@ -1,5 +1,9 @@
 name:  valorzhong_bones
+version: 0.0.1
+author: Valor Zhong <valorzhong@gmail.com>
 description:  A simple ui component based on Stagexl
+homepage: https://github.com/games/bones
+documentation: https://github.com/games/bones
 
 dependencies:
   stagexl: any
