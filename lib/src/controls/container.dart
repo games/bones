@@ -17,7 +17,7 @@ abstract class Container extends Component {
     if (_bounds == null) {
       _bounds = new Rectangle(0, 0, 0, 0);
     }
-    _bounds.setTo(x, y, width, height);
+    _bounds.setTo(0, 0, width, height);
     invalidate();
   }
 
