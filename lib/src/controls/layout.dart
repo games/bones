@@ -74,7 +74,8 @@ class LinearLayout implements Layout {
   VerticalAlign verticalAlign;
   Orientation orientation;
 
-  LinearLayout({this.gap: 0, this.orientation: Orientation.HORIZONTAL, this.horizontalAlign: HorizontalAlign.LEFT, this.verticalAlign: VerticalAlign.TOP, this.padding: 0});
+  LinearLayout({this.gap: 0, this.orientation: Orientation.HORIZONTAL, this.horizontalAlign:
+      HorizontalAlign.LEFT, this.verticalAlign: VerticalAlign.TOP, this.padding: 0});
 
   @override
   order(Component container) {
@@ -82,6 +83,7 @@ class LinearLayout implements Layout {
         h = 0;
     if (horizontalAlign != HorizontalAlign.LEFT || verticalAlign != HorizontalAlign.LEFT) {
       container.forEach((int i, DisplayObject child) {
+        if (!child.visible) return;
         if (orientation == Orientation.HORIZONTAL) {
           w += child.width + gap;
           h = h > child.height ? h : child.height + gap;
@@ -114,6 +116,7 @@ class LinearLayout implements Layout {
       step = (child) => starty += child.height + gap;
     }
     container.forEach((i, child) {
+      if (!child.visible) return;
       child.x = startx;
       child.y = starty;
       step(child);
