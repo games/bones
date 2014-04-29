@@ -37,7 +37,7 @@ abstract class Container extends Component {
   }
 
   _prepareBounds() {
-    if (_bounds == null) {
+    if (_bounds == null || _bounds.isEmpty) {
       setSize(super.width, super.height);
     }
   }
