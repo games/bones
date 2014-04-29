@@ -9,24 +9,14 @@ class Button extends InteractiveObject {
   DisplayObject _downState;
   DisplayObject _hitTestState;
 
-  bool enabled = true;
+  bool _enabled = true;
 
   DisplayObject _currentState;
   Matrix _tmpMatrix = new Matrix.fromIdentity();
 
   Button([this._upState, this._overState, this._downState, this._hitTestState]) {
     useHandCursor = true;
-
-    addEventListener(MouseEvent.MOUSE_OVER, _onMouseEvent);
-    addEventListener(MouseEvent.MOUSE_OUT, _onMouseEvent);
-    addEventListener(MouseEvent.MOUSE_DOWN, _onMouseEvent);
-    addEventListener(MouseEvent.MOUSE_UP, _onMouseEvent);
-
-    onTouchOver.listen(_touchEventHandler);
-    onTouchOut.listen(_touchEventHandler);
-    onTouchBegin.listen(_touchEventHandler);
-    onTouchEnd.listen(_touchEventHandler);
-
+    _registerEvents();
     _currentState = this._upState;
   }
 
@@ -39,6 +29,35 @@ class Button extends InteractiveObject {
   set overState(DisplayObject val) => _overState = val;
   set downState(DisplayObject val) => _downState = val;
   set hitTestState(DisplayObject val) => _hitTestState = val;
+
+  set enabled(bool val) {
+    useHandCursor = val;
+    _enabled = val;
+  }
+
+  get enabled => _enabled;
+
+  _registerEvents() {
+    onMouseOver.listen(_onMouseEvent);
+    onMouseOut.listen(_onMouseEvent);
+    onMouseDown.listen(_onMouseEvent);
+    onMouseUp.listen(_onMouseEvent);
+    onTouchOver.listen(_touchEventHandler);
+    onTouchOut.listen(_touchEventHandler);
+    onTouchBegin.listen(_touchEventHandler);
+    onTouchEnd.listen(_touchEventHandler);
+  }
+
+  //  unregisterEvents() {
+  //    removeEventListener(MouseEvent.MOUSE_OVER, _onMouseEvent);
+  //    removeEventListener(MouseEvent.MOUSE_OUT, _onMouseEvent);
+  //    removeEventListener(MouseEvent.MOUSE_DOWN, _onMouseEvent);
+  //    removeEventListener(MouseEvent.MOUSE_UP, _onMouseEvent);
+  //    onTouchOver.cancelSubscriptions();
+  //    onTouchOut.cancelSubscriptions();
+  //    onTouchBegin.cancelSubscriptions();
+  //    onTouchEnd.cancelSubscriptions();
+  //  }
 
   Rectangle<num> getBoundsTransformed(Matrix matrix, [Rectangle<num> returnRectangle]) {
     if (_currentState != null) {
@@ -65,6 +84,7 @@ class Button extends InteractiveObject {
   }
 
   void _onMouseEvent(MouseEvent mouseEvent) {
+    if (_enabled == false) return;
     if (mouseEvent.type == MouseEvent.MOUSE_OUT) {
       _currentState = _upState;
     } else {
@@ -73,7 +93,7 @@ class Button extends InteractiveObject {
   }
 
   void _touchEventHandler(TouchEvent event) {
-    print(event.type);
+    if (_enabled == false) return;
     if (event.type == TouchEvent.TOUCH_OUT || event.type == TouchEvent.TOUCH_END) {
       _currentState = _upState;
     } else {
@@ -81,17 +101,3 @@ class Button extends InteractiveObject {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
