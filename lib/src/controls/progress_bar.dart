@@ -86,7 +86,7 @@ class CountdownRenderer implements ProgressBarRenderer {
         ..clear()
         ..beginPath()
         ..arc(_halfSize, _halfSize, _halfSize, 0, TWO_PI, false)
-        ..fillColor(ColorHelper.fromRgba(0, 0, 0, 0.5))
+        ..fillColor(ColorHelper.fromRgba(0, 0, 0, 0.7))
         ..beginPath()
         ..arc(_halfSize, _halfSize, _halfSize - _border, 0, TWO_PI, false)
         ..strokeColor(0xff999999, _border)
