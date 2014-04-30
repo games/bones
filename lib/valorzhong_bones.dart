@@ -15,6 +15,7 @@ part 'src/controls/container.dart';
 part 'src/controls/layout.dart';
 part 'src/controls/progress_bar.dart';
 part 'src/controls/button.dart';
+part 'src/controls/scale9.dart';
 
 
 
