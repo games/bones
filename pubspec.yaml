@@ -6,5 +6,6 @@ homepage: https://github.com/games/bones
 documentation: https://github.com/games/bones
 
 dependencies:
-  stagexl: any
+  stagexl: 
+    git: https://github.com/bp74/StageXL.git
   valorzhong_injector: any
