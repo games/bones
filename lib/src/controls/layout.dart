@@ -3,6 +3,16 @@ part of valorzhong_bones;
 
 
 
+class TextImageRelation {
+  static const TextImageRelation IMAGE_ABOVE_TEXT = const TextImageRelation._(0);
+  static const TextImageRelation IMAGE_BEFORE_TEXT = const TextImageRelation._(1);
+  static const TextImageRelation OVERLAY = const TextImageRelation._(2);
+  static const TextImageRelation TEXT_ABOVE_IMAGE = const TextImageRelation._(3);
+  static const TextImageRelation TEXT_BEFORE_IMAGE = const TextImageRelation._(4);
+  final int _value;
+  const TextImageRelation._(this._value);
+}
+
 
 class Orientation {
   static const Orientation HORIZONTAL = const Orientation._(0);
@@ -74,8 +84,8 @@ class LinearLayout implements Layout {
   VerticalAlign verticalAlign;
   Orientation orientation;
 
-  LinearLayout({this.gap: 0, this.orientation: Orientation.HORIZONTAL, this.horizontalAlign:
-      HorizontalAlign.LEFT, this.verticalAlign: VerticalAlign.TOP, this.padding: 0});
+  LinearLayout({this.gap: 0, this.orientation: Orientation.HORIZONTAL, this.horizontalAlign: HorizontalAlign.LEFT, this.verticalAlign:
+      VerticalAlign.TOP, this.padding: 0});
 
   @override
   order(Component container) {
