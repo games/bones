@@ -133,3 +133,29 @@ class LinearLayout implements Layout {
     });
   }
 }
+
+typedef ZipLayoutInterpolater(DisplayObject child);
+
+class ZipLayout implements Layout {
+  int gap;
+  ZipLayoutInterpolater interpolater;
+
+  ZipLayout({this.gap: 5, this.interpolater});
+
+  @override
+  order(Component container) {
+    var halfWidth = container.width / 2;
+    container.forEach((int position, DisplayObject child) {
+      var diretion = position % 2 == 0 ? -1 : 1;
+      var pos = position + 1;
+      if (diretion == -1) {
+        pos = pos ~/ 2 + 1;
+      } else {
+        pos = pos / 2;
+      }
+      pos *= diretion;
+      child.x = pos * child.width + gap * diretion + halfWidth;
+      if (interpolater != null) interpolater(child);
+    });
+  }
+}
