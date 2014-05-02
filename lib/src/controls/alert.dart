@@ -11,7 +11,7 @@ class Alert extends Skinnable {
   Alert(this.message, {this.title: null, this.isModal: true, this.cover: true}): super();
 
   @override
-  Renderer get defaultRenderer => new AlertRenderer();
+  Skin get defaultSkin => new AlertSkin();
 }
 
 class PopupManager {

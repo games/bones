@@ -18,7 +18,8 @@ part 'src/controls/button.dart';
 part 'src/controls/alert.dart';
 
 part 'src/skins/skinnable.dart';
-part 'src/skins/alert_renderer.dart';
+part 'src/skins/alert_skin.dart';
+part 'src/skins/button_skin.dart';
 
 
 

@@ -2,17 +2,17 @@ part of valorzhong_bones;
 
 
 
-class AlertRenderer extends Renderer {
+class AlertSkin extends Skin {
   num padding, doublePadding;
 
-  AlertRenderer(): super() {
+  AlertSkin(): super() {
     padding = 8;
     doublePadding = padding * 2;
   }
 
 
   @override
-  render() {
+  apply() {
     var comp = target as Alert;
     comp.removeChildren();
 

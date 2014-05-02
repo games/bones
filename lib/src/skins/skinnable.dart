@@ -3,34 +3,34 @@ part of valorzhong_bones;
 
 
 
-abstract class Renderer {
+abstract class Skin {
   Skinnable target;
-  render();
+  apply();
 }
 
 
 abstract class Skinnable extends Component {
-  Renderer _renderer;
+  Skin _skin;
 
   Skinnable(): super() {
     repaint();
   }
 
-  Renderer get defaultRenderer;
+  Skin get defaultSkin;
 
-  set renderer(Renderer val) {
-    _renderer = val;
-    _renderer.target = this;
+  set skin(Skin val) {
+    _skin = val;
+    _skin.target = this;
     repaint();
   }
 
   @override
   repaint() {
     super.repaint();
-    if (_renderer == null) {
-      _renderer = defaultRenderer;
-      _renderer.target = this;
+    if (_skin == null) {
+      _skin = defaultSkin;
+      _skin.target = this;
     }
-    _renderer.render();
+    _skin.apply();
   }
 }
