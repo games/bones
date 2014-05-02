@@ -2,9 +2,9 @@ part of valorzhong_bones;
 
 typedef DisplayObject TextRenderer(String txt);
 
-const EventStreamProvider<Event> pressedEvent = const EventStreamProvider<Event>(Button.PRESSED);
+const EventStreamProvider<Event> pressedEvent = const EventStreamProvider<Event>(ButtonBase.PRESSED);
 
-class Button extends InteractiveObject {
+class ButtonBase extends InteractiveObject {
   static const String PRESSED = "BUTTON_PRESSED";
 
   EventStream<Event> get onPressed => pressedEvent.forTarget(this);
@@ -26,7 +26,7 @@ class Button extends InteractiveObject {
   DisplayObject _currentState;
   Matrix _tmpMatrix = new Matrix.fromIdentity();
 
-  Button({DisplayObject upState, DisplayObject overState, DisplayObject downState, DisplayObject hitTestState, textIconRelation:
+  ButtonBase({DisplayObject upState, DisplayObject overState, DisplayObject downState, DisplayObject hitTestState, textIconRelation:
       TextImageRelation.IMAGE_BEFORE_TEXT}) {
     useHandCursor = true;
     _registerEvents();
@@ -189,4 +189,12 @@ class Button extends InteractiveObject {
     }
     if (event.type == TouchEvent.TOUCH_END) dispatchEvent(new Event(PRESSED));
   }
+}
+
+
+class Button extends Skinnable {
+  
+  // TODO: implement defaultRenderer
+  @override
+  Skin get defaultSkin => null;
 }
