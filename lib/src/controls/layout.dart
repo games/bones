@@ -56,6 +56,7 @@ class SingleLayout implements Layout {
 
   @override
   order(Component container) {
+    if (container.numChildren == 0) return;
     var xp, yp;
     if (horizontalAlign == HorizontalAlign.LEFT) {
       xp = (child) => child.x = 0;
@@ -89,6 +90,7 @@ class LinearLayout implements Layout {
 
   @override
   order(Component container) {
+    if (container.numChildren == 0) return;
     var w = 0,
         h = 0;
     if (horizontalAlign != HorizontalAlign.LEFT || verticalAlign != HorizontalAlign.LEFT) {
@@ -144,6 +146,7 @@ class ZipLayout implements Layout {
 
   @override
   order(Component container) {
+    if (container.numChildren == 0) return;
     var halfWidth = container.width / 2;
     container.forEach((int position, DisplayObject child) {
       var diretion = position % 2 == 0 ? -1 : 1;
