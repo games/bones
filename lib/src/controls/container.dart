@@ -6,11 +6,13 @@ part of valorzhong_bones;
 abstract class Container extends Component {
   Layout _layout;
   Rectangle _bounds;
+  bool _autoResize;
 
   Container([this._layout]): super() {
     if (_layout == null) {
       _layout = new EmptyLayout();
     }
+    _autoResize = true;
   }
 
   setSize(num width, num height) {
@@ -18,6 +20,14 @@ abstract class Container extends Component {
       _bounds = new Rectangle(0, 0, 0, 0);
     }
     _bounds.setTo(0, 0, width, height);
+    _autoResize = false;
+    invalidate();
+  }
+
+  Layout get layout => _layout;
+
+  set layout(Layout val) {
+    _layout = val;
     invalidate();
   }
 
@@ -36,13 +46,15 @@ abstract class Container extends Component {
     return _bounds;
   }
 
+  bool get autoResize => _autoResize;
+
   _prepareBounds() {
     if (_bounds == null || _bounds.isEmpty) {
       setSize(super.width, super.height);
     }
   }
 
-  layout() {
+  order() {
     _layout.order(this);
   }
 
@@ -54,7 +66,7 @@ abstract class Container extends Component {
   @override
   repaint() {
     super.repaint();
-    layout();
+    order();
   }
 }
 

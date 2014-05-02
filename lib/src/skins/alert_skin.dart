@@ -3,13 +3,11 @@ part of valorzhong_bones;
 
 
 class AlertSkin extends Skin {
-  num padding, doublePadding;
+  num padding, doublePadding, bodyWidth, bodyHeight;
 
-  AlertSkin(): super() {
-    padding = 8;
+  AlertSkin({this.padding: 8, this.bodyWidth: 0, this.bodyHeight: 0}): super() {
     doublePadding = padding * 2;
   }
-
 
   @override
   apply() {
@@ -33,12 +31,26 @@ class AlertSkin extends Skin {
           ..text = comp.title;
     }
 
-    var messageBounds = new Rectangle(0, 0, message.width + doublePadding, message.height + doublePadding);
+    var bodyBounds = new Rectangle(0, 0, Math.max(message.width, bodyWidth) + doublePadding, Math.max(message.height, bodyHeight) +
+        doublePadding);
+
+    ButtonGroup buttons;
+    if (comp.buttonDefs != null) {
+      buttons = new ButtonGroup(comp.buttonDefs);
+      bodyBounds.width = Math.max(bodyBounds.width, buttons.width + doublePadding);
+      buttons.x = (bodyBounds.width - buttons.width) / 2;
+      buttons.y = bodyBounds.bottom + padding;
+      buttons.onSelected.listen((e) => comp.close());
+      bodyBounds.height = bodyBounds.height + doublePadding + buttons.height;
+    }
+
     Rectangle titleBounds;
     if (title != null) {
-      titleBounds = new Rectangle(0, 0, Math.max(title.width + doublePadding, messageBounds.width), title.height + doublePadding);
-      messageBounds.top = titleBounds.top + titleBounds.height;
-      messageBounds.width = titleBounds.width;
+      titleBounds = new Rectangle(0, 0, Math.max(title.width + doublePadding, bodyBounds.width), title.height + doublePadding);
+      bodyBounds.top = titleBounds.top + titleBounds.height;
+      bodyBounds.width = titleBounds.width;
+      buttons.x = (bodyBounds.width - buttons.width) / 2;
+      buttons.y = bodyBounds.bottom - buttons.height - padding;
     }
 
     content.graphics.clear();
@@ -54,15 +66,16 @@ class AlertSkin extends Skin {
     }
     content.graphics
         ..beginPath()
-        ..rect(messageBounds.left, messageBounds.top, messageBounds.width, messageBounds.height)
+        ..rect(bodyBounds.left, bodyBounds.top, bodyBounds.width, bodyBounds.height)
         ..fillColor(Color.White);
     content.graphics
         ..beginPath()
         ..rect(0, 0, content.width, content.height)
         ..strokeColor(Color.Black);
     message
-        ..x = messageBounds.left + padding
-        ..y = messageBounds.top + padding;
+        ..x = bodyBounds.left + padding
+        ..y = bodyBounds.top + padding;
     comp.addChild(message);
+    if (buttons != null) comp.addChild(buttons);
   }
 }

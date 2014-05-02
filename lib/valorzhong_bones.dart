@@ -15,6 +15,7 @@ part 'src/controls/container.dart';
 part 'src/controls/layout.dart';
 part 'src/controls/progress_bar.dart';
 part 'src/controls/button.dart';
+part 'src/controls/button_group.dart';
 part 'src/controls/alert.dart';
 
 part 'src/skins/skinnable.dart';

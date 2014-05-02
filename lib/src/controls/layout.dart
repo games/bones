@@ -105,19 +105,33 @@ class LinearLayout implements Layout {
         }
       });
     }
+
+    w -= gap;
+    h -= gap;
+
     var startx = 0,
         starty = 0;
+
+    // *** correct ? ***
+    var dp = padding * 2;
+    if (container is Container && container.autoResize) {
+      container.setSize(w + dp, h + dp);
+    }
+    var cw = container.width,
+        ch = container.height;
+    // *****************
+
     if (horizontalAlign == HorizontalAlign.CENTER) {
-      startx = (container.width - w) / 2;
+      startx = (cw - w) / 2;
     } else if (horizontalAlign == HorizontalAlign.RIGHT) {
-      startx = container.width - w - gap - padding;
+      startx = cw - w - gap - padding;
     } else {
       startx = padding;
     }
     if (verticalAlign == VerticalAlign.MIDDLE) {
-      starty = (container.height - h) / 2;
+      starty = (ch - h) / 2;
     } else if (verticalAlign == VerticalAlign.BOTTOM) {
-      starty = container.height - h - gap - padding;
+      starty = ch - h - gap - padding;
     } else {
       starty = padding;
     }

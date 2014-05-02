@@ -7,9 +7,13 @@ abstract class Component extends Sprite {
   Debugger _debugger;
   bool _invalid = true;
   bool get invalid => _invalid;
-  
+
   invalidate() => _invalid = true;
+  // TODO : this name should be changed ?
   repaint() => _invalid = false;
+
+  // TODO : not yet
+  measure() {}
 
   @override
   render(RenderState renderState) {
