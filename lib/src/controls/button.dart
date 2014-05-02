@@ -4,7 +4,7 @@ typedef DisplayObject TextRenderer(String txt);
 
 const EventStreamProvider<Event> pressedEvent = const EventStreamProvider<Event>(ButtonBase.PRESSED);
 
-class ButtonBase extends InteractiveObject {
+class ButtonBase extends Skinnable {
   static const String PRESSED = "BUTTON_PRESSED";
 
   EventStream<Event> get onPressed => pressedEvent.forTarget(this);
@@ -26,18 +26,14 @@ class ButtonBase extends InteractiveObject {
   DisplayObject _currentState;
   Matrix _tmpMatrix = new Matrix.fromIdentity();
 
-  ButtonBase({DisplayObject upState, DisplayObject overState, DisplayObject downState, DisplayObject hitTestState, textIconRelation:
-      TextImageRelation.IMAGE_BEFORE_TEXT}) {
+  ButtonBase({textIconRelation: TextImageRelation.IMAGE_BEFORE_TEXT, Skin skin: null}): super(skin) {
     useHandCursor = true;
     _registerEvents();
-    this.upState = upState;
-    this.overState = overState;
-    this.downState = downState;
-    this.hitTestState = hitTestState;
     _textRenderer = (txt) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT;
   }
 
   set text(String val) => _text = val;
+  String get text => _text;
 
   set textRenderer(TextRenderer val) {
     _label = null;
@@ -91,6 +87,7 @@ class ButtonBase extends InteractiveObject {
   get enabled => _enabled;
 
   _setSizeForState(DisplayObject state) {
+    if (state == null) return;
     if (_width != null) state.width = _width;
     if (_height != null) state.height = _height;
   }
@@ -128,6 +125,10 @@ class ButtonBase extends InteractiveObject {
   }
 
   void render(RenderState renderState) {
+    if (_invalid) {
+      _invalid = false;
+      repaint();
+    }
     if (_currentState != null) {
       renderState.renderDisplayObject(_currentState);
       if (icon != null) {
@@ -189,12 +190,7 @@ class ButtonBase extends InteractiveObject {
     }
     if (event.type == TouchEvent.TOUCH_END) dispatchEvent(new Event(PRESSED));
   }
-}
 
-
-class Button extends Skinnable {
-  
-  // TODO: implement defaultRenderer
   @override
-  Skin get defaultSkin => null;
+  Skin get defaultSkin => new ButtonSkin();
 }

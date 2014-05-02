@@ -5,15 +5,16 @@ typedef void ChildrenWalker(int, DisplayObject);
 abstract class Component extends Sprite {
 
   Debugger _debugger;
-  bool _invalidate = true;
-
-  invalidate() => _invalidate = true;
-  repaint() => _invalidate = false;
+  bool _invalid = true;
+  bool get invalid => _invalid;
+  
+  invalidate() => _invalid = true;
+  repaint() => _invalid = false;
 
   @override
   render(RenderState renderState) {
-    if (_invalidate) {
-      _invalidate = false;
+    if (_invalid) {
+      _invalid = false;
       repaint();
     }
     super.render(renderState);

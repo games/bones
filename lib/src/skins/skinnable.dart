@@ -12,13 +12,13 @@ abstract class Skin {
 abstract class Skinnable extends Component {
   Skin _skin;
 
-  Skinnable(): super() {
+  Skinnable(this._skin): super() {
     repaint();
   }
 
   Skin get defaultSkin;
 
-  set skin(Skin val) {
+  void set skin(Skin val) {
     _skin = val;
     _skin.target = this;
     repaint();
@@ -29,8 +29,8 @@ abstract class Skinnable extends Component {
     super.repaint();
     if (_skin == null) {
       _skin = defaultSkin;
-      _skin.target = this;
     }
+    _skin.target = this;
     _skin.apply();
   }
 }

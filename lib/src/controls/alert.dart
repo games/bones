@@ -8,7 +8,7 @@ class Alert extends Skinnable {
   bool isModal;
   bool cover;
 
-  Alert(this.message, {this.title: null, this.isModal: true, this.cover: true}): super();
+  Alert(this.message, {this.title: null, this.isModal: true, this.cover: true, Skin skin: null}): super(skin);
 
   @override
   Skin get defaultSkin => new AlertSkin();
@@ -34,8 +34,11 @@ class PopupScreen extends Screen {
     if (alert.cover) {
       addChild(renderBackground());
     }
-    alert.x = (Application.instance.stage.sourceWidth - alert.width) / 2;
-    alert.y = (Application.instance.stage.sourceHeight - alert.height) / 2;
+    //    if (alert.invalid) {
+    //      alert.repaint();
+    //    }
+    alert.x = (stage.sourceWidth - alert.width) / 2;
+    alert.y = (stage.sourceHeight - alert.height) / 2;
     addChild(alert);
   }
 
@@ -46,7 +49,7 @@ class PopupScreen extends Screen {
 
   DisplayObject renderBackground() {
     return new Sprite()
-        ..graphics.rect(0, 0, Application.instance.stage.sourceWidth, Application.instance.stage.sourceHeight)
+        ..graphics.rect(0, 0, stage.sourceWidth, stage.sourceHeight)
         ..graphics.fillColor(ColorHelper.fromRgba(0, 0, 0, 0.5));
   }
 }
