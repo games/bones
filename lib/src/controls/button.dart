@@ -2,9 +2,9 @@ part of valorzhong_bones;
 
 typedef DisplayObject TextRenderer(String txt);
 
-const EventStreamProvider<Event> pressedEvent = const EventStreamProvider<Event>(ButtonBase.PRESSED);
+const EventStreamProvider<Event> pressedEvent = const EventStreamProvider<Event>(Button.PRESSED);
 
-class ButtonBase extends Skinnable {
+class Button extends Skinnable {
   static const String PRESSED = "BUTTON_PRESSED";
 
   EventStream<Event> get onPressed => pressedEvent.forTarget(this);
@@ -26,7 +26,7 @@ class ButtonBase extends Skinnable {
   DisplayObject _currentState;
   Matrix _tmpMatrix = new Matrix.fromIdentity();
 
-  ButtonBase({textIconRelation: TextImageRelation.IMAGE_BEFORE_TEXT, Skin skin: null}): super(skin) {
+  Button({textIconRelation: TextImageRelation.IMAGE_BEFORE_TEXT, Skin skin: null}): super(skin) {
     useHandCursor = true;
     _registerEvents();
     _textRenderer = (txt) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT;

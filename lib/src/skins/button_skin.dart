@@ -39,7 +39,7 @@ class ButtonSkin extends Skin {
     }
     if (hitTestState == null) hitTestState = upState;
     
-    (target as ButtonBase)
+    (target as Button)
         ..upState = upState
         ..overState = overState
         ..downState = downState
