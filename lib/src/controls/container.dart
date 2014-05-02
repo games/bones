@@ -53,6 +53,7 @@ abstract class Container extends Component {
 
   @override
   repaint() {
+    super.repaint();
     layout();
   }
 }
