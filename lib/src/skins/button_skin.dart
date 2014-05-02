@@ -44,8 +44,8 @@ class ButtonSkin extends Skin {
         ..overState = overState
         ..downState = downState
         ..hitTestState = upState
-        ..icon = icon
-        ..width = width
-        ..height = height;
+        ..icon = icon;
+//        ..width = width
+//        ..height = height;
   }
 }

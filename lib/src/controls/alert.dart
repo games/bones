@@ -30,7 +30,7 @@ class Alert extends Skinnable {
 class PopupManager {
 
   static message(String message, {String title: null, bool isModal: true, bool cover: true}) {
-    show(Alert.okayCancel(message, title: title, isModal: isModal, cover: cover));
+    show(Alert.ok(message, title: title, isModal: isModal, cover: cover));
   }
 
   static show(Alert alert) {
