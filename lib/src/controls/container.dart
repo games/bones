@@ -8,21 +8,20 @@ abstract class Container extends Component {
   Rectangle _bounds;
   bool _autoResize;
 
-  Container([this._layout]): super() {
-    if (_layout == null) {
-      _layout = new EmptyLayout();
-    }
-    _autoResize = true;
+  Container([this._layout])
+      : _autoResize = true,
+        super() {
   }
 
-  setSize(num width, num height) {
-    if (_bounds == null) {
-      _bounds = new Rectangle(0, 0, 0, 0);
-    }
+  @override
+  size(num width, num height) {
+    _prepareBounds();
     _bounds.setTo(0, 0, width, height);
     _autoResize = false;
     invalidate();
   }
+
+  Layout get defaultLayout => new EmptyLayout();
 
   Layout get layout => _layout;
 
@@ -35,6 +34,7 @@ abstract class Container extends Component {
   void set width(num val) {
     _prepareBounds();
     _bounds.width = val;
+    _autoResize = false;
     invalidate();
   }
 
@@ -42,6 +42,7 @@ abstract class Container extends Component {
   void set height(num val) {
     _prepareBounds();
     _bounds.height = val;
+    _autoResize = false;
     invalidate();
   }
 
@@ -65,12 +66,14 @@ abstract class Container extends Component {
   bool get autoResize => _autoResize;
 
   _prepareBounds() {
-    if (_bounds == null || _bounds.isEmpty) {
-      setSize(super.width, super.height);
-    }
+    if (_bounds == null) _bounds = new Rectangle(0, 0, 0, 0);
+    if (_bounds.isEmpty) _bounds.setTo(0, 0, super.width, super.height);
   }
 
   order() {
+    if (_layout == null) {
+      _layout = defaultLayout;
+    }
     _layout.order(this);
   }
 
@@ -80,9 +83,13 @@ abstract class Container extends Component {
   }
 
   @override
-  repaint() {
-    super.repaint();
-    order();
+  render(RenderState renderState) {
+    if (_invalid) {
+      repaint();
+      order();
+      _invalid = false;
+    }
+    super.render(renderState);
   }
 }
 

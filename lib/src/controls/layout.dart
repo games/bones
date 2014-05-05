@@ -115,7 +115,7 @@ class LinearLayout implements Layout {
     // *** correct ? ***
     var dp = padding * 2;
     if (container is Container && container.autoResize) {
-      container.setSize(w + dp, h + dp);
+      container.size(w + dp, h + dp);
     }
     var cw = container.width,
         ch = container.height;

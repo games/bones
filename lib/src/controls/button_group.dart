@@ -17,15 +17,16 @@ class ButtonGroup extends Container {
   List<ButtonDef> buttonDefs;
 
   ButtonGroup(this.buttonDefs, [Layout layout]): super(layout) {
-    if (layout == null) {
-      _layout = new LinearLayout(gap: 5, orientation: Orientation.HORIZONTAL, horizontalAlign: HorizontalAlign.CENTER, verticalAlign:
-          VerticalAlign.MIDDLE);
-    }
     repaint();
+    order();
   }
 
   @override
+  Layout get defaultLayout => new LinearLayout(gap: 5, orientation: Orientation.HORIZONTAL, horizontalAlign: HorizontalAlign.CENTER, verticalAlign: VerticalAlign.MIDDLE);
+
+  @override
   repaint() {
+    super.repaint();
     removeChildren();
     buttonDefs.forEach((def) {
       var btn = new Button(skin: def.skin)..text = def.label;
@@ -34,7 +35,6 @@ class ButtonGroup extends Container {
       });
       addChild(btn);
     });
-    super.repaint();
   }
 }
 

@@ -10,16 +10,28 @@ abstract class Component extends Sprite {
 
   invalidate() => _invalid = true;
   // TODO : this name should be changed ?
-  repaint() => _invalid = false;
+  repaint() {}
 
-  // TODO : not yet
-  measure() {}
+  //  // TODO : not yet
+  //  measure() {}
+
+  size(num width, num height) => this
+      ..width = width
+      ..height = height;
+
+  zoom(num val) => this
+      ..scaleX = val
+      ..scaleY = val;
+
+  move(num x, num y) => this
+      ..x = x
+      ..y = y;
 
   @override
   render(RenderState renderState) {
     if (_invalid) {
-      _invalid = false;
       repaint();
+      _invalid = false;
     }
     super.render(renderState);
   }
