@@ -126,8 +126,8 @@ class Button extends Skinnable {
 
   void render(RenderState renderState) {
     if (_invalid) {
-      _invalid = false;
       repaint();
+      _invalid = false;
     }
     if (_currentState != null) {
       renderState.renderDisplayObject(_currentState);
