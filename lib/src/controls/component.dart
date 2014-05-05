@@ -2,13 +2,14 @@ part of valorzhong_bones;
 
 typedef void ChildrenWalker(int, DisplayObject);
 
-abstract class Component extends Sprite {
+class Component extends Sprite {
 
-  _Debugger _debugger;
+  Debugger _debugger;
   bool _invalid = true;
   bool get invalid => _invalid;
 
   invalidate() => _invalid = true;
+  
   // TODO : this name should be changed ?
   repaint() {}
 
@@ -51,9 +52,9 @@ abstract class Component extends Sprite {
     }
   }
 
-  _Debugger get debugger {
+  Debugger get debugger {
     if (_debugger == null) {
-      _debugger = new _Debugger(this);
+      _debugger = new Debugger(this);
     }
     return _debugger;
   }
@@ -67,9 +68,9 @@ class Box extends Component {
   }
 }
 
-class _Debugger {
+class Debugger {
   Component _cmp;
-  _Debugger(this._cmp);
+  Debugger(this._cmp);
 
   clear() => _cmp.graphics.clear();
 

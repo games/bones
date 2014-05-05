@@ -10,14 +10,14 @@ abstract class Container extends Component {
 
   Container([this._layout])
       : _autoResize = true,
-        super() {
-  }
+        super();
 
   @override
   size(num width, num height) {
     _prepareBounds();
     _bounds.setTo(0, 0, width, height);
     _autoResize = false;
+    _fireResize();
     invalidate();
   }
 
@@ -35,6 +35,7 @@ abstract class Container extends Component {
     _prepareBounds();
     _bounds.width = val;
     _autoResize = false;
+    _fireResize();
     invalidate();
   }
 
@@ -43,6 +44,7 @@ abstract class Container extends Component {
     _prepareBounds();
     _bounds.height = val;
     _autoResize = false;
+    _fireResize();
     invalidate();
   }
 
@@ -91,6 +93,8 @@ abstract class Container extends Component {
     }
     super.render(renderState);
   }
+
+  _fireResize() => dispatchEvent(new Event(Event.RESIZE));
 }
 
 
