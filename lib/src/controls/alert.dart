@@ -9,22 +9,23 @@ class Alert extends Skinnable {
   String message, title;
   bool isModal;
   bool cover;
+  num bodyWidth, bodyHeight;
   List<ButtonDef> buttonDefs;
 
-  Alert(this.message, {this.title: null, this.isModal: true, this.cover: true, this.buttonDefs, Skin skin: null}): super(skin);
+  Alert(this.message, {this.title: null, this.isModal: true, this.cover: true, this.buttonDefs, this.bodyWidth: null, this.bodyHeight: null, Skin skin: null}): super(skin);
 
   close() => dispatchEvent(new Event(Event.CLOSE));
 
-  static Alert make({String message: null, String title: null, List<ButtonDef> buttonsDefs: null, bool isModal: true, bool cover: true, Skin skin: null}) {
-    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: buttonsDefs, skin: skin);
+  static Alert make({String message: null, String title: null, List<ButtonDef> buttonsDefs: null, bodyWidth: null, bodyHeight: null, bool isModal: true, bool cover: true, Skin skin: null}) {
+    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: buttonsDefs, skin: skin, bodyWidth: bodyWidth, bodyHeight: bodyHeight);
   }
 
-  static Alert ok(String message, {String title: null, bool isModal: true, bool cover: true, Skin skin: null}) {
-    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: BUTTONS_OK, skin: skin);
+  static Alert ok(String message, {String title: null, bool isModal: true, bool cover: true, Skin skin: null, bodyWidth: null, bodyHeight: null}) {
+    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: BUTTONS_OK, skin: skin, bodyWidth: bodyWidth, bodyHeight: bodyHeight);
   }
 
-  static Alert okayCancel(String message, {String title: null, bool isModal: true, bool cover: true, Skin skin: null}) {
-    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: BUTTONS_OK_CANCEL, skin: skin);
+  static Alert okayCancel(String message, {String title: null, bool isModal: true, bool cover: true, Skin skin: null, bodyWidth: null, bodyHeight: null}) {
+    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: BUTTONS_OK_CANCEL, skin: skin, bodyWidth: bodyWidth, bodyHeight: bodyHeight);
   }
 
   @override
@@ -33,20 +34,20 @@ class Alert extends Skinnable {
 
 class PopupManager {
 
-  static Alert message(String message, {String title: null, bool isModal: true, bool cover: true, List<ButtonDef> buttonsDefs: null, Skin skin: null}) {
-    var alert = Alert.make(message: message, title: title, isModal: isModal, cover: cover, buttonsDefs: buttonsDefs, skin: skin);
+  static Alert message(String message, {String title: null, bool isModal: true, bool cover: true, List<ButtonDef> buttonsDefs: null, Skin skin: null, bodyWidth: null, bodyHeight: null}) {
+    var alert = Alert.make(message: message, title: title, isModal: isModal, cover: cover, buttonsDefs: buttonsDefs, skin: skin, bodyWidth: bodyWidth, bodyHeight: bodyHeight);
     show(alert);
     return alert;
   }
 
   static show(Alert alert) {
-    Application.instance.push(new PopupScreen(alert));
+    Application.instance.push(new _PopupScreen(alert));
   }
 }
 
-class PopupScreen extends Screen {
+class _PopupScreen extends Screen {
   Alert alert;
-  PopupScreen(this.alert);
+  _PopupScreen(this.alert);
 
   @override
   enter() {

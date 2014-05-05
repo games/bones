@@ -4,7 +4,7 @@ typedef void ChildrenWalker(int, DisplayObject);
 
 abstract class Component extends Sprite {
 
-  Debugger _debugger;
+  _Debugger _debugger;
   bool _invalid = true;
   bool get invalid => _invalid;
 
@@ -39,9 +39,9 @@ abstract class Component extends Sprite {
     }
   }
 
-  Debugger get debugger {
+  _Debugger get debugger {
     if (_debugger == null) {
-      _debugger = new Debugger(this);
+      _debugger = new _Debugger(this);
     }
     return _debugger;
   }
@@ -55,21 +55,27 @@ class Box extends Component {
   }
 }
 
-class Debugger {
+class _Debugger {
   Component _cmp;
-  Debugger(this._cmp);
+  _Debugger(this._cmp);
 
   clear() => _cmp.graphics.clear();
 
-  drawBackground([int color = Color.Red]) {
+  drawBackground([int color = Color.Red, Rectangle rect = null]) {
+    if (rect == null) {
+      rect = new Rectangle(0, 0, _cmp.width, _cmp.height);
+    }
     _cmp.graphics
-        ..rect(0, 0, _cmp.width, _cmp.height)
+        ..rect(rect.left, rect.top, rect.width, rect.height)
         ..fillColor(color);
   }
 
-  drawBorder([int color = Color.Red]) {
+  drawBorder([int color = Color.Red, Rectangle rect = null]) {
+    if (rect == null) {
+      rect = new Rectangle(0, 0, _cmp.width, _cmp.height);
+    }
     _cmp.graphics
-        ..rect(0, 0, _cmp.width, _cmp.height)
+        ..rect(rect.left, rect.top, rect.width, rect.height)
         ..strokeColor(color);
   }
 }

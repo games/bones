@@ -3,9 +3,9 @@ part of valorzhong_bones;
 
 
 class AlertSkin extends Skin {
-  num padding, doublePadding, bodyWidth, bodyHeight;
+  num padding, doublePadding;
 
-  AlertSkin({this.padding: 8, this.bodyWidth: 0, this.bodyHeight: 0}): super() {
+  AlertSkin({this.padding: 8}): super() {
     doublePadding = padding * 2;
   }
 
@@ -17,17 +17,26 @@ class AlertSkin extends Skin {
     var content = new Shape();
     comp.addChild(content);
 
-    Rectangle bodyBounds;
-
     TextField message;
     if (comp.message != null) {
       message = new TextField()
           ..defaultTextFormat.size = 12
+          ..defaultTextFormat.align = TextFormatAlign.CENTER
           ..autoSize = TextFieldAutoSize.CENTER
           ..text = comp.message;
-      bodyBounds = new Rectangle(0, 0, Math.max(message.width, bodyWidth) + doublePadding, Math.max(message.height, bodyHeight) + doublePadding);
+    }
+    Rectangle bodyBounds;
+    if (comp.bodyWidth != null && comp.bodyHeight != null) {
+      bodyBounds = new Rectangle(0, 0, comp.bodyWidth + doublePadding, comp.bodyHeight + doublePadding);
+      message
+          ..multiline = true
+          ..wordWrap = true
+          ..width = comp.bodyWidth
+          ..height = comp.bodyHeight;
+    } else if (message != null) {
+      bodyBounds = new Rectangle(0, 0, message.width + doublePadding, message.height + doublePadding);
     } else {
-      bodyBounds = new Rectangle(0, 0, bodyWidth + doublePadding, bodyHeight + doublePadding);
+      bodyBounds = new Rectangle(0, 0, doublePadding, doublePadding);
     }
 
     TextField title;
@@ -57,10 +66,17 @@ class AlertSkin extends Skin {
       titleBounds = new Rectangle(0, 0, Math.max(title.width + doublePadding, bodyBounds.width), title.height + doublePadding);
       bodyBounds.top = titleBounds.top + titleBounds.height;
       bodyBounds.width = titleBounds.width;
-      if (buttons != null) {
-        buttons.x = (bodyBounds.width - buttons.width) / 2;
-        buttons.y = bodyBounds.bottom - buttons.height - padding;
-      }
+    }
+
+    if (message != null) {
+      message
+          ..x = bodyBounds.left + padding
+          ..y = bodyBounds.top + (bodyBounds.height - (buttons != null ? buttons.height : 0) - message.height) / 2;
+    }
+
+    if (buttons != null) {
+      buttons.x = (bodyBounds.width - buttons.width) / 2;
+      buttons.y = bodyBounds.bottom - buttons.height - padding;
     }
 
     content.graphics.clear();
@@ -82,10 +98,9 @@ class AlertSkin extends Skin {
         ..beginPath()
         ..rect(0, 0, content.width, content.height)
         ..strokeColor(Color.Black);
-    message
-        ..x = bodyBounds.left + padding
-        ..y = bodyBounds.top + padding;
-    comp.addChild(message);
+    if (message != null) {
+      comp.addChild(message);
+    }
     if (buttons != null) comp.addChild(buttons);
   }
 }
