@@ -31,11 +31,27 @@ abstract class Container extends Component {
     invalidate();
   }
 
+  @override
+  void set width(num val) {
+    _prepareBounds();
+    _bounds.width = val;
+    invalidate();
+  }
+
+  @override
+  void set height(num val) {
+    _prepareBounds();
+    _bounds.height = val;
+    invalidate();
+  }
+
+  @override
   num get width {
     _prepareBounds();
     return _bounds.width;
   }
 
+  @override
   num get height {
     _prepareBounds();
     return _bounds.height;
