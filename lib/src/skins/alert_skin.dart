@@ -14,8 +14,8 @@ class AlertSkin extends Skin {
     var comp = target as Alert;
     comp.removeChildren();
 
-    var content = new Shape();
-    comp.addChild(content);
+    var background = new Shape();
+    comp.addChild(background);
 
     TextField message;
     if (comp.message != null) {
@@ -79,9 +79,9 @@ class AlertSkin extends Skin {
       buttons.y = bodyBounds.bottom - buttons.height - padding;
     }
 
-    content.graphics.clear();
+    background.graphics.clear();
     if (titleBounds != null) {
-      content.graphics
+      background.graphics
           ..beginPath()
           ..rect(titleBounds.left, titleBounds.top, titleBounds.width, titleBounds.height)
           ..fillColor(ColorHelper.fromRgba(222, 222, 222));
@@ -90,13 +90,13 @@ class AlertSkin extends Skin {
           ..y = titleBounds.top + padding;
       comp.addChild(title);
     }
-    content.graphics
+    background.graphics
         ..beginPath()
         ..rect(bodyBounds.left, bodyBounds.top, bodyBounds.width, bodyBounds.height)
         ..fillColor(Color.White);
-    content.graphics
+    background.graphics
         ..beginPath()
-        ..rect(0, 0, content.width, content.height)
+        ..rect(0, 0, background.width, background.height)
         ..strokeColor(Color.Black);
     if (message != null) {
       comp.addChild(message);
