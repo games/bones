@@ -3,6 +3,8 @@ part of valorzhong_bones;
 
 
 class Alert extends Skinnable {
+  static final List<ButtonDef> BUTTONS_OK = [const ButtonDef(label: "OK", event: Event.OKAY)];
+  static final List<ButtonDef> BUTTONS_OK_CANCEL = [const ButtonDef(label: "OK", event: Event.OKAY), const ButtonDef(label: "CANCEL", event: Event.CANCEL)];
 
   String message, title;
   bool isModal;
@@ -13,14 +15,16 @@ class Alert extends Skinnable {
 
   close() => dispatchEvent(new Event(Event.CLOSE));
 
-  static Alert ok(String message, {String title: null, bool isModal: true, bool cover: true}) {
-    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: [new ButtonDef(label: "OK", event: Event.OKAY)]
-        );
+  static Alert make({String message: null, String title: null, List<ButtonDef> buttonsDefs: null, bool isModal: true, bool cover: true, Skin skin: null}) {
+    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: buttonsDefs, skin: skin);
   }
 
-  static Alert okayCancel(String message, {String title: null, bool isModal: true, bool cover: true}) {
-    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: [new ButtonDef(label: "OK", event: Event.OKAY),
-        new ButtonDef(label: "CANCEL", event: Event.CANCEL)]);
+  static Alert ok(String message, {String title: null, bool isModal: true, bool cover: true, Skin skin: null}) {
+    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: BUTTONS_OK, skin: skin);
+  }
+
+  static Alert okayCancel(String message, {String title: null, bool isModal: true, bool cover: true, Skin skin: null}) {
+    return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: BUTTONS_OK_CANCEL, skin: skin);
   }
 
   @override
@@ -29,8 +33,10 @@ class Alert extends Skinnable {
 
 class PopupManager {
 
-  static message(String message, {String title: null, bool isModal: true, bool cover: true}) {
-    show(Alert.ok(message, title: title, isModal: isModal, cover: cover));
+  static Alert message(String message, {String title: null, bool isModal: true, bool cover: true, List<ButtonDef> buttonsDefs: null, Skin skin: null}) {
+    var alert = Alert.make(message: message, title: title, isModal: isModal, cover: cover, buttonsDefs: buttonsDefs, skin: skin);
+    show(alert);
+    return alert;
   }
 
   static show(Alert alert) {

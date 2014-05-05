@@ -17,10 +17,18 @@ class AlertSkin extends Skin {
     var content = new Shape();
     comp.addChild(content);
 
-    var message = new TextField()
-        ..defaultTextFormat.size = 12
-        ..autoSize = TextFieldAutoSize.CENTER
-        ..text = comp.message;
+    Rectangle bodyBounds;
+
+    TextField message;
+    if (comp.message != null) {
+      message = new TextField()
+          ..defaultTextFormat.size = 12
+          ..autoSize = TextFieldAutoSize.CENTER
+          ..text = comp.message;
+      bodyBounds = new Rectangle(0, 0, Math.max(message.width, bodyWidth) + doublePadding, Math.max(message.height, bodyHeight) + doublePadding);
+    } else {
+      bodyBounds = new Rectangle(0, 0, bodyWidth + doublePadding, bodyHeight + doublePadding);
+    }
 
     TextField title;
     if (comp.title != null) {
@@ -31,16 +39,16 @@ class AlertSkin extends Skin {
           ..text = comp.title;
     }
 
-    var bodyBounds = new Rectangle(0, 0, Math.max(message.width, bodyWidth) + doublePadding, Math.max(message.height, bodyHeight) +
-        doublePadding);
-
     ButtonGroup buttons;
     if (comp.buttonDefs != null) {
       buttons = new ButtonGroup(comp.buttonDefs);
       bodyBounds.width = Math.max(bodyBounds.width, buttons.width + doublePadding);
       buttons.x = (bodyBounds.width - buttons.width) / 2;
       buttons.y = bodyBounds.bottom + padding;
-      buttons.onSelected.listen((e) => comp.close());
+      buttons.onSelected.listen((e) {
+        comp.dispatchEvent(new Event(e.event));
+        comp.close();
+      });
       bodyBounds.height = bodyBounds.height + doublePadding + buttons.height;
     }
 
@@ -49,8 +57,10 @@ class AlertSkin extends Skin {
       titleBounds = new Rectangle(0, 0, Math.max(title.width + doublePadding, bodyBounds.width), title.height + doublePadding);
       bodyBounds.top = titleBounds.top + titleBounds.height;
       bodyBounds.width = titleBounds.width;
-      buttons.x = (bodyBounds.width - buttons.width) / 2;
-      buttons.y = bodyBounds.bottom - buttons.height - padding;
+      if (buttons != null) {
+        buttons.x = (bodyBounds.width - buttons.width) / 2;
+        buttons.y = bodyBounds.bottom - buttons.height - padding;
+      }
     }
 
     content.graphics.clear();

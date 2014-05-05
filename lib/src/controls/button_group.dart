@@ -42,5 +42,5 @@ class ButtonDef {
   final String label;
   final String event;
   final Skin skin;
-  ButtonDef({this.label: "", this.event, this.skin: null});
+  const ButtonDef({this.label: "", this.event, this.skin: null});
 }
