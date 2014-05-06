@@ -16,6 +16,7 @@ abstract class Skinnable extends Component {
 
   Skinnable(this._skin): super() {
     repaint();
+    _invalid = false;
   }
 
   Skin get defaultSkin;
