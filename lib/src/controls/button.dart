@@ -16,20 +16,22 @@ class Button extends Skinnable {
   DisplayObject icon;
 
   TextImageRelation _textIconRelation;
+  HorizontalAlign _align;
   DisplayObject _label;
   String _text;
   TextRenderer _textRenderer;
 
   bool _enabled = true;
-  num _width, _height;
+  num _width, _height, padding;
 
   DisplayObject _currentState;
   Matrix _tmpMatrix = new Matrix.fromIdentity();
 
-  Button({textIconRelation: TextImageRelation.IMAGE_BEFORE_TEXT, Skin skin: null}): super(skin) {
+  Button({textIconRelation: TextImageRelation.IMAGE_BEFORE_TEXT, this.padding: 5, HorizontalAlign align: HorizontalAlign.CENTER, Skin skin: null}): super(skin) {
     useHandCursor = true;
     _registerEvents();
     _textIconRelation = textIconRelation;
+    _align = align;
     _textRenderer = (txt) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT;
   }
 
@@ -42,6 +44,7 @@ class Button extends Skinnable {
   }
 
   set textIconRelation(TextImageRelation val) => _textIconRelation = val;
+  set align(HorizontalAlign val) => _align = val;
 
   set width(num val) {
     _width = val;
@@ -125,6 +128,7 @@ class Button extends Skinnable {
     return null;
   }
 
+  // TODO: so crazy code. should be refactoring.
   void render(RenderState renderState) {
     if (_invalid) {
       repaint();
@@ -149,26 +153,49 @@ class Button extends Skinnable {
         switch (_textIconRelation) {
           case TextImageRelation.IMAGE_ABOVE_TEXT:
             icon.y = (_currentState.height - h) / 2;
-            _label.y = icon.y + icon.height + 1;
+            _label.y = icon.y + padding + icon.height + 1;
+            _alignForVertical();
             break;
           case TextImageRelation.IMAGE_BEFORE_TEXT:
             icon.x = (_currentState.width - w) / 2;
-            _label.x = icon.x + icon.width + 1;
+            _label.x = icon.x + padding + icon.width + 1;
+            _alignForHorizontal(icon, _label);
             break;
           case TextImageRelation.OVERLAY:
             break;
           case TextImageRelation.TEXT_ABOVE_IMAGE:
             _label.y = (_currentState.height - h) / 2;
-            icon.y = _label.y + _label.height + 1;
+            icon.y = _label.y + padding + _label.height + 1;
+            _alignForVertical();
             break;
           case TextImageRelation.TEXT_BEFORE_IMAGE:
             _label.x = (_currentState.width - w) / 2;
-            icon.x = _label.x + _label.width + 1;
+            icon.x = _label.x + padding + _label.width + 1;
+            _alignForHorizontal(_label, icon);
             break;
         }
       }
       if (icon != null) renderState.renderDisplayObject(icon);
       if (_label != null) renderState.renderDisplayObject(_label);
+    }
+  }
+
+  void _alignForHorizontal(DisplayObject first, DisplayObject second) {
+    if (_align == HorizontalAlign.LEFT) {
+      first.x = padding;
+      second.x = first.x + first.width + padding;
+    } else if (_align == HorizontalAlign.RIGHT) {
+      second.x = _currentState.width - padding - second.width;
+      first.x = second.x - first.width - padding;
+    }
+  }
+
+  void _alignForVertical() {
+    if (_align == HorizontalAlign.LEFT) {
+      icon.x = _label.x = padding;
+    } else if (_align == HorizontalAlign.RIGHT) {
+      icon.x = _currentState.width - icon.width - padding;
+      _label.x = _currentState.width - _label.width - padding;
     }
   }
 
