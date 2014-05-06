@@ -6,38 +6,47 @@ part of valorzhong_bones;
 class ScrollView extends Container {
 
   Component _content;
+  Point _lastPos;
+  int _backgroundColor = Color.White;
 
   ScrollView(): super() {
     _content = new Component();
     super.addChildAt(_content, 0);
+    _lastPos = new Point(0, 0);
     on(Event.RESIZE).listen(_resizeHandler);
     onMouseDown.listen((e) {
       if (stage != null) {
+        _clearStageEvents();
+        _lastPos.setTo(e.stageX, e.stageY);
         stage.onMouseMove.listen(_stageMouseMoveHandler);
-
-        _content.startDrag(false, _bounds);
-        stage.onMouseUp.listen(_onStageMouseUp);
+        stage.onMouseUp.listen(_stageMouseUpHandler);
       }
     });
   }
 
-  void _stageMouseMoveHandler(MouseEvent e) {
+  void _clearStageEvents() {
+    stage.removeEventListener(MouseEvent.MOUSE_MOVE, _stageMouseMoveHandler);
+    stage.removeEventListener(MouseEvent.MOUSE_UP, _stageMouseUpHandler);
   }
 
-  void _onStageMouseUp(e) {
-    print("stage onmouseup");
-    stage.removeEventListener(MouseEvent.MOUSE_UP, _onStageMouseUp);
-    _content.stopDrag();
+  void _stageMouseMoveHandler(MouseEvent e) {
+    var delta = new Point(e.stageX, e.stageY) - _lastPos;
+    scrollTo(_content.x + delta.x, _content.y + delta.y);
+    _lastPos.setTo(e.stageX, e.stageY);
+  }
+
+  void _stageMouseUpHandler(e) {
+    _clearStageEvents();
   }
 
   void _resizeHandler(Event event) {
-    //    mask = new Mask.rectangle(_bounds.left, _bounds.top, _bounds.width, _bounds.height);
+    mask = new Mask.rectangle(_bounds.left, _bounds.top, _bounds.width, _bounds.height);
   }
 
   void scrollTo(num x, num y) {
     _content
-        ..x = x
-        ..y = y;
+        ..x = Math.min(Math.max(_bounds.right - _content.width, x), _bounds.left)
+        ..y = Math.min(Math.max(_bounds.bottom - _content.height, y), _bounds.top);
   }
 
   @override
@@ -86,5 +95,21 @@ class ScrollView extends Container {
 
   bool contains(DisplayObject child) => _content.contains(child);
 
+  @override
+  repaint() {
+    super.repaint();
+    if (_backgroundColor != null) {
+      graphics
+          ..clear()
+          ..rect(_bounds.left, _bounds.top, _bounds.width, _bounds.height)
+          ..fillColor(_backgroundColor);
+    }
+  }
+
   int get numChildren => _content.numChildren;
+  int get backgroundColor => _backgroundColor;
+  set backgroundColor(int val) {
+    _backgroundColor = val;
+    invalidate();
+  }
 }
