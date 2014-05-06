@@ -4,11 +4,10 @@ part of valorzhong_bones;
 
 
 class ScrollBarSkin extends Skin {
+  static const num WIDTH = 5;
+  static const num HEIGHT = 200;
+  static const num ROUND = 3;
 
-  ScrollBarSkin(): super() {
-    width = 10;
-    height = 200;
-  }
 
   @override
   apply() {
@@ -21,22 +20,23 @@ class ScrollBarSkin extends Skin {
         v;
 
     if (bar.orientation == Orientation.VERTICAL) {
-      h = width;
-      v = height;
+      h = width == null ? WIDTH : width;
+      v = height == null ? HEIGHT : height;
       sw = h;
       sh = v * sp;
     } else {
-      h = height;
-      v = width;
+      h = width == null ? HEIGHT : width;
+      v = height == null ? WIDTH : height;
       sw = h * sp;
       sh = v;
     }
     bar.slider = new Shape()
-        ..graphics.rectRound(0, 0, sw, sh, 5, 5)
+        ..graphics.rectRound(0, 0, sw, sh, ROUND, ROUND)
         ..graphics.fillColor(Color.WhiteSmoke);
 
     bar.background = new Shape()
-        ..graphics.rectRound(0, 0, h, v, 5, 5)
+        ..alpha = 0.5
+        ..graphics.rectRound(0, 0, h, v, ROUND, ROUND)
         ..graphics.fillColor(Color.Gray);
   }
 }

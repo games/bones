@@ -42,7 +42,7 @@ class ScrollBar extends ProgressBar {
   }
 
   @override
-  set value(int val) {
+  set value(num val) {
     if (val < _minimum) val = _minimum;
     if (val > _maximum) val = _maximum;
     _value = val;

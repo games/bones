@@ -20,6 +20,8 @@ abstract class Skinnable extends Component {
 
   Skin get defaultSkin;
 
+  Skin get skin => _skin;
+
   void set skin(Skin val) {
     _skin = val;
     _skin.target = this;
