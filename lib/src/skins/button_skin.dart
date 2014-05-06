@@ -10,9 +10,12 @@ class ButtonSkin extends Skin {
   DisplayObject downState;
   DisplayObject hitTestState;
   DisplayObject icon;
-  num width, height;
 
-  ButtonSkin({this.upState, this.overState, this.downState, this.hitTestState, this.icon, this.width: 100, this.height: 50});
+  ButtonSkin({this.upState, this.overState, this.downState, this.hitTestState, this.icon, num width: 100, num height: 50})
+      : super() {
+    this.width = width;
+    this.height = height;
+  }
 
   @override
   apply() {
@@ -38,14 +41,14 @@ class ButtonSkin extends Skin {
           ..graphics.strokeColor(Color.Gray, 2);
     }
     if (hitTestState == null) hitTestState = upState;
-    
+
     (target as Button)
         ..upState = upState
         ..overState = overState
         ..downState = downState
         ..hitTestState = upState
         ..icon = icon;
-//        ..width = width
-//        ..height = height;
+    //        ..width = width
+    //        ..height = height;
   }
 }

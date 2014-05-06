@@ -4,9 +4,10 @@ part of valorzhong_bones;
 
 
 class LinearProgressBarSkin extends Skin {
-  int _width;
-  int _height;
-  LinearProgressBarSkin([this._width = 100, this._height = 2]);
+  LinearProgressBarSkin([num width = 100, num height = 2]) {
+    this.width = width;
+    this.height = height;
+  }
 
   @override
   apply() {
@@ -14,10 +15,10 @@ class LinearProgressBarSkin extends Skin {
     bar.graphics
         ..clear()
         ..beginPath()
-        ..rect(0, 0, _width, _height)
+        ..rect(0, 0, width, height)
         ..fillColor(0x33000000)
         ..beginPath()
-        ..rect(0, 0, _width * bar.percent, _height)
+        ..rect(0, 0, width * bar.percent, height)
         ..fillColor(0xffffcc00);
   }
 }

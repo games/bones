@@ -8,7 +8,6 @@ class ScrollBarSkin extends Skin {
   static const num HEIGHT = 200;
   static const num ROUND = 3;
 
-
   @override
   apply() {
     var bar = target as ScrollBar;
