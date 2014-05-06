@@ -5,6 +5,8 @@ part of valorzhong_bones;
 
 abstract class Skin {
   Skinnable target;
+  // TODO : These properties are requirement for all skins, should be move into component?
+  num width, height;
   apply();
 }
 
