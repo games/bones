@@ -21,16 +21,10 @@ class ScrollBar extends ProgressBar {
     if (background != null) {
       addChild(background);
     }
-    if (background != null && slider != null) {
-      addChild(slider
-          ..x = 0
-          ..y = 0);
-      if (orientation == Orientation.VERTICAL) {
-        slider.y = percent * (background.height - slider.height);
-      } else {
-        slider.x = percent * (background.width - slider.width);
-      }
+    if (slider != null) {
+      addChild(slider);
     }
+    _adjustSlider();
   }
 
   Orientation get orientation => _orientation;
@@ -52,15 +46,21 @@ class ScrollBar extends ProgressBar {
     if (val < _minimum) val = _minimum;
     if (val > _maximum) val = _maximum;
     _value = val;
-    if (background != null && slider != null) {
-      if (orientation == Orientation.VERTICAL) {
-        slider.y = percent * (background.height - slider.height);
-      } else {
-        slider.x = percent * (background.width - slider.width);
-      }
-    }
+    _adjustSlider();
   }
 
   @override
   Skin get defaultSkin => new ScrollBarSkin();
+
+  _adjustSlider() {
+    if (background != null && slider != null) {
+      if (orientation == Orientation.VERTICAL) {
+        slider.x = 0;
+        slider.y = percent * (background.height - slider.height);
+      } else {
+        slider.x = percent * (background.width - slider.width);
+        slider.y = 0;
+      }
+    }
+  }
 }
