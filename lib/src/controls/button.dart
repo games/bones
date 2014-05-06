@@ -29,6 +29,7 @@ class Button extends Skinnable {
   Button({textIconRelation: TextImageRelation.IMAGE_BEFORE_TEXT, Skin skin: null}): super(skin) {
     useHandCursor = true;
     _registerEvents();
+    _textIconRelation = textIconRelation;
     _textRenderer = (txt) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT;
   }
 
