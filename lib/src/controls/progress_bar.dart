@@ -8,7 +8,7 @@ class ProgressBar extends Skinnable {
 
   ProgressBar([Skin skin]): super(skin);
 
-  reset() => _value = _minimum;
+  reset() => value = _minimum;
   step() => value = _value + 1;
 
   num get value => _value;
