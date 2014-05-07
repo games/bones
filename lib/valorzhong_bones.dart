@@ -21,6 +21,7 @@ part 'src/controls/scroll_view.dart';
 part 'src/controls/scroll_bar.dart';
 part 'src/controls/list_view.dart';
 part 'src/controls/drawer.dart';
+part 'src/controls/toast.dart';
 
 part 'src/controls/skinnable.dart';
 part 'src/skins/alert_skin.dart';
@@ -28,6 +29,7 @@ part 'src/skins/button_skin.dart';
 part 'src/skins/list_view_skin.dart';
 part 'src/skins/progress_bar_skin.dart';
 part 'src/skins/scroll_bar_skin.dart';
+part 'src/skins/toast_skin.dart';
 
 
 
