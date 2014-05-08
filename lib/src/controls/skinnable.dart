@@ -5,18 +5,24 @@ part of valorzhong_bones;
 
 abstract class Skin {
   Skinnable target;
-  // TODO : These properties are requirement for all skins, should be move into component?
-  num width, height;
   apply();
+  repaint() {}
 }
 
 
 abstract class Skinnable extends Component {
   Skin _skin;
 
-  Skinnable(this._skin): super() {
-    repaint();
-    _invalid = false;
+  Skinnable(this._skin): super();
+
+  @override
+  initialize() {
+    super.initialize();
+    if (_skin == null) {
+      _skin = defaultSkin;
+    }
+    _skin.target = this;
+    _skin.apply();
   }
 
   Skin get defaultSkin;
@@ -32,10 +38,7 @@ abstract class Skinnable extends Component {
   @override
   repaint() {
     super.repaint();
-    if (_skin == null) {
-      _skin = defaultSkin;
-    }
     _skin.target = this;
-    _skin.apply();
+    _skin.repaint();
   }
 }

@@ -22,12 +22,14 @@ class Button extends Skinnable {
   TextRenderer _textRenderer;
 
   bool _enabled = true;
-  num _width, _height, padding;
+  num padding;
 
   DisplayObject _currentState;
   Matrix _tmpMatrix = new Matrix.fromIdentity();
 
   Button({textIconRelation: TextImageRelation.IMAGE_BEFORE_TEXT, this.padding: 5, HorizontalAlign align: HorizontalAlign.CENTER, Skin skin: null}): super(skin) {
+    _width = 100;
+    _height = 50;
     useHandCursor = true;
     _registerEvents();
     _textIconRelation = textIconRelation;
@@ -46,6 +48,7 @@ class Button extends Skinnable {
   set textIconRelation(TextImageRelation val) => _textIconRelation = val;
   set align(HorizontalAlign val) => _align = val;
 
+  @override
   set width(num val) {
     _width = val;
     if (_upState != null) _upState.width = _width;
@@ -54,6 +57,7 @@ class Button extends Skinnable {
     if (_hitTestState != null) _hitTestState.width = _width;
   }
 
+  @override
   set height(num val) {
     _height = val;
     if (_upState != null) _upState.height = _height;
@@ -130,9 +134,9 @@ class Button extends Skinnable {
 
   // TODO: so crazy code. should be refactoring.
   void render(RenderState renderState) {
-    if (_invalid) {
+    if (_dirty) {
       repaint();
-      _invalid = false;
+      _dirty = false;
     }
     if (_currentState != null) {
       renderState.renderDisplayObject(_currentState);

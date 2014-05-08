@@ -34,7 +34,7 @@ class Alert extends Skinnable {
 
 class PopupManager {
 
-  static Alert message(String message, {String title: null, bool isModal: true, bool cover: true, List<ButtonDef> buttonsDefs: null, Skin skin: null, bodyWidth: null, bodyHeight: null}) {
+  static Alert message(String message, {String title: null, bool isModal: true, bool cover: true, List<ButtonDef> buttonsDefs: null, Skin skin: null, num bodyWidth: null, num bodyHeight: null}) {
     var alert = Alert.make(message: message, title: title, isModal: isModal, cover: cover, buttonsDefs: buttonsDefs, skin: skin, bodyWidth: bodyWidth, bodyHeight: bodyHeight);
     show(alert);
     return alert;
@@ -54,6 +54,7 @@ class _PopupScreen extends Screen {
     if (alert.cover) {
       addChild(renderBackground());
     }
+    alert.repaint();
     alert.x = (stage.sourceWidth - alert.width) / 2;
     alert.y = (stage.sourceHeight - alert.height) / 2;
     alert.on(Event.CLOSE).listen((e) => Application.instance.remove(this));

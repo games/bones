@@ -4,21 +4,23 @@ part of valorzhong_bones;
 
 
 class LinearProgressBarSkin extends Skin {
-  LinearProgressBarSkin([num width = 100, num height = 2]) {
-    this.width = width;
-    this.height = height;
+
+  apply() {
+    var bar = target as ProgressBar;
+    if (bar.width == 0) bar.width = 100;
+    if (bar.height == 0) bar.height = 2;
   }
 
   @override
-  apply() {
+  repaint() {
     var bar = target as ProgressBar;
     bar.graphics
         ..clear()
         ..beginPath()
-        ..rect(0, 0, width, height)
+        ..rect(0, 0, bar.width, bar.height)
         ..fillColor(0x33000000)
         ..beginPath()
-        ..rect(0, 0, width * bar.percent, height)
+        ..rect(0, 0, bar.width * bar.percent, bar.height)
         ..fillColor(0xffffcc00);
   }
 }
@@ -35,6 +37,11 @@ class CountdownSkin extends Skin {
 
   @override
   apply() {
+
+  }
+
+  @override
+  repaint() {
     var bar = target as ProgressBar;
     bar.removeChildren();
     bar.graphics
@@ -56,6 +63,7 @@ class CountdownSkin extends Skin {
           ..autoSize = TextFieldAutoSize.CENTER
           ..text = "-";
     }
+    bar.measure();
     _label.text = bar.value.toString();
     _label.x = (bar.width - _label.width) / 2;
     _label.y = (bar.height - _label.height) / 2;

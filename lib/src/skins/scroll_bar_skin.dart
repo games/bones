@@ -11,31 +11,36 @@ class ScrollBarSkin extends Skin {
   @override
   apply() {
     var bar = target as ScrollBar;
+    if (bar.orientation == Orientation.VERTICAL) {
+      bar.width = bar.width == 0 ? WIDTH : bar.width;
+      bar.height = bar.height == 0 ? HEIGHT : bar.height;
+    } else {
+      bar.width = bar.width == 0 ? HEIGHT : bar.width;
+      bar.height = bar.height == 0 ? WIDTH : bar.height;
+    }
+  }
 
+  @override
+  repaint() {
+    var bar = target as ScrollBar;
     var sw,
         sh,
-        sp = bar.range / (bar.maximum - bar.minimum),
-        h,
-        v;
-
+        sp = bar.range / (bar.maximum - bar.minimum);
     if (bar.orientation == Orientation.VERTICAL) {
-      h = width == null ? WIDTH : width;
-      v = height == null ? HEIGHT : height;
-      sw = h;
-      sh = v * sp;
+      sw = bar.width;
+      sh = bar.height * sp;
     } else {
-      h = width == null ? HEIGHT : width;
-      v = height == null ? WIDTH : height;
-      sw = h * sp;
-      sh = v;
+      sw = bar.width * sp;
+      sh = bar.height;
     }
-    bar.slider = new Shape()
-        ..graphics.rectRound(0, 0, sw, sh, ROUND, ROUND)
-        ..graphics.fillColor(Color.WhiteSmoke);
-
+    if (bar.range > 0) {
+      bar.slider = new Shape()
+          ..graphics.rectRound(0, 0, sw, sh, ROUND, ROUND)
+          ..graphics.fillColor(Color.WhiteSmoke);
+    }
     bar.background = new Shape()
         ..alpha = 0.5
-        ..graphics.rectRound(0, 0, h, v, ROUND, ROUND)
+        ..graphics.rectRound(0, 0, bar.width, bar.height, ROUND, ROUND)
         ..graphics.fillColor(Color.Gray);
   }
 }

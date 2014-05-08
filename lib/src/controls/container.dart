@@ -86,10 +86,10 @@ abstract class Container extends Component {
 
   @override
   render(RenderState renderState) {
-    if (_invalid) {
+    if (_dirty) {
       repaint();
       order();
-      _invalid = false;
+      _dirty = false;
     }
     super.render(renderState);
   }

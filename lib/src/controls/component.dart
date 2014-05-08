@@ -4,17 +4,44 @@ typedef void ChildrenWalker(int, DisplayObject);
 
 class Component extends Sprite {
 
+  num _width, _height;
   Debugger _debugger;
-  bool _invalid = true;
-  bool get invalid => _invalid;
+  bool _dirty = true;
+  bool get dirty => _dirty;
 
-  invalidate() => _invalid = true;
-  
+  Component()
+      : _width = 0,
+        _height = 0 {
+    initialize();
+  }
+
+  initialize() {}
+
+  invalidate() => _dirty = true;
+
   // TODO : this name should be changed ?
   repaint() {}
 
-  //  // TODO : not yet
-  //  measure() {}
+  measure() {
+    if (_width == 0) _width = super.width;
+    if (_height == 0) _height = super.height;
+  }
+
+  @override
+  void set width(num val) {
+    _width = val;
+    invalidate();
+  }
+
+  num get width => _width;
+
+  @override
+  void set height(num val) {
+    _height = val;
+    invalidate();
+  }
+
+  num get height => _height;
 
   size(num width, num height) => this
       ..width = width
@@ -30,9 +57,9 @@ class Component extends Sprite {
 
   @override
   render(RenderState renderState) {
-    if (_invalid) {
+    if (_dirty) {
       repaint();
-      _invalid = false;
+      _dirty = false;
     }
     super.render(renderState);
   }
@@ -65,6 +92,7 @@ class Box extends Component {
     graphics
         ..rect(0, 0, w, h)
         ..fillColor(color);
+    measure();
   }
 }
 
