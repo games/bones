@@ -28,8 +28,6 @@ class Button extends Skinnable {
   Matrix _tmpMatrix = new Matrix.fromIdentity();
 
   Button({textIconRelation: TextImageRelation.IMAGE_BEFORE_TEXT, this.padding: 5, HorizontalAlign align: HorizontalAlign.CENTER, Skin skin: null}): super(skin) {
-    _width = 100;
-    _height = 50;
     useHandCursor = true;
     _registerEvents();
     _textIconRelation = textIconRelation;

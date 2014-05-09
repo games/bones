@@ -11,7 +11,8 @@ abstract class Theme {
 
   Map<String, Skin> _skins;
 
-  Theme(): _skins = {};
+  Theme(): _skins = {
+  };
 
   void register(String name, Skin skin) {
     if (_skins.containsKey(name)) throw new ArgumentError("Duplicate skin[$name] exists.");
@@ -49,4 +50,8 @@ class ThemeManager {
     // TODO : dispatch changed event.
   }
 
+}
+
+createScale9Bitmap(DisplayObject drawable, Rectangle grid) {
+  return new Scale9Bitmap(new BitmapData(drawable.width.toInt(), drawable.height.toInt(), true, 0x00FFFFFF)..draw(drawable), grid);
 }

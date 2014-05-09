@@ -13,7 +13,9 @@ class Toast extends Skinnable {
 
   DelayedCall _delayedCall;
 
-  Toast([Skin skin]): super(skin);
+  Toast([Skin skin]): super(skin) {
+    visible = false;
+  }
 
   @override
   repaint() {
@@ -44,7 +46,6 @@ class Toast extends Skinnable {
   show(String val) {
     _message = val;
     visible = true;
-    removeChildren();
     invalidate();
   }
 

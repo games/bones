@@ -1,5 +1,7 @@
 import 'dart:html' as html;
+import 'dart:async';
 import 'package:stagexl/stagexl.dart';
+import 'package:stats/stats.dart';
 import 'package:valorzhong_bones/valorzhong_bones.dart';
 
 
@@ -8,7 +10,9 @@ import 'package:valorzhong_bones/valorzhong_bones.dart';
 void main() {
   var canvas = html.querySelector("#stage");
 
-  var stage = new Stage(canvas, width: canvas.clientWidth, height: canvas.clientHeight, color: Color.SkyBlue, webGL: false);
+
+
+  var stage = new Stage(canvas, width: canvas.clientWidth, height: canvas.clientHeight, color: Color.SkyBlue, webGL: true);
   stage.scaleMode = StageScaleMode.NO_SCALE;
   stage.align = StageAlign.NONE;
 
@@ -24,10 +28,13 @@ class TestScreen extends Screen {
     graphics.rect(0, 0, stage.sourceWidth, stage.sourceHeight);
     graphics.fillColor(Color.SkyBlue);
 
+    var stats = new Stats();
+    html.document.body.children.add(stats.container);
+    stage.onEnterFrame.listen((e)=> stats.begin());
+    stage.onExitFrame.listen((e) => stats.end());
 
-    var toast = new Toast();
-    toast.x = 300;
-    toast.y = 300;
+    var toast = new Toast()..move(300, 300);
+    toast.show("Welcome!!");
     addChild(toast);
 
     addChild(new Button()
@@ -39,13 +46,22 @@ class TestScreen extends Screen {
         })
         ..move(1, 1));
 
-    addChild(new ProgressBar()
-        ..value = 40
-        ..move(120, 10));
+    var progressBar = new ProgressBar()
+      ..periodic = true
+      ..value = 40
+      ..move(160, 10);
+    addChild(progressBar);
 
-    addChild(new ProgressBar(new CountdownSkin())
-        ..value = 45
-        ..move(320, 10));
+    var countdown = new ProgressBar(new CountdownSkin())
+      ..periodic = true
+      ..value = 45
+      ..move(320, 10);
+    addChild(countdown);
+
+    var t = new Timer.periodic(new Duration(milliseconds: 33), (t){
+      progressBar.step();
+      countdown.step();
+    });
 
     addChild(new ScrollBar()
         ..range = 10
@@ -64,9 +80,9 @@ class TestScreen extends Screen {
     addChild(new ScrollView()
         ..size(150, 100)
         ..move(30, 100)
-        ..addChild(new Shape()
-            ..graphics.rect(0, 0, 300, 300)
-            ..graphics.fillGradient(gradient)));
+        ..addChild(createScale9Bitmap(new Shape()
+      ..graphics.rect(0, 0, 300, 300)
+      ..graphics.fillGradient(gradient), new Rectangle(2, 2, 10, 10))));
 
     var listView = new ListView()
         ..data = [{

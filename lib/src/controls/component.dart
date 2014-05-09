@@ -93,6 +93,7 @@ class Box extends Component {
         ..rect(0, 0, w, h)
         ..fillColor(color);
     measure();
+    applyCache(0, 0, w, h);
   }
 }
 

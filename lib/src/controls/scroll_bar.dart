@@ -19,10 +19,25 @@ class ScrollBar extends ProgressBar {
     super.repaint();
     removeChildren();
     if (background != null) {
+      background.width = width;
+      background.height = height;
       addChild(background);
     }
     if (slider != null) {
       addChild(slider);
+      if(_range > 0) {
+        var sp = _range / (maximum - minimum);
+        if (orientation == Orientation.VERTICAL) {
+          slider.width = width.toInt();
+          slider.height = (height * sp).toInt();
+        } else {
+          slider.width = (width * sp).toInt();
+          slider.height = height.toInt();
+        }
+        slider.visible = true;
+      } else {
+        slider.visible = false;
+      }
     }
     _adjustSlider();
   }
@@ -39,14 +54,6 @@ class ScrollBar extends ProgressBar {
   void set range(num val) {
     _range = val;
     invalidate();
-  }
-
-  @override
-  set value(num val) {
-    if (val < _minimum) val = _minimum;
-    if (val > _maximum) val = _maximum;
-    _value = val;
-    _adjustSlider();
   }
 
   _adjustSlider() {

@@ -9,3 +9,5 @@ dependencies:
   stagexl: 
     git: https://github.com/bp74/StageXL.git
   valorzhong_injector: any
+  stats:
+    git: https://github.com/Dartist/stats.dart.git

@@ -2,6 +2,7 @@ part of valorzhong_bones;
 
 
 class ProgressBar extends Skinnable {
+  bool periodic = false;
   num _value = 1;
   num _minimum = 1;
   num _maximum = 100;
@@ -15,7 +16,7 @@ class ProgressBar extends Skinnable {
 
   set value(num val) {
     if (val < _minimum) val = _minimum;
-    if (val > _maximum) val = _maximum;
+    if (val > _maximum) val = periodic ? _minimum : _maximum;
     _value = val;
     invalidate();
   }
