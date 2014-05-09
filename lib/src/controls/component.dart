@@ -25,6 +25,10 @@ class Component extends Sprite {
   measure() {
     if (_width == 0) _width = super.width;
     if (_height == 0) _height = super.height;
+    // TODO : Is this necessary ?
+    //    forEach((i, child) {
+    //      if (child is Component) child.measure();
+    //    });
   }
 
   @override
@@ -33,7 +37,7 @@ class Component extends Sprite {
     invalidate();
   }
 
-  num get width => _width;
+  num get width => _width == 0 ? super.width : _width;
 
   @override
   void set height(num val) {
@@ -41,7 +45,7 @@ class Component extends Sprite {
     invalidate();
   }
 
-  num get height => _height;
+  num get height => _height == 0 ? super.height : _height;
 
   size(num width, num height) => this
       ..width = width
