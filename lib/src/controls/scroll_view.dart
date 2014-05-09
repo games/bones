@@ -1,10 +1,12 @@
 part of valorzhong_bones;
 
 
-
-
 class ScrollView extends Container {
+  static const OVER_SCROLL_ALWAYS = 0;
+  static const OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
+  static const OVER_SCROLL_NEVER = 2;
 
+  int _overScrollModel = OVER_SCROLL_ALWAYS;
   Sprite _content;
   Point _lastPos;
   int _backgroundColor = Color.White;
@@ -12,9 +14,11 @@ class ScrollView extends Container {
   Point<num> _viewport;
 
   ScrollView(): super() {
-    _hbar = new ScrollBar(orientation: Orientation.HORIZONTAL)..visible = false;
+    _hbar = new ScrollBar(orientation: Orientation.HORIZONTAL)
+      ..visible = false;
     super.addChildAt(_hbar, 0);
-    _vbar = new ScrollBar(orientation: Orientation.VERTICAL)..visible = false;
+    _vbar = new ScrollBar(orientation: Orientation.VERTICAL)
+      ..visible = false;
     super.addChildAt(_vbar, 0);
     _content = new Sprite();
     super.addChildAt(_content, 0);
@@ -25,7 +29,6 @@ class ScrollView extends Container {
     onMouseDown.listen((e) {
       if (stage != null) {
         _stopScrolling();
-        _showScrollBars();
         _lastPos.setTo(e.stageX, e.stageY);
         stage.onMouseMove.listen(_stageMouseMoveHandler);
         stage.onMouseUp.listen(_stageMouseUpHandler);
@@ -34,8 +37,7 @@ class ScrollView extends Container {
   }
 
   void _stopScrolling() {
-    _hbar.visible = false;
-    _vbar.visible = false;
+    _showScrollBars();
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, _stageMouseMoveHandler);
     stage.removeEventListener(MouseEvent.MOUSE_UP, _stageMouseUpHandler);
   }
@@ -58,8 +60,8 @@ class ScrollView extends Container {
 
   void scrollTo(num x, num y) {
     _content
-        ..x = Math.min(Math.max(_viewport.x, x), _bounds.left)
-        ..y = Math.min(Math.max(_viewport.y, y), _bounds.top);
+      ..x = Math.min(Math.max(_viewport.x, x), _bounds.left)
+      ..y = Math.min(Math.max(_viewport.y, y), _bounds.top);
     _hbar.value = _content.x / _viewport.x * _content.width;
     _vbar.value = _content.y / _viewport.y * _content.height;
   }
@@ -120,9 +122,9 @@ class ScrollView extends Container {
     super.repaint();
     if (_backgroundColor != null) {
       graphics
-          ..clear()
-          ..rect(_bounds.left, _bounds.top, _bounds.width, _bounds.height)
-          ..fillColor(_backgroundColor);
+        ..clear()
+        ..rect(_bounds.left, _bounds.top, _bounds.width, _bounds.height)
+        ..fillColor(_backgroundColor);
     }
   }
 
@@ -138,22 +140,39 @@ class ScrollView extends Container {
   void _adjustViewport() {
     _viewport.setTo(_bounds.right - _content.width, _bounds.bottom - _content.height);
     _hbar
-        ..width = _bounds.width
-        ..y = _bounds.bottom - _hbar.height
-        ..range = _bounds.width
-        ..maximum = _content.width;
+      ..width = _bounds.width
+      ..y = _bounds.bottom - _hbar.height
+      ..range = _bounds.width
+      ..maximum = _content.width;
     _vbar
-        ..height = _bounds.height
-        ..x = _bounds.right - _vbar.width
-        ..range = _bounds.height
-        ..maximum = _content.height;
+      ..height = _bounds.height
+      ..x = _bounds.right - _vbar.width
+      ..range = _bounds.height
+      ..maximum = _content.height;
+    _showScrollBars();
   }
 
   _showScrollBars() {
-    _hbar.visible = visibleHBar;
-    _vbar.visible = visibleVBar;
+    _hbar.visible = hbarVisible;
+    _vbar.visible = vbarVisible;
   }
 
-  bool get visibleHBar => _content.width > _bounds.width;
-  bool get visibleVBar => _content.height > _bounds.height;
+  int get overScrollModel => _overScrollModel;
+
+  void set overScrollModel(int val) {
+    _overScrollModel = val;
+    _showScrollBars();
+  }
+
+  bool get hbarVisible {
+    if(_overScrollModel == OVER_SCROLL_ALWAYS) return true;
+    if(_overScrollModel == OVER_SCROLL_IF_CONTENT_SCROLLS) return _content.width > _bounds.width;
+    return false;
+  }
+
+  bool get vbarVisible {
+    if(_overScrollModel == OVER_SCROLL_ALWAYS) return true;
+    if(_overScrollModel == OVER_SCROLL_IF_CONTENT_SCROLLS) return _content.height > _bounds.height;
+    return false;
+  }
 }
