@@ -226,6 +226,4 @@ class Button extends Skinnable {
   DisplayObject get currentState => _currentState;
   set currentState(DisplayObject state) => _currentState = state;
 
-  @override
-  Skin get defaultSkin => new ButtonSkin();
 }

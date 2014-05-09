@@ -49,9 +49,6 @@ class ScrollBar extends ProgressBar {
     _adjustSlider();
   }
 
-  @override
-  Skin get defaultSkin => new ScrollBarSkin();
-
   _adjustSlider() {
     if (background != null && slider != null) {
       if (orientation == Orientation.VERTICAL) {

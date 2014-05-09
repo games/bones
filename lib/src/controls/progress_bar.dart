@@ -35,7 +35,4 @@ class ProgressBar extends Skinnable {
   }
 
   get percent => (_value - _minimum) / (_maximum - _minimum);
-
-  @override
-  Skin get defaultSkin => new LinearProgressBarSkin();
 }

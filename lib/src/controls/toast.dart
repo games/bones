@@ -48,7 +48,5 @@ class Toast extends Skinnable {
     invalidate();
   }
 
-  @override
-  Skin get defaultSkin => new ToastSkin();
   String get message => _message;
 }

@@ -56,7 +56,4 @@ class ListView extends Skinnable {
       }
     }
   }
-
-  @override
-  Skin get defaultSkin => new ListViewSkin();
 }
