@@ -32,7 +32,7 @@ class Button extends Skinnable {
     _registerEvents();
     _textIconRelation = textIconRelation;
     _align = align;
-    _textRenderer = (txt) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT;
+    _textRenderer = _textRenderer == null ? (txt) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT : _textRenderer;
   }
 
   set text(String val) => _text = val;
@@ -70,20 +70,28 @@ class Button extends Skinnable {
     if (_currentState == null) _currentState = val;
   }
 
+  get upState => _upState;
+
   set downState(DisplayObject val) {
     _downState = val;
     _setSizeForState(val);
   }
+
+  get downState => _downState == null ? _upState : _downState;
 
   set overState(DisplayObject val) {
     _overState = val;
     _setSizeForState(val);
   }
 
+  get overState => _overState == null ? _upState : _overState;
+
   set hitTestState(DisplayObject val) {
     _hitTestState = val;
     _setSizeForState(val);
   }
+
+  get hitTestState => _hitTestState == null ? _upState : _hitTestState;
 
   set enabled(bool val) {
     useHandCursor = val;
@@ -119,13 +127,14 @@ class Button extends Skinnable {
   }
 
   DisplayObject hitTestInput(num localX, num localY) {
-    if (this._hitTestState != null) {
-      Matrix matrix = this._hitTestState.transformationMatrix;
+    if (hitTestState != null) {
+      var state = hitTestState;
+      Matrix matrix = state.transformationMatrix;
       num deltaX = localX - matrix.tx;
       num deltaY = localY - matrix.ty;
       num childX = (matrix.d * deltaX - matrix.c * deltaY) / matrix.det;
       num childY = (matrix.a * deltaY - matrix.b * deltaX) / matrix.det;
-      if (this._hitTestState.hitTestInput(childX, childY) != null) return this;
+      if (state.hitTestInput(childX, childY) != null) return this;
     }
     return null;
   }
@@ -204,9 +213,9 @@ class Button extends Skinnable {
   void _mouseEventHandler(MouseEvent event) {
     if (_enabled == false) return;
     if (event.type == MouseEvent.MOUSE_OUT || event.type == MouseEvent.CLICK) {
-      _currentState = _upState;
+      _currentState = upState;
     } else {
-      _currentState = event.buttonDown ? _downState : _overState;
+      _currentState = event.buttonDown ? downState : overState;
     }
     if (event.type == MouseEvent.CLICK) dispatchEvent(new Event(PRESSED));
   }
@@ -214,9 +223,9 @@ class Button extends Skinnable {
   void _touchEventHandler(TouchEvent event) {
     if (_enabled == false) return;
     if (event.type == TouchEvent.TOUCH_OUT || event.type == TouchEvent.TOUCH_END) {
-      _currentState = _upState;
+      _currentState = upState;
     } else {
-      _currentState = event.type == TouchEvent.TOUCH_BEGIN ? _downState : _overState;
+      _currentState = event.type == TouchEvent.TOUCH_BEGIN ? downState : overState;
     }
     if (event.type == TouchEvent.TOUCH_END) dispatchEvent(new Event(PRESSED));
   }
