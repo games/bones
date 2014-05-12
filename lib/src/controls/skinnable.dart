@@ -12,9 +12,12 @@ abstract class Skin {
 
 abstract class Skinnable extends Component {
   Skin _skin;
+  String theme;
+  String skinSelector;
 
   Skinnable(this._skin): super();
 
+  // TODO : should not apply skin until the component be added to stage/parent?
   @override
   initialize() {
     super.initialize();

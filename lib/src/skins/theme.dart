@@ -11,8 +11,7 @@ abstract class Theme {
 
   Map<String, Skin> _skins;
 
-  Theme(): _skins = {
-  };
+  Theme(): _skins = {};
 
   void register(String name, Skin skin) {
     if (_skins.containsKey(name)) throw new ArgumentError("Duplicate skin[$name] exists.");
@@ -33,10 +32,40 @@ class DefaultTheme extends Theme {
   }
 }
 
+abstract class TextureAtlasSkin extends Skin {
+  TextureAtlasTheme theme;
+  TextureAtlasSkin([this.theme]);
+  Scale9Bitmap scale9Skin(String name, Rectangle grid) => theme.scale9Skin(target, name, grid);
+}
+
+abstract class TextureAtlasTheme extends Theme {
+  ResourceManager resources;
+  String altas;
+  TextureAtlasTheme(this.resources, this.altas): super();
+
+  @override
+  void register(String name, Skin skin) {
+    super.register(name, skin);
+    if (skin is TextureAtlasSkin) skin.theme = this;
+  }
+
+  Scale9Bitmap scale9Skin(Skinnable target, String name, Rectangle grid) {
+    var atlas,
+        texture = name;
+    if (target.theme == null) {
+      atlas = resources.getTextureAtlas(altas);
+    } else {
+      atlas = resources.getTextureAtlas(target.theme);
+    }
+    if (target.skinSelector != null) texture = "${target.skinSelector}-$name";
+    return new Scale9Bitmap(atlas.getBitmapData(texture), grid);
+  }
+}
+
 //const EventStreamProvider<Event> onChangeEvent = new EventStreamProvider<Event>(Event.CHANGE);
 
 class ThemeManager {
-//  EventStream<Event> static get onChanged => onChangeEvent.forTarget(this);
+  //  EventStream<Event> static get onChanged => onChangeEvent.forTarget(this);
 
   static Theme _theme;
 
@@ -49,7 +78,6 @@ class ThemeManager {
     _theme = val;
     // TODO : dispatch changed event.
   }
-
 }
 
 createScale9Bitmap(DisplayObject drawable, Rectangle grid) {
