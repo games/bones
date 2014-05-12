@@ -1,4 +1,4 @@
-part of valorzhong_bones;
+part of bones;
 
 typedef DisplayObject TextRenderer(String txt);
 

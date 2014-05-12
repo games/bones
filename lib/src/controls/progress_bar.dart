@@ -1,4 +1,4 @@
-part of valorzhong_bones;
+part of bones;
 
 
 class ProgressBar extends Skinnable {

@@ -1,4 +1,4 @@
-library valorzhong_bones;
+library bones;
 
 
 import 'dart:math' as Math;

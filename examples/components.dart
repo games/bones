@@ -2,7 +2,7 @@ import 'dart:html' as html;
 import 'dart:async';
 import 'package:stagexl/stagexl.dart';
 import 'package:stats/stats.dart';
-import 'package:valorzhong_bones/valorzhong_bones.dart';
+import 'package:bones/bones.dart';
 
 
 

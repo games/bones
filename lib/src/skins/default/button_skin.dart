@@ -1,4 +1,4 @@
-part of valorzhong_bones;
+part of bones;
 
 
 class ButtonSkin extends Skin {
@@ -23,6 +23,9 @@ class ButtonSkin extends Skin {
               ..graphics.beginPath()
               ..graphics.rectRound(0, 0, btn.width, btn.height, 5, 5)
               ..graphics.fillColor(Color.White)), grid);
+    } else {
+      btn.width = upState.width;
+      btn.height = upState.height;
     }
 
     if (overState == null) {

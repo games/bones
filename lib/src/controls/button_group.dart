@@ -1,4 +1,4 @@
-part of valorzhong_bones;
+part of bones;
 
 
 const EventStreamProvider<ButtonGroupEvent> selectedEvent = const EventStreamProvider<ButtonGroupEvent>(ButtonGroupEvent.SELECTED);
