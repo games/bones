@@ -5,7 +5,6 @@ part of bones;
 
 abstract class Container extends Component {
   Layout _layout;
-  Rectangle _bounds;
   bool _autoResize;
 
   Container([this._layout])
@@ -14,11 +13,9 @@ abstract class Container extends Component {
 
   @override
   size(num width, num height) {
-    _prepareBounds();
-    _bounds.setTo(0, 0, width, height);
+    super.size(width, height);
     _autoResize = false;
     _fireResize();
-    invalidate();
   }
 
   Layout get defaultLayout => new EmptyLayout();
@@ -32,45 +29,19 @@ abstract class Container extends Component {
 
   @override
   void set width(num val) {
-    _prepareBounds();
-    _bounds.width = val;
+    super.width = val;
     _autoResize = false;
     _fireResize();
-    invalidate();
   }
 
   @override
   void set height(num val) {
-    _prepareBounds();
-    _bounds.height = val;
+    super.height = val;
     _autoResize = false;
     _fireResize();
-    invalidate();
-  }
-
-  @override
-  num get width {
-    _prepareBounds();
-    return _bounds.width;
-  }
-
-  @override
-  num get height {
-    _prepareBounds();
-    return _bounds.height;
-  }
-
-  Rectangle get bounds {
-    _prepareBounds();
-    return _bounds;
   }
 
   bool get autoResize => _autoResize;
-
-  _prepareBounds() {
-    if (_bounds == null) _bounds = new Rectangle(0, 0, 0, 0);
-    if (_bounds.isEmpty) _bounds.setTo(0, 0, super.width, super.height);
-  }
 
   order() {
     if (_layout == null) {

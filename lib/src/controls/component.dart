@@ -2,33 +2,52 @@ part of bones;
 
 typedef void ChildrenWalker(int, DisplayObject);
 
+
+/*
+ * component lifecycle:
+ * 
+ * -> instantiation from new()
+ * ->   onAdded call initialize
+ * 
+ * -> initialize(only first time)
+ *    -> should calculate width and height
+ * 
+ * -> render
+ *      if (dirty)  repaint()
+ *      
+ * -> invalidate
+ *      dirty = true 
+ *      
+ * -> destroy
+ * 
+ */
+
 class Component extends Sprite {
 
   num _width, _height;
   Debugger _debugger;
-  bool _dirty = true;
+  bool _dirty = false;
   bool get dirty => _dirty;
+  Once _initializer;
 
-  Component()
-      : _width = 0,
-        _height = 0 {
-    initialize();
+  Component() {
+    _initializer = new Once(initialize);
+    onAdded.listen((e) => _initializer.execute());
   }
 
-  initialize() {}
+  initialize() {
+  }
 
   invalidate() => _dirty = true;
+  validate() => _dirty = false;
 
   // TODO : this name should be changed ?
   repaint() {}
 
   measure() {
-    if (_width == 0) _width = super.width;
-    if (_height == 0) _height = super.height;
-    // TODO : Is this necessary ?
-    //    forEach((i, child) {
-    //      if (child is Component) child.measure();
-    //    });
+    _initializer.execute();
+    if (_width == null) _width = super.width;
+    if (_height == null) _height = super.height;
   }
 
   @override
@@ -37,7 +56,10 @@ class Component extends Sprite {
     invalidate();
   }
 
-  num get width => _width == 0 ? super.width : _width;
+  num get width {
+    if (_width == null) measure();
+    return _width;
+  }
 
   @override
   void set height(num val) {
@@ -45,7 +67,10 @@ class Component extends Sprite {
     invalidate();
   }
 
-  num get height => _height == 0 ? super.height : _height;
+  num get height {
+    if (_height == null) measure();
+    return _height;
+  }
 
   size(num width, num height) => this
       ..width = width
@@ -96,7 +121,6 @@ class Box extends Component {
     graphics
         ..rect(0, 0, w, h)
         ..fillColor(color);
-    measure();
     applyCache(0, 0, w, h);
   }
 }

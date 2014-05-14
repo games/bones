@@ -18,18 +18,16 @@ class Alert extends Skinnable {
   DisplayObject content;
 
   @override
-  repaint() {
-    super.repaint();
-
+  initialize() {
+    super.initialize();
     var doublePadding = padding * 2;
-
     removeChildren();
     addChild(background);
 
     if (bodyWidth != null && bodyHeight != null) {
       _width = bodyWidth + doublePadding;
       _height = bodyHeight + doublePadding;
-      content
+      if (content != null) content
           ..width = bodyWidth
           ..height = bodyHeight;
     } else if (content != null) {
@@ -63,7 +61,7 @@ class Alert extends Skinnable {
       _width = Math.max(_width, buttons.width + doublePadding);
       _height = _height + doublePadding + buttons.height;
       buttons.x = (_width - buttons.width) / 2;
-      buttons.y = _height - buttons.height - doublePadding;
+      buttons.y = _height - buttons.height - padding;
       addChild(buttons);
     }
 
@@ -120,11 +118,10 @@ class _PopupScreen extends Screen {
     if (alert.cover) {
       addChild(renderBackground());
     }
-    alert.repaint();
+    addChild(alert);
     alert.x = (stage.sourceWidth - alert.width) / 2;
     alert.y = (stage.sourceHeight - alert.height) / 2;
     alert.on(Event.CLOSE).listen((e) => Application.instance.remove(this));
-    addChild(alert);
   }
 
   @override

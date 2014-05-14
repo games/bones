@@ -54,8 +54,6 @@ class ListViewItemSkin extends TextureAtlasSkin {
               ..defaultTextFormat.color = Color.White
               ..text = msg
               ..autoSize = TextFieldAutoSize.CENTER;
-        }
-        ..width = 100
-        ..height = 50;
+        };
   }
 }
