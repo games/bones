@@ -2,25 +2,25 @@ part of bones;
 
 
 typedef DisplayObject ItemRenderer(num position, data);
+const EventStreamProvider<Event> itemSelectedEvent = const EventStreamProvider<Event>(ListView.EVENT_ITEM_SELECTED);
 
 class ListView extends Skinnable {
+  static const EVENT_ITEM_SELECTED = "EVENT_ITEM_SELECTED";
+
+  EventStream<Event> get onItemSelected => itemSelectedEvent.forTarget(this);
+
   DisplayObject header;
   DisplayObject footer;
   num itemWidth, itemHeight;
   ItemRenderer itemRenderer;
   ItemRenderer dividerRenderer;
   List _data;
+  int _selectedIndex = -1;
+  DisplayObject _selectedItem;
 
   ListView([List data, Skin skin])
       : _data = data,
         super(skin);
-
-  List get data => _data;
-
-  void set data(val) {
-    _data = val;
-    invalidate();
-  }
 
   @override
   repaint() {
@@ -39,6 +39,9 @@ class ListView extends Skinnable {
         var item = itemRenderer(i, _data[i])
             ..x = 0
             ..y = bottom;
+        if (item is InteractiveObject) {
+          _itemHandler(item, i);
+        }
         bottom += item.height;
         addChild(item);
         if (dividerRenderer != null) {
@@ -55,5 +58,37 @@ class ListView extends Skinnable {
             ..y = bottom);
       }
     }
+  }
+
+  _itemHandler(item, int i) {
+    var handler = (e) {
+      _selectedIndex = i;
+      _selectedItem = item;
+      dispatchEvent(new Event(EVENT_ITEM_SELECTED));
+    };
+    if (Multitouch.inputMode == MultitouchInputMode.TOUCH_POINT) {
+      item.onTouchEnd.listen(handler);
+    } else {
+      item.onMouseClick.listen(handler);
+    }
+  }
+
+  List get data => _data;
+
+  void set data(val) {
+    _data = val;
+    invalidate();
+  }
+
+  @override
+  String get skinName => "ListView";
+
+  int get selectedIndex => _selectedIndex;
+
+  DisplayObject get selectedItem => _selectedItem;
+
+  get selectedData {
+    if (_data != null && _selectedIndex >= 0 && _selectedIndex < _data.length) return _data[_selectedIndex];
+    return null;
   }
 }

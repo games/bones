@@ -4,8 +4,11 @@ part of bones;
 class ListViewSkin extends Skin {
   ItemRenderer renderer;
   ItemRenderer dividerRenderer;
+  int itemUpColor;
+  int itemOverColor;
+  int itemDownColor;
 
-  ListViewSkin({this.renderer, this.dividerRenderer}): super();
+  ListViewSkin({this.renderer, this.dividerRenderer, this.itemUpColor: Color.White, this.itemOverColor: Color.WhiteSmoke, this.itemDownColor: Color.WhiteSmoke}): super();
 
   @override
   apply() {
@@ -13,7 +16,7 @@ class ListViewSkin extends Skin {
     listView.itemWidth = listView.itemWidth == null ? 200 : listView.itemWidth;
     listView.itemHeight = listView.itemHeight == null ? 50 : listView.itemHeight;
     listView.itemRenderer = renderer != null ? renderer : (num position, item) {
-      var btn = new Button(align: HorizontalAlign.LEFT, padding: 10, skin: new ListViewItemSkin());
+      var btn = new Button(align: HorizontalAlign.LEFT, padding: 10, skin: new ListViewItemSkin(itemUpColor, itemOverColor, itemDownColor));
       btn.width = listView.itemWidth;
       btn.height = listView.itemHeight;
       if (item is Map) {
@@ -23,6 +26,9 @@ class ListViewSkin extends Skin {
         if (item.containsKey("label")) {
           btn.text = item["label"];
         }
+        if (item.containsKey("height")) {
+          btn.height = item["height"];
+        }
       } else {
         btn.text = item.toString();
       }
@@ -30,9 +36,9 @@ class ListViewSkin extends Skin {
     };
     listView.dividerRenderer = dividerRenderer != null ? dividerRenderer : (num position, item) {
       return new Shape()
-        ..graphics.rect(0, 0, listView.itemWidth, 1)
-        ..graphics.fillColor(Color.Gray)
-        ..applyCache(0, 0, listView.itemWidth, 1);
+          ..graphics.rect(0, 0, listView.itemWidth, 1)
+          ..graphics.fillColor(Color.Gray)
+          ..applyCache(0, 0, listView.itemWidth, 1);
     };
   }
 
@@ -42,6 +48,11 @@ class ListViewSkin extends Skin {
 }
 
 class ListViewItemSkin extends Skin {
+  int upColor;
+  int overColor;
+  int downColor;
+
+  ListViewItemSkin(this.upColor, this.overColor, this.downColor);
 
   @override
   apply() {
@@ -50,32 +61,25 @@ class ListViewItemSkin extends Skin {
     if (btn.height == 0) btn.height = 50;
 
     var grid = new Rectangle(10, 10, btn.width - 20, btn.height - 20);
-    var upState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)
-      ..draw(new Shape()
-      ..graphics.beginPath()
-      ..graphics.rect(0, 0, btn.width, btn.height)
-      ..graphics.fillColor(Color.White)), grid);
+    var upState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)..draw(new Shape()
+            ..graphics.beginPath()
+            ..graphics.rect(0, 0, btn.width, btn.height)
+            ..graphics.fillColor(upColor)), grid);
 
-    var overState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)
-      ..draw(new Shape()
-      ..graphics.beginPath()
-      ..graphics.rect(0, 0, btn.width, btn.height)
-      ..graphics.fillColor(Color.WhiteSmoke)), grid);
+    var overState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)..draw(new Shape()
+            ..graphics.beginPath()
+            ..graphics.rect(0, 0, btn.width, btn.height)
+            ..graphics.fillColor(overColor)), grid);
 
-    var downState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)
-      ..draw(new Shape()
-      ..graphics.beginPath()
-      ..graphics.rect(0, 0, btn.width, btn.height)
-      ..graphics.fillColor(Color.WhiteSmoke)), grid);
+    var downState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)..draw(new Shape()
+            ..graphics.beginPath()
+            ..graphics.rect(0, 0, btn.width, btn.height)
+            ..graphics.fillColor(downColor)), grid);
 
     btn
-      ..upState = upState
-      ..overState = overState
-      ..downState = downState
-      ..hitTestState = upState;
-  }
-
-  @override
-  repaint() {
+        ..upState = upState
+        ..overState = overState
+        ..downState = downState
+        ..hitTestState = upState;
   }
 }
