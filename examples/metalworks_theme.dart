@@ -58,10 +58,18 @@ class TestScreen extends Screen {
 
     ThemeManager.theme = new MetalworksTheme(resources, "theme");
 
+    var toast = new Toast()..move(300, 300);
+    toast.show("Welcome!!");
+    addChild(toast);
+
     var btn = new Button();
     btn
         ..text = "Button"
-        ..onPressed.listen((e) => PopupManager.message("I just wanted you to know that I have a very\n important message to share with you.", title: "Alert", buttonsDefs: Alert.BUTTONS_OK_CANCEL))
+        ..onPressed.listen((e) {
+          var alert = PopupManager.message("I just wanted you to know that I have a very\n important message to share with you.", title: "Title", buttonsDefs: Alert.BUTTONS_OK_CANCEL);
+          alert.on(Event.OKAY).listen((e2) => toast.show("You selected the OKAY!"));
+          alert.on(Event.CANCEL).listen((e2) => toast.show("You selected the CANCEL!"));
+        })
         ..move(10, 10);
     addChild(btn);
 
