@@ -29,7 +29,6 @@ class ButtonGroup extends Container {
       addChild(btn);
     });
     order();
-    validate();
   }
 
   @override

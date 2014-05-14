@@ -23,9 +23,6 @@ class ButtonSkin extends Skin {
               ..graphics.beginPath()
               ..graphics.rectRound(0, 0, btn.width, btn.height, 5, 5)
               ..graphics.fillColor(Color.White)), grid);
-    } else {
-      btn.width = upState.width;
-      btn.height = upState.height;
     }
 
     if (overState == null) {
@@ -48,8 +45,8 @@ class ButtonSkin extends Skin {
         ..upState = upState
         ..overState = overState
         ..downState = downState
-        ..hitTestState = upState
-        ..icon = icon;
+        ..hitTestState = upState;
+    if (icon != null) btn.icon = icon;
   }
 
   @override
