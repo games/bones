@@ -27,6 +27,8 @@ class ListView extends Skinnable {
     super.repaint();
     removeChildren();
     if (_data != null && itemRenderer != null) {
+      _width = 0;
+      _height = 0;
       var num = _data.length,
           bottom = 0;
       if (header != null) {
@@ -44,6 +46,7 @@ class ListView extends Skinnable {
         }
         bottom += item.height;
         addChild(item);
+        _width = Math.max(item.width, _width);
         if (dividerRenderer != null) {
           var divider = dividerRenderer(i, _data[i])
               ..x = 0
@@ -56,7 +59,11 @@ class ListView extends Skinnable {
         addChild(footer
             ..x = 0
             ..y = bottom);
+        _height = bottom + footer.height;
+      } else {
+        _height = bottom;
       }
+      _fireResize();
     }
   }
 

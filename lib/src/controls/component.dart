@@ -53,6 +53,7 @@ class Component extends Sprite {
   @override
   void set width(num val) {
     _width = val;
+    _fireResize();
     invalidate();
   }
 
@@ -64,6 +65,7 @@ class Component extends Sprite {
   @override
   void set height(num val) {
     _height = val;
+    _fireResize();
     invalidate();
   }
 
@@ -72,9 +74,12 @@ class Component extends Sprite {
     return _height;
   }
 
-  size(num width, num height) => this
-      ..width = width
-      ..height = height;
+  size(num width, num height) {
+    this
+        ..width = width
+        ..height = height;
+    _fireResize();
+  }
 
   zoom(num val) => this
       ..scaleX = val
@@ -83,7 +88,7 @@ class Component extends Sprite {
   move(num x, num y) => this
       ..x = x
       ..y = y;
-  
+
   toggle() => visible = !visible;
 
   @override
@@ -109,6 +114,8 @@ class Component extends Sprite {
       walker(i, getChildAt(i));
     }
   }
+
+  _fireResize() => dispatchEvent(new Event(Event.RESIZE));
 
   Debugger get debugger {
     if (_debugger == null) {

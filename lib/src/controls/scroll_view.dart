@@ -68,8 +68,10 @@ class ScrollView extends Container {
     _vbar.value = _content.y / _viewport.y * _content.height;
   }
 
+  // TODO: Only one child can be add. so need to fix it.
   @override
   void addChild(DisplayObject child) {
+//    child.on(Event.RESIZE).listen((e) => _adjustViewport());
     _content.addChild(child);
     _adjustViewport();
   }

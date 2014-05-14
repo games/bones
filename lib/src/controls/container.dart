@@ -22,7 +22,6 @@ abstract class Container extends Component {
   size(num width, num height) {
     super.size(width, height);
     _autoResize = false;
-    _fireResize();
   }
 
   Layout get defaultLayout => new EmptyLayout();
@@ -38,14 +37,12 @@ abstract class Container extends Component {
   void set width(num val) {
     super.width = val;
     _autoResize = false;
-    _fireResize();
   }
 
   @override
   void set height(num val) {
     super.height = val;
     _autoResize = false;
-    _fireResize();
   }
 
   bool get autoResize => _autoResize;
@@ -75,8 +72,6 @@ abstract class Container extends Component {
     }
     super.render(renderState);
   }
-
-  _fireResize() => dispatchEvent(new Event(Event.RESIZE));
 }
 
 

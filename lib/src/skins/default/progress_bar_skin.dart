@@ -29,7 +29,7 @@ class LinearProgressBarSkin extends Skin {
   @override
   repaint() {
     var bar = target as ProgressBar;
-    background.width = bar.width;
+    background.width = bar.width.toInt();
     progress.width = (bar.width * bar.percent).toInt();
   }
 }
