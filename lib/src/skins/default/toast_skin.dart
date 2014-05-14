@@ -11,11 +11,11 @@ class ToastSkin extends Skin {
     if (toast.width == 0) toast.width = 200;
     if (toast.height == 0) toast.height = 50;
 
-    toast.background = createScale9Bitmap(new Shape()
+    toast.background = DisplayObjectHelper.toScale9Bitmap(new Shape()
       ..graphics.rectRound(0, 0, toast.width, toast.height, ellipse, ellipse)
       ..graphics.fillColor(Color.Black), new Rectangle(5, 5, 10, 10));
 
-    toast.background = createScale9Bitmap(new Shape()
+    toast.background = DisplayObjectHelper.toScale9Bitmap(new Shape()
       ..graphics.beginPath()
       ..graphics.rectRound(0, 0, 30, 30, ellipse, ellipse)
       ..graphics.fillColor(Color.Black), new Rectangle(ellipse, ellipse, 5, 5));

@@ -11,7 +11,7 @@ class LinearProgressBarSkin extends Skin {
     if (bar.width == 0) bar.width = 200;
     if (bar.height == 0) bar.height = 2;
 
-    background = createScale9Bitmap(new Shape()
+    background = DisplayObjectHelper.toScale9Bitmap(new Shape()
         ..graphics.beginPath()
         ..graphics.rect(0, 0, 2, 2)
         ..graphics.fillColor(0x33000000), new Rectangle(1, 1, 1, 1))
@@ -19,7 +19,7 @@ class LinearProgressBarSkin extends Skin {
         ..height = bar.height;
     bar.addChild(background);
 
-    progress = createScale9Bitmap(new Shape()
+    progress = DisplayObjectHelper.toScale9Bitmap(new Shape()
         ..graphics.beginPath()
         ..graphics.rect(0, 0, 2, 2)
         ..graphics.fillColor(0xffffcc00), new Rectangle(1, 1, 1, 1));

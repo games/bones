@@ -9,6 +9,7 @@ import 'package:valorzhong_injector/valorzhong_injector.dart';
 part 'src/application.dart';
 part 'src/screen.dart';
 part 'src/utils/color_helper.dart';
+part 'src/utils/displayobject_helper.dart';
 
 part 'src/controls/component.dart';
 part 'src/controls/container.dart';

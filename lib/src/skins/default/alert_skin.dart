@@ -22,7 +22,7 @@ class AlertSkin extends Skin {
           ..autoSize = TextFieldAutoSize.CENTER
           ..text = alert.message;
     }
-    alert.background = createScale9Bitmap(new Shape()
+    alert.background = DisplayObjectHelper.toScale9Bitmap(new Shape()
         ..graphics.rectRound(0, 0, 20, 20, 5, 5)
         ..graphics.fillColor(Color.White), new Rectangle(5, 5, 5, 5));
   }

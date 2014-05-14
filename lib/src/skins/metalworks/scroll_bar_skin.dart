@@ -21,7 +21,7 @@ class ScrollBarSkin extends TextureAtlasSkin {
       bar.slider = scale9Skin("horizontal-scroll-bar-thumb-skin", MetalworksTheme.SCROLL_BAR_HORIZONTAL);
     }
 
-    bar.background = createScale9Bitmap(new Shape()
+    bar.background = DisplayObjectHelper.toScale9Bitmap(new Shape()
         ..graphics.beginPath()
         ..graphics.rectRound(0, 0, 10, 10, 5, 5)
         ..graphics.fillColor(0x33000000), new Rectangle(2, 2, 5, 5));

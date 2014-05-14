@@ -16,12 +16,12 @@ class ScrollBarSkin extends Skin {
       bar.height = bar.height == 0 ? WIDTH : bar.height;
     }
 
-    bar.background = createScale9Bitmap(new Shape()
+    bar.background = DisplayObjectHelper.toScale9Bitmap(new Shape()
       ..graphics.beginPath()
       ..graphics.rect(0, 0, 10, 10)
       ..graphics.fillColor(0x33000000), new Rectangle(2, 2, 5, 5));
 
-    bar.slider = createScale9Bitmap(new Shape()
+    bar.slider = DisplayObjectHelper.toScale9Bitmap(new Shape()
       ..graphics.beginPath()
       ..graphics.rect(0, 0, 10, 10)
       ..graphics.fillColor(Color.WhiteSmoke), new Rectangle(2, 2, 5, 5));
