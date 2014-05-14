@@ -83,6 +83,8 @@ class Component extends Sprite {
   move(num x, num y) => this
       ..x = x
       ..y = y;
+  
+  toggle() => visible = !visible;
 
   @override
   render(RenderState renderState) {
