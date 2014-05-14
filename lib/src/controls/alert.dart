@@ -94,6 +94,9 @@ class Alert extends Skinnable {
   static Alert okayCancel(String message, {String title: null, bool isModal: true, bool cover: true, Skin skin: null, bodyWidth: null, bodyHeight: null}) {
     return new Alert(message, title: title, isModal: isModal, cover: cover, buttonDefs: BUTTONS_OK_CANCEL, skin: skin, bodyWidth: bodyWidth, bodyHeight: bodyHeight);
   }
+
+  @override
+  String get skinName => "Alert";
 }
 
 class PopupManager {

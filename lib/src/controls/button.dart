@@ -233,4 +233,6 @@ class Button extends Skinnable {
   DisplayObject get currentState => _currentState;
   set currentState(DisplayObject state) => _currentState = state;
 
+  @override
+  String get skinName => "Button";
 }
