@@ -22,12 +22,12 @@ class ScrollView extends Container {
     super.addChildAt(_content, 0);
     _viewport = new Point(0, 0);
     _lastPos = new Point(0, 0);
+    on(Event.RESIZE).listen(_resizeHandler);
   }
 
   @override
   initialize() {
     super.initialize();
-    on(Event.RESIZE).listen(_resizeHandler);
     onMouseDown.listen((e) {
       if (stage != null) {
         _stopScrolling();

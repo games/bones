@@ -73,7 +73,6 @@ class SingleLayout implements Layout {
       xp = (child) => child.y = container.height - child.height;
     }
     container.forEach((int i, DisplayObject child) {
-//      if (child is Component) child.measure;
       xp(child);
       yp(child);
     });
@@ -96,7 +95,6 @@ class LinearLayout implements Layout {
     if (horizontalAlign != HorizontalAlign.LEFT || verticalAlign != HorizontalAlign.LEFT) {
       container.forEach((int i, DisplayObject child) {
         if (!child.visible) return;
-//        if (child is Component) child.measure();
         if (orientation == Orientation.HORIZONTAL) {
           w += child.width + gap;
           h = h > child.height ? h : child.height + gap;
@@ -117,6 +115,7 @@ class LinearLayout implements Layout {
     var dp = padding * 2;
     if (container is Container && container.autoResize) {
       container.size(w + dp, h + dp);
+      container.autoResize = true;
     }
     var cw = container.width,
         ch = container.height;

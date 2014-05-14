@@ -7,7 +7,7 @@ typedef void ChildrenWalker(int, DisplayObject);
  * component lifecycle:
  * 
  * -> instantiation from new()
- * ->   onAdded call initialize
+ * ->   onAddedToStage call initialize
  * 
  * -> initialize(only first time)
  *    -> should calculate width and height
@@ -32,7 +32,7 @@ class Component extends Sprite {
 
   Component() {
     _initializer = new Once(initialize);
-    onAdded.listen((e) => _initializer.execute());
+    onAddedToStage.listen((e) => _initializer.execute());
   }
 
   initialize() {

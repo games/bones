@@ -12,6 +12,13 @@ abstract class Container extends Component {
         super();
 
   @override
+  initialize() {
+    super.initialize();
+    order();
+    validate();
+  }
+
+  @override
   size(num width, num height) {
     super.size(width, height);
     _autoResize = false;
@@ -42,6 +49,10 @@ abstract class Container extends Component {
   }
 
   bool get autoResize => _autoResize;
+
+  void set autoResize(bool val) {
+    _autoResize = val;
+  }
 
   order() {
     if (_layout == null) {
