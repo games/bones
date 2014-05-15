@@ -15,17 +15,26 @@ class ScrollBar extends ProgressBar {
         super(skin);
 
   @override
-  repaint() {
-    super.repaint();
-    removeChildren();
+  initialize() {
+    super.initialize();
     if (background != null) {
-      background.width = width;
-      background.height = height;
       addChild(background);
     }
     if (slider != null) {
       addChild(slider);
-      if(_range > 0) {
+    }
+    _adjustSlider();
+  }
+
+  @override
+  repaint() {
+    super.repaint();
+    if (background != null) {
+      background.width = width;
+      background.height = height;
+    }
+    if (slider != null) {
+      if (_range > 0) {
         var sp = _range / (maximum - minimum);
         if (orientation == Orientation.VERTICAL) {
           slider.width = width.toInt();
@@ -67,4 +76,7 @@ class ScrollBar extends ProgressBar {
       }
     }
   }
+
+  @override
+  String get skinName => "ScrollBar";
 }
