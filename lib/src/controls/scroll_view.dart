@@ -130,13 +130,13 @@ class ScrollView extends Component {
 
   bool get hbarVisible {
     if (_overScrollModel == OVER_SCROLL_ALWAYS) return true;
-    if (_overScrollModel == OVER_SCROLL_IF_CONTENT_SCROLLS) return _content.width > width;
+    if (_overScrollModel == OVER_SCROLL_IF_CONTENT_SCROLLS) return _content != null ? _content.width > width : false;
     return false;
   }
 
   bool get vbarVisible {
     if (_overScrollModel == OVER_SCROLL_ALWAYS) return true;
-    if (_overScrollModel == OVER_SCROLL_IF_CONTENT_SCROLLS) return _content.height > height;
+    if (_overScrollModel == OVER_SCROLL_IF_CONTENT_SCROLLS) return _content != null ? _content.height > height : false;
     return false;
   }
 }
