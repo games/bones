@@ -30,8 +30,8 @@ class ScrollBar extends ProgressBar {
   repaint() {
     super.repaint();
     if (background != null) {
-      background.width = width;
-      background.height = height;
+      background.width = width.toInt();
+      background.height = height.toInt();
     }
     if (slider != null) {
       if (_range > 0) {

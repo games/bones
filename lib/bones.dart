@@ -24,15 +24,19 @@ part 'src/controls/scroll_bar.dart';
 part 'src/controls/list_view.dart';
 part 'src/controls/drawer.dart';
 part 'src/controls/toast.dart';
+part 'src/controls/label.dart';
+part 'src/controls/navigation_bar.dart';
 
 part 'src/controls/skinnable.dart';
 part 'src/skins/theme.dart';
+part 'src/skins/default/label_skin.dart';
 part 'src/skins/default/alert_skin.dart';
 part 'src/skins/default/button_skin.dart';
 part 'src/skins/default/list_view_skin.dart';
 part 'src/skins/default/progress_bar_skin.dart';
 part 'src/skins/default/scroll_bar_skin.dart';
 part 'src/skins/default/toast_skin.dart';
+part 'src/skins/default/navigation_bar_skin.dart';
 
 
 

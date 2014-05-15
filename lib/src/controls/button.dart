@@ -1,6 +1,7 @@
 part of bones;
 
-typedef DisplayObject TextRenderer(String txt);
+
+
 
 const EventStreamProvider<Event> pressedEvent = const EventStreamProvider<Event>(Button.PRESSED);
 
@@ -32,7 +33,7 @@ class Button extends Skinnable {
     _registerEvents();
     _textIconRelation = textIconRelation;
     _align = align;
-    _textRenderer = _textRenderer == null ? (txt) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT : _textRenderer;
+    _textRenderer = _textRenderer == null ? (txt, [TextFormat format]) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT : _textRenderer;
   }
 
   set text(String val) => _text = val;

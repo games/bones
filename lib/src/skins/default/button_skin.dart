@@ -40,13 +40,15 @@ class ButtonSkin extends Skin {
     }
 
     if (hitTestState == null) hitTestState = upState;
+    if (btn.width == 0) btn.width = upState.width;
+    if (btn.height == 0) btn.height = upState.height;
+    if (icon != null) btn.icon = icon;
 
     btn
         ..upState = upState
         ..overState = overState
         ..downState = downState
         ..hitTestState = upState;
-    if (icon != null) btn.icon = icon;
   }
 
   @override

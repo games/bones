@@ -2,12 +2,14 @@ part of bones;
 
 
 abstract class Theme {
+  static const LABEL_SKIN = "LabelSkin";
   static const ALERT_SKIN = "AlertSkin";
   static const BUTTON_SKIN = "ButtonSkin";
   static const LIST_VIEW_SKIN = "ListViewSkin";
   static const PROGRESS_BAR_SKIN = "ProgressBarSkin";
   static const SCROLL_BAR_SKIN = "ScrollBarSkin";
   static const TOAST_SKIN = "ToastSkin";
+  static const NAVIGATION_BAR_SKIN = "NavigationBarSkin";
 
   Map<String, Skin> _skins;
 
@@ -23,12 +25,14 @@ abstract class Theme {
 
 class DefaultTheme extends Theme {
   DefaultTheme(): super() {
+    register(Theme.LABEL_SKIN, new LabelSkin());
     register(Theme.ALERT_SKIN, new AlertSkin());
     register(Theme.BUTTON_SKIN, new ButtonSkin());
     register(Theme.LIST_VIEW_SKIN, new ListViewSkin());
     register(Theme.PROGRESS_BAR_SKIN, new LinearProgressBarSkin());
     register(Theme.SCROLL_BAR_SKIN, new ScrollBarSkin());
     register(Theme.TOAST_SKIN, new ToastSkin());
+    register(Theme.NAVIGATION_BAR_SKIN, new NavigationBarSkin());
   }
 }
 
@@ -79,5 +83,3 @@ class ThemeManager {
     // TODO : dispatch changed event.
   }
 }
-
-

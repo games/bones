@@ -46,7 +46,7 @@ class ListViewItemSkin extends TextureAtlasSkin {
     (target as Button)
         ..upState = scale9Skin("list-item-up-skin", MetalworksTheme.ITEM_RENDERER_SCALE9_GRID)
         ..downState = scale9Skin("list-item-selected-skin", MetalworksTheme.ITEM_RENDERER_SCALE9_GRID)
-        ..textRenderer = (String msg) {
+        ..textRenderer = (String msg, [TextFormat format]) {
           return new TextField()
               ..defaultTextFormat.size = 16
               ..defaultTextFormat.bold = true

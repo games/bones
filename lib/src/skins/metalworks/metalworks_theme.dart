@@ -22,6 +22,7 @@ class MetalworksTheme extends TextureAtlasTheme {
   static final SCROLL_BAR_VERTICAL = new Rectangle(5, 10, 1, 5);
 
   MetalworksTheme(ResourceManager resources, String altas): super(resources, altas) {
+    register(Theme.LABEL_SKIN, new LabelSkin());
     register(Theme.ALERT_SKIN, new AlertSkin());
     register(Theme.BUTTON_SKIN, new ButtonSkin());
     register(Theme.LIST_VIEW_SKIN, new ListViewSkin());

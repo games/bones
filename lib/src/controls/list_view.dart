@@ -12,6 +12,7 @@ class ListView extends Skinnable {
   DisplayObject header;
   DisplayObject footer;
   num itemWidth, itemHeight;
+  bool divider;
   ItemRenderer itemRenderer;
   ItemRenderer dividerRenderer;
   List _data;
@@ -20,6 +21,7 @@ class ListView extends Skinnable {
 
   ListView([List data, Skin skin])
       : _data = data,
+        divider = true,
         super(skin);
 
   @override

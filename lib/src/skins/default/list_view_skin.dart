@@ -7,8 +7,9 @@ class ListViewSkin extends Skin {
   int itemUpColor;
   int itemOverColor;
   int itemDownColor;
+  int dividerColor;
 
-  ListViewSkin({this.renderer, this.dividerRenderer, this.itemUpColor: Color.White, this.itemOverColor: Color.WhiteSmoke, this.itemDownColor: Color.WhiteSmoke}): super();
+  ListViewSkin({this.renderer, this.dividerRenderer, this.itemUpColor: Color.White, this.itemOverColor: Color.WhiteSmoke, this.itemDownColor: Color.WhiteSmoke, this.dividerColor: Color.Gray}): super();
 
   @override
   apply() {
@@ -34,12 +35,14 @@ class ListViewSkin extends Skin {
       }
       return btn;
     };
-    listView.dividerRenderer = dividerRenderer != null ? dividerRenderer : (num position, item) {
-      return new Shape()
-          ..graphics.rect(0, 0, listView.itemWidth, 1)
-          ..graphics.fillColor(Color.Gray)
-          ..applyCache(0, 0, listView.itemWidth, 1);
-    };
+    if (listView.divider) {
+      listView.dividerRenderer = dividerRenderer != null ? dividerRenderer : (num position, item) {
+        return new Shape()
+            ..graphics.rect(0, 0, listView.itemWidth, 1)
+            ..graphics.fillColor(dividerColor)
+            ..applyCache(0, 0, listView.itemWidth, 1);
+      };
+    }
   }
 
   @override
