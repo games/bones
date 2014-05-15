@@ -30,7 +30,7 @@ class TestScreen extends Screen {
 
     var stats = new Stats();
     html.document.body.children.add(stats.container);
-    stage.onEnterFrame.listen((e)=> stats.begin());
+    stage.onEnterFrame.listen((e) => stats.begin());
     stage.onExitFrame.listen((e) => stats.end());
 
     var toast = new Toast()..move(300, 300);
@@ -47,18 +47,18 @@ class TestScreen extends Screen {
         ..move(1, 1));
 
     var progressBar = new ProgressBar()
-      ..periodic = true
-      ..value = 40
-      ..move(160, 10);
+        ..periodic = true
+        ..value = 40
+        ..move(160, 10);
     addChild(progressBar);
 
     var countdown = new ProgressBar(new CountdownSkin())
-      ..periodic = true
-      ..value = 45
-      ..move(320, 10);
+        ..periodic = true
+        ..value = 45
+        ..move(320, 10);
     addChild(countdown);
 
-    var t = new Timer.periodic(new Duration(milliseconds: 33), (t){
+    var t = new Timer.periodic(new Duration(milliseconds: 33), (t) {
       progressBar.step();
       countdown.step();
     });
@@ -80,9 +80,9 @@ class TestScreen extends Screen {
     addChild(new ScrollView()
         ..size(150, 100)
         ..move(30, 100)
-        ..addChild(DisplayObjectHelper.toScale9Bitmap(new Shape()
-      ..graphics.rect(0, 0, 300, 300)
-      ..graphics.fillGradient(gradient), new Rectangle(2, 2, 10, 10))));
+        ..content = DisplayObjectHelper.toScale9Bitmap(new Shape()
+            ..graphics.rect(0, 0, 300, 300)
+            ..graphics.fillGradient(gradient), new Rectangle(2, 2, 10, 10)));
 
     var listView = new ListView()
         ..data = [{

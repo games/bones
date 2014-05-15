@@ -114,9 +114,10 @@ class TestScreen extends Screen {
     addChild(new ScrollView()
         ..size(150, 100)
         ..move(30, 100)
-        ..addChild(DisplayObjectHelper.toScale9Bitmap(new Shape()
+        ..backgroundColor = Color.Red
+        ..content = DisplayObjectHelper.toScale9Bitmap(new Shape()
             ..graphics.rect(0, 0, 300, 300)
-            ..graphics.fillGradient(gradient), new Rectangle(2, 2, 10, 10))));
+            ..graphics.fillGradient(gradient), new Rectangle(2, 2, 10, 10)));
   }
 
   @override

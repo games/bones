@@ -1,13 +1,13 @@
 part of bones;
 
 
-class ScrollView extends Container {
+class ScrollView extends Component {
   static const OVER_SCROLL_ALWAYS = 0;
   static const OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
   static const OVER_SCROLL_NEVER = 2;
 
   int _overScrollModel = OVER_SCROLL_ALWAYS;
-  Sprite _content;
+  DisplayObject _content;
   Point _lastPos;
   int _backgroundColor = Color.White;
   ScrollBar _hbar, _vbar;
@@ -15,11 +15,9 @@ class ScrollView extends Container {
 
   ScrollView(): super() {
     _hbar = new ScrollBar(orientation: Orientation.HORIZONTAL)..visible = false;
-    super.addChildAt(_hbar, 0);
+    addChild(_hbar);
     _vbar = new ScrollBar(orientation: Orientation.VERTICAL)..visible = false;
-    super.addChildAt(_vbar, 0);
-    _content = new Sprite();
-    super.addChildAt(_content, 0);
+    addChild(_vbar);
     _viewport = new Point(0, 0);
     _lastPos = new Point(0, 0);
     on(Event.RESIZE).listen(_resizeHandler);
@@ -56,8 +54,10 @@ class ScrollView extends Container {
 
   void _resizeHandler(Event event) {
     mask = new Mask.rectangle(0, 0, width, height);
-    _adjustViewport();
-    scrollTo(_content.x, _content.y);
+    if (_content != null) {
+      _adjustViewport();
+      scrollTo(_content.x, _content.y);
+    }
   }
 
   void scrollTo(num x, num y) {
@@ -67,59 +67,6 @@ class ScrollView extends Container {
     _hbar.value = _content.x / _viewport.x * _content.width;
     _vbar.value = _content.y / _viewport.y * _content.height;
   }
-
-  // TODO: Only one child can be add. so need to fix it.
-  @override
-  void addChild(DisplayObject child) {
-//    child.on(Event.RESIZE).listen((e) => _adjustViewport());
-    _content.addChild(child);
-    _adjustViewport();
-  }
-
-  @override
-  void addChildAt(DisplayObject child, int index) {
-    _content.addChildAt(child, index);
-    _adjustViewport();
-  }
-
-  void removeChild(DisplayObject child) {
-    _content.removeChild(child);
-    _adjustViewport();
-  }
-
-  void removeChildAt(int index) {
-    _content.removeChildAt(index);
-    _adjustViewport();
-  }
-
-  void removeChildren([int beginIndex = 0, int endIndex = 0x7fffffff]) {
-    _content.removeChildren(beginIndex, endIndex);
-    _adjustViewport();
-  }
-
-  dynamic getChildAt(int index) => _content.getChildAt(index);
-
-  dynamic getChildByName(String name) => _content.getChildByName(name);
-
-  int getChildIndex(DisplayObject child) => _content.getChildIndex(child);
-
-  void setChildIndex(DisplayObject child, int index) {
-    _content.setChildIndex(child, index);
-  }
-
-  void swapChildren(DisplayObject child1, DisplayObject child2) {
-    _content.swapChildren(child1, child2);
-  }
-
-  void swapChildrenAt(int index1, int index2) {
-    _content.swapChildrenAt(index1, index2);
-  }
-
-  void sortChildren(Function compareFunction) {
-    _content.sortChildren(compareFunction);
-  }
-
-  bool contains(DisplayObject child) => _content.contains(child);
 
   @override
   repaint() {
@@ -132,7 +79,18 @@ class ScrollView extends Container {
     }
   }
 
-  int get numChildren => _content.numChildren;
+  DisplayObject get content => _content;
+
+  void set content(DisplayObject val) {
+    if (_content != null) {
+      _content.on(Event.RESIZE).cancelSubscriptions();
+      removeChild(_content);
+    }
+    _content = val;
+    _content.on(Event.RESIZE).listen((e) => _adjustViewport());
+    addChildAt(_content, 0);
+    _adjustViewport();
+  }
 
   int get backgroundColor => _backgroundColor;
 
@@ -142,17 +100,19 @@ class ScrollView extends Container {
   }
 
   void _adjustViewport() {
-    _viewport.setTo(width - _content.width, height - _content.height);
+    var cw = _content.width;
+    var ch = _content.height;
+    _viewport.setTo(width - cw, height - ch);
     _hbar
         ..width = width
         ..y = height - _hbar.height
         ..range = width
-        ..maximum = _content.width;
+        ..maximum = cw;
     _vbar
         ..height = height
         ..x = width - _vbar.width
         ..range = height
-        ..maximum = _content.height;
+        ..maximum = ch;
     _showScrollBars();
   }
 
