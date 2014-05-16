@@ -36,7 +36,10 @@ class Button extends Skinnable {
     _textRenderer = _textRenderer == null ? (txt, [TextFormat format]) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT : _textRenderer;
   }
 
-  set text(String val) => _text = val;
+  set text(String val) {
+    _text = val;
+    _label = null;
+  }
   String get text => _text;
 
   set textRenderer(TextRenderer val) {
