@@ -26,29 +26,48 @@ class ScrollView extends Component {
   @override
   initialize() {
     super.initialize();
-    onMouseDown.listen((e) {
-      if (stage != null) {
-        _stopScrolling();
-        _lastPos.setTo(e.stageX, e.stageY);
-        stage.onMouseMove.listen(_stageMouseMoveHandler);
-        stage.onMouseUp.listen(_stageMouseUpHandler);
+    if (Multitouch.inputMode == MultitouchInputMode.TOUCH_POINT) {
+      onTouchBegin.listen(_startDrag);
+    } else {
+      onMouseDown.listen(_startDrag);
+    }
+  }
+
+  void _startDrag(e) {
+    if (stage != null) {
+      _stopScrolling();
+      _lastPos.setTo(e.stageX, e.stageY);
+
+      if (Multitouch.inputMode == MultitouchInputMode.TOUCH_POINT) {
+        stage.onTouchMove.listen(_stageMoveHandler);
+        stage.onTouchEnd.listen(_stageUpHandler);
+      } else {
+        stage.onMouseMove.listen(_stageMoveHandler);
+        stage.onMouseUp.listen(_stageUpHandler);
       }
-    });
+
+    }
   }
 
   void _stopScrolling() {
     _showScrollBars();
-    stage.removeEventListener(MouseEvent.MOUSE_MOVE, _stageMouseMoveHandler);
-    stage.removeEventListener(MouseEvent.MOUSE_UP, _stageMouseUpHandler);
+
+    if (Multitouch.inputMode == MultitouchInputMode.TOUCH_POINT) {
+      stage.removeEventListener(TouchEvent.TOUCH_MOVE, _stageMoveHandler);
+      stage.removeEventListener(TouchEvent.TOUCH_END, _stageUpHandler);
+    } else {
+      stage.removeEventListener(MouseEvent.MOUSE_MOVE, _stageMoveHandler);
+      stage.removeEventListener(MouseEvent.MOUSE_UP, _stageUpHandler);
+    }
   }
 
-  void _stageMouseMoveHandler(MouseEvent e) {
+  void _stageMoveHandler(e) {
     var delta = new Point(e.stageX, e.stageY) - _lastPos;
     scrollTo(_content.x + delta.x, _content.y + delta.y);
     _lastPos.setTo(e.stageX, e.stageY);
   }
 
-  void _stageMouseUpHandler(e) {
+  void _stageUpHandler(e) {
     _stopScrolling();
   }
 
