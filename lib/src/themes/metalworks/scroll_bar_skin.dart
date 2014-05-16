@@ -14,11 +14,11 @@ class ScrollBarSkin extends TextureAtlasSkin {
     if (bar.orientation == Orientation.VERTICAL) {
       bar.width = bar.width == 0 ? WIDTH : bar.width;
       bar.height = bar.height == 0 ? HEIGHT : bar.height;
-      bar.slider = scale9Skin("vertical-scroll-bar-thumb-skin", MetalworksTheme.SCROLL_BAR_HORIZONTAL);
+      bar.slider = makeSkin("vertical-scroll-bar-thumb-skin", MetalworksTheme.SCROLL_BAR_HORIZONTAL);
     } else {
       bar.width = bar.width == 0 ? HEIGHT : bar.width;
       bar.height = bar.height == 0 ? WIDTH : bar.height;
-      bar.slider = scale9Skin("horizontal-scroll-bar-thumb-skin", MetalworksTheme.SCROLL_BAR_HORIZONTAL);
+      bar.slider = makeSkin("horizontal-scroll-bar-thumb-skin", MetalworksTheme.SCROLL_BAR_HORIZONTAL);
     }
 
     bar.background = DisplayObjectHelper.toScale9Bitmap(new Shape()

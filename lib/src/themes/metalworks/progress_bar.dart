@@ -13,12 +13,12 @@ class ProgressBarSkin extends TextureAtlasSkin {
     if (bar.width == 0) bar.width = 240;
     if (bar.height == 0) bar.height = 22;
 
-    background = scale9Skin("background-skin", MetalworksTheme.DEFAULT_SCALE9_GRID);
+    background = makeSkin("background-skin", MetalworksTheme.DEFAULT_SCALE9_GRID);
     background.width = bar.width;
     background.height = bar.height;
     bar.addChild(background);
 
-    progress = scale9Skin("button-up-skin", MetalworksTheme.BUTTON_SCALE9_GRID);
+    progress = makeSkin("button-up-skin", MetalworksTheme.BUTTON_SCALE9_GRID);
     progress.width = bar.width;
     progress.height = bar.height;
     bar.addChild(progress);

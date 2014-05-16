@@ -15,40 +15,42 @@ class ButtonSkin extends Skin {
   apply() {
     var btn = target as Button;
 
-    var grid = new Rectangle(10, 10, btn.width - 20, btn.height - 20);
+    var up, over, down, hit, ellipse = 8;
     if (upState == null) {
+      up = DisplayObjectHelper.createRound(0xFFFFFFFF, ellipse, border: true, borderColor: Color.Gray);
       btn.width = 150;
       btn.height = 40;
-      upState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)..draw(new Shape()
-              ..graphics.beginPath()
-              ..graphics.rectRound(0, 0, btn.width, btn.height, 5, 5)
-              ..graphics.fillColor(Color.White)), grid);
+    } else {
+      up = upState;
     }
 
     if (overState == null) {
-      overState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)..draw(new Shape()
-              ..graphics.beginPath()
-              ..graphics.rectRound(0, 0, btn.width, btn.height, 5, 5)
-              ..graphics.fillColor(Color.WhiteSmoke)), grid);
+      if (upState == null) over = DisplayObjectHelper.createRound(0xFFEBEBEB, ellipse, border: true, borderColor: Color.Gray); else over = upState;
+    } else {
+      over = overState;
     }
 
     if (downState == null) {
-      downState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)..draw(new Shape()
-              ..graphics.beginPath()
-              ..graphics.rectRound(0, 0, btn.width, btn.height, 10, 10)
-              ..graphics.fillColor(Color.WhiteSmoke)), grid);
+      if (upState == null) down = DisplayObjectHelper.createRound(0xFFD0D0D0, ellipse, border: true, borderColor: Color.Gray); else down = upState;
+    } else {
+      down = downState;
     }
 
-    if (hitTestState == null) hitTestState = upState;
-    if (btn.width == 0) btn.width = upState.width;
-    if (btn.height == 0) btn.height = upState.height;
+    if (hitTestState == null) hit = up; else hit = hitTestState;
     if (icon != null) btn.icon = icon;
 
+    if (upState == null) {
+      btn.width = 150;
+      btn.height = 40;
+    }
+    if (btn.width == 0) btn.width = up.width;
+    if (btn.height == 0) btn.height = up.height;
+
     btn
-        ..upState = upState
-        ..overState = overState
-        ..downState = downState
-        ..hitTestState = upState;
+        ..upState = up
+        ..overState = over
+        ..downState = down
+        ..hitTestState = hit;
   }
 
   @override

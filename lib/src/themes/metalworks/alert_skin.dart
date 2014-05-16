@@ -22,6 +22,6 @@ class AlertSkin extends TextureAtlasSkin {
           ..autoSize = TextFieldAutoSize.CENTER
           ..text = alert.message;
     }
-    alert.background = scale9Skin("background-popup-skin", MetalworksTheme.DEFAULT_SCALE9_GRID);
+    alert.background = makeSkin("background-popup-skin", MetalworksTheme.DEFAULT_SCALE9_GRID);
   }
 }

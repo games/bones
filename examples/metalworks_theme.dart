@@ -58,6 +58,11 @@ class TestScreen extends Screen {
 
     ThemeManager.theme = new MetalworksTheme(resources, "theme");
 
+    var stats = new Stats();
+    html.document.body.children.add(stats.container);
+    stage.onEnterFrame.listen((e) => stats.begin());
+    stage.onExitFrame.listen((e) => stats.end());
+
     var toast = new Toast()..move(300, 300);
     toast.show("Welcome!!");
     addChild(toast);

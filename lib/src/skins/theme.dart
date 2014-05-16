@@ -39,7 +39,7 @@ class DefaultTheme extends Theme {
 abstract class TextureAtlasSkin extends Skin {
   TextureAtlasTheme theme;
   TextureAtlasSkin([this.theme]);
-  Scale9Bitmap scale9Skin(String name, Rectangle grid) => theme.scale9Skin(target, name, grid);
+  Scale9Bitmap makeSkin(String name, Rectangle grid) => theme.makeSkin(target, name, grid);
 }
 
 abstract class TextureAtlasTheme extends Theme {
@@ -53,7 +53,7 @@ abstract class TextureAtlasTheme extends Theme {
     if (skin is TextureAtlasSkin) skin.theme = this;
   }
 
-  Scale9Bitmap scale9Skin(Skinnable target, String name, Rectangle grid) {
+  Scale9Bitmap makeSkin(Skinnable target, String name, Rectangle grid) {
     var atlas,
         texture = name;
     if (target.theme == null) {

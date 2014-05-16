@@ -7,8 +7,8 @@ class ButtonSkin extends TextureAtlasSkin {
   @override
   apply() {
     (target as Button)
-        ..upState = scale9Skin("button-up-skin", MetalworksTheme.BUTTON_SCALE9_GRID)
-        ..downState = scale9Skin("button-down-skin", MetalworksTheme.BUTTON_SCALE9_GRID)
+        ..upState = makeSkin("button-up-skin", MetalworksTheme.BUTTON_SCALE9_GRID)
+        ..downState = makeSkin("button-down-skin", MetalworksTheme.BUTTON_SCALE9_GRID)
         ..textRenderer = (String msg, [TextFormat format]) {
           return new TextField()
               ..defaultTextFormat.size = 16
