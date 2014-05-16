@@ -9,6 +9,7 @@ typedef DisplayObject TextRenderer(String txt, [TextFormat format]);
 
 class Label extends Skinnable {
 
+  Layout _layout;
   String _description;
   String _text;
   HorizontalAlign _hAlign;
@@ -22,11 +23,12 @@ class Label extends Skinnable {
   DisplayObject background;
   DisplayObject content;
 
-  Label(String text, {HorizontalAlign hAlign: HorizontalAlign.CENTER, VerticalAlign vAlign: VerticalAlign.MIDDLE, TextRenderer textRenderer, Skin skin}): super(skin) {
+  Label({String text, HorizontalAlign hAlign: HorizontalAlign.CENTER, VerticalAlign vAlign: VerticalAlign.MIDDLE, TextRenderer textRenderer, Skin skin}): super(skin) {
     _text = text;
     _hAlign = hAlign;
     _vAlign = vAlign;
     _textRenderer = textRenderer;
+    _layout = new SingleLayout(horizontalAlign: hAlign, verticalAlign: vAlign);
   }
 
   String get text => _text;
@@ -76,7 +78,9 @@ class Label extends Skinnable {
     if (content != null) {
       addChild(content);
     }
-    new SingleLayout(horizontalAlign: hAlign, verticalAlign: vAlign).order(this);
+    if (width == 0) width = content.width + 2 * gap;
+    if (height == 0) height = content.height;
+    _layout.order(this);
     validate();
   }
 
@@ -94,7 +98,6 @@ class Label extends Skinnable {
         var w = width;
         if (w == 0) {
           t.x = d.x + d.width + gap;
-          size(t.x + t.width, t.height);
         } else {
           t.x = (width - gap * 2 - t.width);
         }
@@ -122,6 +125,7 @@ class Label extends Skinnable {
         addChild(content);
       }
     }
+    _layout.order(this);
   }
 
   @override
