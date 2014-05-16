@@ -7,10 +7,11 @@ class DisplayObjectHelper {
   static final Rectangle DEFAULT_PLANE_GRID = new Rectangle(2, 2, 5, 5);
 
   static final TextRenderer defaultTextRenderer = (txt, [TextFormat format]) {
-    var l = new TextField()..autoSize = TextFieldAutoSize.LEFT;
+    var l = new TextField();
     if (format != null) l.defaultTextFormat = format;
-    l.text = txt;
-    return l;
+    return l
+        ..text = txt
+        ..autoSize = TextFieldAutoSize.LEFT;
   };
 
   static Scale9Bitmap toScale9Bitmap(DisplayObject drawable, Rectangle grid) {

@@ -98,7 +98,7 @@ class TestScreen extends Screen {
         ..move(50, 210);
     addChild(listView);
 
-    var label = new Label("我是Label");
+    var label = new Label(text: "我是Label");
     label.move(300, 300);
     addChild(label);
 
