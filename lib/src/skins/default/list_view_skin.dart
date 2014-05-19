@@ -9,7 +9,8 @@ class ListViewSkin extends Skin {
   int itemDownColor;
   int dividerColor;
 
-  ListViewSkin({this.renderer, this.dividerRenderer, this.itemUpColor: Color.White, this.itemOverColor: Color.WhiteSmoke, this.itemDownColor: Color.WhiteSmoke, this.dividerColor: Color.Gray}): super();
+  ListViewSkin({this.renderer, this.dividerRenderer, this.itemUpColor: DefaultTheme.LIST_DEFAULT, this.itemOverColor: DefaultTheme.LIST_ROLLOVER, this.itemDownColor:
+      DefaultTheme.LIST_SELECTED, this.dividerColor: DefaultTheme.LIST_DIVIDER}): super();
 
   @override
   apply() {
@@ -64,20 +65,18 @@ class ListViewItemSkin extends Skin {
     if (btn.height == 0) btn.height = 50;
 
     var grid = new Rectangle(10, 10, btn.width - 20, btn.height - 20);
-    var upState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)..draw(new Shape()
-            ..graphics.beginPath()
-            ..graphics.rect(0, 0, btn.width, btn.height)
-            ..graphics.fillColor(upColor)), grid);
 
-    var overState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)..draw(new Shape()
-            ..graphics.beginPath()
-            ..graphics.rect(0, 0, btn.width, btn.height)
-            ..graphics.fillColor(overColor)), grid);
+    var upState = DisplayObjectHelper.createPlane(upColor)
+        ..width = btn.width
+        ..height = btn.height;
 
-    var downState = new Scale9Bitmap(new BitmapData(btn.width, btn.height, true, 0x00FFFFFF)..draw(new Shape()
-            ..graphics.beginPath()
-            ..graphics.rect(0, 0, btn.width, btn.height)
-            ..graphics.fillColor(downColor)), grid);
+    var overState = DisplayObjectHelper.createPlane(overColor)
+        ..width = btn.width
+        ..height = btn.height;
+
+    var downState = DisplayObjectHelper.createPlane(downColor)
+        ..width = btn.width
+        ..height = btn.height;
 
     btn
         ..upState = upState

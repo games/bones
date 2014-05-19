@@ -17,7 +17,6 @@ abstract class Skinnable extends Component {
 
   Skinnable(this._skin): super();
 
-  // TODO : should not apply skin until the component be added to stage/parent?
   @override
   initialize() {
     super.initialize();

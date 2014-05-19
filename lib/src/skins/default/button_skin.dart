@@ -17,7 +17,7 @@ class ButtonSkin extends Skin {
 
     var up, over, down, hit, ellipse = 8;
     if (upState == null) {
-      up = DisplayObjectHelper.createRound(0xFFFFFFFF, ellipse, border: true, borderColor: Color.Gray);
+      up = DisplayObjectHelper.createRound(DefaultTheme.BUTTON_FACE, ellipse, border: false, borderColor: Color.Gray);
       btn.width = 150;
       btn.height = 40;
     } else {
@@ -25,13 +25,13 @@ class ButtonSkin extends Skin {
     }
 
     if (overState == null) {
-      if (upState == null) over = DisplayObjectHelper.createRound(0xFFEBEBEB, ellipse, border: true, borderColor: Color.Gray); else over = upState;
+      if (upState == null) over = DisplayObjectHelper.createRound(DefaultTheme.BUTTON_DOWN, ellipse, border: false, borderColor: Color.Gray); else over = upState;
     } else {
       over = overState;
     }
 
     if (downState == null) {
-      if (upState == null) down = DisplayObjectHelper.createRound(0xFFD0D0D0, ellipse, border: true, borderColor: Color.Gray); else down = upState;
+      if (upState == null) down = DisplayObjectHelper.createRound(DefaultTheme.BUTTON_DOWN, ellipse, border: false, borderColor: Color.Gray); else down = upState;
     } else {
       down = downState;
     }

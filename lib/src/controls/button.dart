@@ -33,7 +33,7 @@ class Button extends Skinnable {
     _registerEvents();
     _textIconRelation = textIconRelation;
     _align = align;
-    _textRenderer = _textRenderer == null ? (txt, [TextFormat format]) => new TextField(txt)..autoSize = TextFieldAutoSize.LEFT : _textRenderer;
+    _textRenderer = _textRenderer == null ? DisplayObjectHelper.defaultTextRenderer : _textRenderer;
   }
 
   set text(String val) {

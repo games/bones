@@ -15,7 +15,7 @@ class ScrollBarSkin extends Skin {
       bar.width = bar.width == 0 ? HEIGHT : bar.width;
       bar.height = bar.height == 0 ? WIDTH : bar.height;
     }
-    bar.background = DisplayObjectHelper.createPlane(0x03000000);
+    bar.background = DisplayObjectHelper.createPlane(DefaultTheme.SCROLL_BAR_BACKGROUND);
     bar.slider = DisplayObjectHelper.createRound(0xFF4D4D4D, 2);
   }
 }
