@@ -41,6 +41,7 @@ class CountdownSkin extends Skin {
   num _halfSize;
 
   Shape _background;
+  Shape _progress;
 
   CountdownSkin([this._size = 120, this._border = 10]) {
     _halfSize = _size / 2;
@@ -61,6 +62,9 @@ class CountdownSkin extends Skin {
     _background.applyCache(0, 0, _background.width.toInt(), _background.height.toInt());
     bar.addChild(_background);
 
+    _progress = new Shape();
+    bar.addChild(_progress);
+
     _label = new TextField()
         ..defaultTextFormat.bold = true
         ..defaultTextFormat.color = Color.White
@@ -68,26 +72,20 @@ class CountdownSkin extends Skin {
         ..autoSize = TextFieldAutoSize.CENTER
         ..text = "-";
     bar.addChild(_label);
-    bar.measure();
-  }
-
-  _getProgress(num percent) {
-    var s = new Shape()
-        ..graphics.arc(_halfSize, _halfSize, _halfSize - _border, -Math.PI / 2, TWO_PI * percent - Math.PI / 2, false)
-        ..graphics.strokeColor(0xffffcc00, _border);
-    s.applyCache(0, 0, _size, _size);
-    return s;
   }
 
   @override
   repaint() {
     var bar = target as ProgressBar;
-    bar.removeChildren();
-    bar.addChild(_background);
-    bar.addChild(_getProgress(bar.percent));
+    _progress
+        ..removeCache()
+        ..graphics.clear()
+        ..graphics.arc(_halfSize, _halfSize, _halfSize - _border, -Math.PI / 2, TWO_PI * bar.percent - Math.PI / 2, false)
+        ..graphics.strokeColor(0xffffcc00, _border);
+    _progress.applyCache(0, 0, _size, _size);
+
     _label.text = bar.value.toString();
     _label.x = (bar.width - _label.width) / 2;
     _label.y = (bar.height - _label.height) / 2;
-    bar.addChild(_label);
   }
 }
