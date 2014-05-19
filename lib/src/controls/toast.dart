@@ -52,5 +52,5 @@ class Toast extends Skinnable {
   String get message => _message;
 
   @override
-  String get skinName => "Toast";
+  String get skinName => Theme.TOAST_SKIN;
 }

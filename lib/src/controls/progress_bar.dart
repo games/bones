@@ -38,5 +38,5 @@ class ProgressBar extends Skinnable {
   get percent => (_value - _minimum) / (_maximum - _minimum);
 
   @override
-  String get skinName => "ProgressBar";
+  String get skinName => Theme.PROGRESS_BAR_SKIN;
 }

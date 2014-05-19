@@ -78,5 +78,5 @@ class ScrollBar extends ProgressBar {
   }
 
   @override
-  String get skinName => "ScrollBar";
+  String get skinName => Theme.SCROLL_BAR_SKIN;
 }

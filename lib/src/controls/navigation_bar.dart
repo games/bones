@@ -67,5 +67,5 @@ class NavigationBar extends Skinnable {
   }
 
   @override
-  String get skinName => "NavigationBar";
+  String get skinName => Theme.NAVIGATION_BAR_SKIN;
 }

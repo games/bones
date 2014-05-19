@@ -96,7 +96,7 @@ class Alert extends Skinnable {
   }
 
   @override
-  String get skinName => "Alert";
+  String get skinName => Theme.ALERT_SKIN;
 }
 
 class PopupManager {

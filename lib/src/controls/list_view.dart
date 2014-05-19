@@ -90,7 +90,7 @@ class ListView extends Skinnable {
   }
 
   @override
-  String get skinName => "ListView";
+  String get skinName => Theme.LIST_VIEW_SKIN;
 
   int get selectedIndex => _selectedIndex;
 

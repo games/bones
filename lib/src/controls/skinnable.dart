@@ -28,10 +28,10 @@ abstract class Skinnable extends Component {
     _skin.apply();
   }
 
-  Skin get defaultSkin => ThemeManager.theme.takeFor(skinName + "Skin");
+  Skin get defaultSkin => ThemeManager.theme.takeFor(skinName);
 
   Skin get skin => _skin;
-  
+
   String get skinName;
 
   void set skin(Skin val) {

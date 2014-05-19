@@ -129,5 +129,5 @@ class Label extends Skinnable {
   }
 
   @override
-  String get skinName => "Label";
+  String get skinName => Theme.LABEL_SKIN;
 }

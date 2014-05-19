@@ -238,5 +238,5 @@ class Button extends Skinnable {
   set currentState(DisplayObject state) => _currentState = state;
 
   @override
-  String get skinName => "Button";
+  String get skinName => Theme.BUTTON_SKIN;
 }
