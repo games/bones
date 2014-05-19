@@ -30,12 +30,13 @@ class DisplayObjectHelper {
   }
 
   static Scale9Bitmap createRound(int color, num ellipse, {bool border: false, int borderColor: 0, int borderSize: 1}) {
+    var gap = 5, size = ellipse * 2 + gap;
     var shape = new Shape()
-        ..graphics.rectRound(0, 0, 20, 20, ellipse, ellipse)
+        ..graphics.rectRound(0, 0, size, size, ellipse, ellipse)
         ..graphics.fillColor(color);
     if (border) {
       shape.graphics.strokeColor(borderColor, borderSize);
     }
-    return toScale9Bitmap(shape, DEFAULT_RECTROUND_GRID);
+    return toScale9Bitmap(shape, new Rectangle(ellipse + 1, ellipse + 1, gap - 2, gap - 2));
   }
 }
