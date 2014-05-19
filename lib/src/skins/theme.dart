@@ -10,6 +10,7 @@ abstract class Theme {
   static const SCROLL_BAR_SKIN = "ScrollBarSkin";
   static const TOAST_SKIN = "ToastSkin";
   static const NAVIGATION_BAR_SKIN = "NavigationBarSkin";
+  static const SWITCH_SKIN = "SwitchSkin";
 
   Map<String, Skin> _skins;
 
@@ -21,19 +22,6 @@ abstract class Theme {
   }
 
   Skin takeFor(String name) => _skins[name];
-}
-
-class DefaultTheme extends Theme {
-  DefaultTheme(): super() {
-    register(Theme.LABEL_SKIN, new LabelSkin());
-    register(Theme.ALERT_SKIN, new AlertSkin());
-    register(Theme.BUTTON_SKIN, new ButtonSkin());
-    register(Theme.LIST_VIEW_SKIN, new ListViewSkin());
-    register(Theme.PROGRESS_BAR_SKIN, new LinearProgressBarSkin());
-    register(Theme.SCROLL_BAR_SKIN, new ScrollBarSkin());
-    register(Theme.TOAST_SKIN, new ToastSkin());
-    register(Theme.NAVIGATION_BAR_SKIN, new NavigationBarSkin());
-  }
 }
 
 abstract class TextureAtlasSkin extends Skin {
