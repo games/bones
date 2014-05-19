@@ -11,7 +11,7 @@ class Alert extends Skinnable {
   bool cover;
   num bodyWidth, bodyHeight;
 
-  num padding = 20;
+  num padding = 10;
   DisplayObject background;
   ButtonGroup buttons;
   DisplayObject header;
@@ -40,21 +40,16 @@ class Alert extends Skinnable {
 
     var headerHeight = 0;
     if (header != null) {
-      header
-          ..x = padding
-          ..y = padding;
-      addChild(header);
+      addChild(header..y = padding);
       headerHeight = header.height + dp;
       _width = Math.max(header.width + dp, _width);
       _height = _height + header.height + dp;
     }
 
     if (content != null) {
-      content
+      addChild(content
           ..width = _width - dp
-          ..x = padding
-          ..y = headerHeight + (_height - headerHeight - content.height) / 2;
-      addChild(content);
+          ..y = headerHeight + (_height - headerHeight - content.height) / 2);
     }
 
     if (buttons != null) {
@@ -64,6 +59,9 @@ class Alert extends Skinnable {
       buttons.y = _height - buttons.height - padding;
       addChild(buttons);
     }
+
+    if (header != null) header.x = (_width - header.width) / 2;
+    if (content != null) content.x = (_width - content.width) / 2;
 
     background
         ..width = _width.toInt()
