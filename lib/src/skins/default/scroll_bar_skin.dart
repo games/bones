@@ -2,7 +2,7 @@ part of bones;
 
 
 class ScrollBarSkin extends Skin {
-  static const num WIDTH = 2;
+  static const num WIDTH = 5;
   static const num HEIGHT = 200;
 
   @override
@@ -16,10 +16,6 @@ class ScrollBarSkin extends Skin {
       bar.height = bar.height == 0 ? WIDTH : bar.height;
     }
     bar.background = DisplayObjectHelper.createPlane(0x03000000);
-    bar.slider = DisplayObjectHelper.createPlane(0xF0000000);
-  }
-
-  @override
-  repaint() {
+    bar.slider = DisplayObjectHelper.createRound(0xFFF3F3F3, 2);
   }
 }
