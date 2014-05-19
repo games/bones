@@ -21,15 +21,16 @@ class ButtonGroup extends Container {
   @override
   initialize() {
     super.initialize();
-    buttonDefs.forEach((def) {
-      var btn = new Button(skin: def.skin)..text = def.label;
-      // TODO : incorrect button reference.
-      if (def.event != null) btn.onPressed.listen((e) {
-        dispatchEvent(new ButtonGroupEvent(btn, def.event));
-      });
-      addChild(btn);
-    });
+    buttonDefs.forEach(_createButton);
     order();
+  }
+
+  _createButton(ButtonDef def) {
+    var btn = new Button(skin: def.skin)..text = def.label;
+    if (def.event != null) btn.onPressed.listen((e) {
+      dispatchEvent(new ButtonGroupEvent(btn, def.event));
+    });
+    addChild(btn);
   }
 
   @override

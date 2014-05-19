@@ -20,22 +20,22 @@ class Alert extends Skinnable {
   @override
   initialize() {
     super.initialize();
-    var doublePadding = padding * 2;
+    var dp = padding * 2;
     removeChildren();
     addChild(background);
 
     if (bodyWidth != null && bodyHeight != null) {
-      _width = bodyWidth + doublePadding;
-      _height = bodyHeight + doublePadding;
+      _width = bodyWidth + dp;
+      _height = bodyHeight + dp;
       if (content != null) content
           ..width = bodyWidth
           ..height = bodyHeight;
     } else if (content != null) {
-      _width = content.width + doublePadding;
-      _height = content.height + doublePadding;
+      _width = content.width + dp;
+      _height = content.height + dp;
     } else {
-      _width = doublePadding;
-      _height = doublePadding;
+      _width = dp;
+      _height = dp;
     }
 
     var headerHeight = 0;
@@ -44,22 +44,22 @@ class Alert extends Skinnable {
           ..x = padding
           ..y = padding;
       addChild(header);
-      headerHeight = header.height + doublePadding;
-      _width = Math.max(header.width + doublePadding, _width);
-      _height = _height + header.height + doublePadding;
+      headerHeight = header.height + dp;
+      _width = Math.max(header.width + dp, _width);
+      _height = _height + header.height + dp;
     }
 
     if (content != null) {
       content
-          ..width = _width - doublePadding
+          ..width = _width - dp
           ..x = padding
           ..y = headerHeight + (_height - headerHeight - content.height) / 2;
       addChild(content);
     }
 
     if (buttons != null) {
-      _width = Math.max(_width, buttons.width + doublePadding);
-      _height = _height + doublePadding + buttons.height;
+      _width = Math.max(_width, buttons.width + dp);
+      _height = _height + dp + buttons.height;
       buttons.x = (_width - buttons.width) / 2;
       buttons.y = _height - buttons.height - padding;
       addChild(buttons);
