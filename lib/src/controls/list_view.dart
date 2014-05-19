@@ -22,7 +22,25 @@ class ListView extends Skinnable {
   ListView([List data, Skin skin])
       : _data = data,
         divider = true,
-        super(skin);
+        super(skin) {
+    if (data != null) invalidate();
+  }
+
+  @override
+  measure() {
+    super.measure();
+    if (_data != null) {
+      var hw = 0,
+          fw = 0;
+      if (header != null) hw = header.width;
+      if (footer != null) fw = footer.width;
+      _width = Math.max(Math.max(hw, fw), itemWidth);
+      _height = _data.length * itemHeight;
+    } else {
+      _width = 0;
+      _height = 0;
+    }
+  }
 
   @override
   repaint() {
@@ -37,6 +55,7 @@ class ListView extends Skinnable {
         addChild(header
             ..x = 0
             ..y = 0);
+        _width = header.width;
         bottom = header.height;
       }
       for (var i = 0; i < num; i++) {
@@ -61,6 +80,7 @@ class ListView extends Skinnable {
         addChild(footer
             ..x = 0
             ..y = bottom);
+        _width = Math.max(footer.width, _width);
         _height = bottom + footer.height;
       } else {
         _height = bottom;

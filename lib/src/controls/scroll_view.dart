@@ -107,6 +107,9 @@ class ScrollView extends Component {
     }
     _content = val;
     _content.on(Event.RESIZE).listen((e) => _adjustViewport());
+    _content
+        ..x = 0
+        ..y = 0;
     addChildAt(_content, 0);
     _adjustViewport();
   }
