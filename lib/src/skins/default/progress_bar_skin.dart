@@ -9,7 +9,7 @@ class LinearProgressBarSkin extends Skin {
   apply() {
     var bar = target as ProgressBar;
     if (bar.width == 0) bar.width = 200;
-    if (bar.height == 0) bar.height = 2;
+    if (bar.height == 0) bar.height = 5;
 
     background = DisplayObjectHelper.toScale9Bitmap(new Shape()
         ..graphics.beginPath()
@@ -22,7 +22,9 @@ class LinearProgressBarSkin extends Skin {
     progress = DisplayObjectHelper.toScale9Bitmap(new Shape()
         ..graphics.beginPath()
         ..graphics.rect(0, 0, 2, 2)
-        ..graphics.fillColor(DefaultTheme.PROGRESS_BAR), new Rectangle(1, 1, 1, 1));
+        ..graphics.fillColor(DefaultTheme.PROGRESS_BAR), new Rectangle(1, 1, 1, 1))
+        ..width = bar.width
+        ..height = bar.height;
     bar.addChild(progress);
   }
 
