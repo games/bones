@@ -21,6 +21,7 @@ class Button extends Skinnable {
   DisplayObject _label;
   String _text;
   TextRenderer _textRenderer;
+  TextFormat _format;
 
   bool _enabled = true;
   num padding;
@@ -45,6 +46,11 @@ class Button extends Skinnable {
   set textRenderer(TextRenderer val) {
     _label = null;
     _textRenderer = val;
+  }
+
+  set textFormat(TextFormat val) {
+    _label = null;
+    _format = val;
   }
 
   set textIconRelation(TextImageRelation val) => _textIconRelation = val;
@@ -156,7 +162,7 @@ class Button extends Skinnable {
         icon.y = (_currentState.height - icon.height) / 2;
       }
       if (_text != null && _label == null && _textRenderer != null) {
-        _label = _textRenderer(_text);
+        _label = _textRenderer(_text, _format);
       }
       if (_label != null) {
         _label.x = (_currentState.width - _label.width) / 2;
