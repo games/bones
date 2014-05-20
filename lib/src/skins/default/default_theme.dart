@@ -4,19 +4,19 @@ part of bones;
 
 
 class DefaultTheme extends Theme {
-  static const BACKGROUND = 0XFFCCCCCC;
-  static const HIGHLIGHT = 0xFF4BD763;
-  static const BUTTON_FACE = 0xFFFFFFFF;
-  static const BUTTON_DOWN = 0xFFEEEEEE;
-  static const PROGRESS_BAR = 0xFFFFCC00;
-  static const SCROLL_BAR_SLIDER = 0xFF4D4D4D;
-  static const SCROLL_BAR_BACKGROUND = 0x0F000000;
-  static const LIST_DEFAULT = 0xFFFFFFFF;
-  static const LIST_ALTERNATE = 0xFFF3F3F3;
-  static const LIST_SELECTED = Color.WhiteSmoke;
-  static const LIST_ROLLOVER = Color.WhiteSmoke;
-
-  static const LIST_DIVIDER = 0xFFEAEAEA;
+  static int BACKGROUND = 0XFFCCCCCC;
+  static int HIGHLIGHT = 0xFF4BD763;
+  static int HEADER_BACKGROUND = 0xFF313131;
+  static int BUTTON_FACE = 0xFFFFFFFF;
+  static int BUTTON_DOWN = 0xFFEEEEEE;
+  static int PROGRESS_BAR = 0xFFFFCC00;
+  static int SCROLL_BAR_SLIDER = 0xFF4D4D4D;
+  static int SCROLL_BAR_BACKGROUND = 0x0F000000;
+  static int LIST_DEFAULT = 0xFFFFFFFF;
+  static int LIST_ALTERNATE = 0xFFF3F3F3;
+  static int LIST_SELECTED = Color.WhiteSmoke;
+  static int LIST_ROLLOVER = Color.WhiteSmoke;
+  static int LIST_DIVIDER = 0xFFEAEAEA;
 
   DefaultTheme(): super() {
     register(Theme.LABEL_SKIN, new LabelSkin());

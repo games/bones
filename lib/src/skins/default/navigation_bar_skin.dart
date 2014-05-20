@@ -14,7 +14,7 @@ class NavigationBarSkin extends Skin {
         ..defaultTextFormat.bold = true
         ..text = txt
         ..autoSize = TextFieldAutoSize.LEFT;
-    bar.background = DisplayObjectHelper.createPlane(0xFF313131);
+    bar.background = DisplayObjectHelper.createPlane(DefaultTheme.HEADER_BACKGROUND);
     if (bar.stage != null) {
       bar.background.width = bar.stage.sourceWidth;
       bar.background.height = 45;

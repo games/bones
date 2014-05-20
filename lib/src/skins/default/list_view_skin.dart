@@ -9,11 +9,15 @@ class ListViewSkin extends Skin {
   int itemDownColor;
   int dividerColor;
 
-  ListViewSkin({this.renderer, this.dividerRenderer, this.itemUpColor: DefaultTheme.LIST_DEFAULT, this.itemOverColor: DefaultTheme.LIST_ROLLOVER, this.itemDownColor:
-      DefaultTheme.LIST_SELECTED, this.dividerColor: DefaultTheme.LIST_DIVIDER}): super();
+  ListViewSkin({this.renderer, this.dividerRenderer, this.itemUpColor, this.itemOverColor, this.itemDownColor, this.dividerColor}): super();
 
   @override
   apply() {
+    if (itemUpColor == null) itemUpColor = DefaultTheme.LIST_DEFAULT;
+    if (itemOverColor == null) itemOverColor = DefaultTheme.LIST_ROLLOVER;
+    if (itemDownColor == null) itemDownColor = DefaultTheme.LIST_SELECTED;
+    if (dividerColor == null) dividerColor = DefaultTheme.LIST_DIVIDER;
+
     var listView = target as ListView;
     listView.itemWidth = listView.itemWidth == null ? 200 : listView.itemWidth;
     listView.itemHeight = listView.itemHeight == null ? 50 : listView.itemHeight;
