@@ -155,50 +155,49 @@ class Button extends Skinnable {
       repaint();
       _dirty = false;
     }
-    if (_currentState != null) {
-      renderState.renderDisplayObject(_currentState);
-      if (icon != null) {
-        icon.x = (_currentState.width - icon.width) / 2;
-        icon.y = (_currentState.height - icon.height) / 2;
-      }
-      if (_text != null && _label == null && _textRenderer != null) {
-        _label = _textRenderer(_text, _format);
-      }
-      if (_label != null) {
-        _label.x = (_currentState.width - _label.width) / 2;
-        _label.y = (_currentState.height - _label.height) / 2;
-      }
-      if (icon != null && _label != null) {
-        var w = icon.width + _label.width,
-            h = icon.height + icon.height;
-        switch (_textIconRelation) {
-          case TextImageRelation.IMAGE_ABOVE_TEXT:
-            icon.y = (_currentState.height - h) / 2;
-            _label.y = icon.y + padding + icon.height + 1;
-            _alignForVertical();
-            break;
-          case TextImageRelation.IMAGE_BEFORE_TEXT:
-            icon.x = (_currentState.width - w) / 2;
-            _label.x = icon.x + padding + icon.width + 1;
-            _alignForHorizontal(icon, _label);
-            break;
-          case TextImageRelation.OVERLAY:
-            break;
-          case TextImageRelation.TEXT_ABOVE_IMAGE:
-            _label.y = (_currentState.height - h) / 2;
-            icon.y = _label.y + padding + _label.height + 1;
-            _alignForVertical();
-            break;
-          case TextImageRelation.TEXT_BEFORE_IMAGE:
-            _label.x = (_currentState.width - w) / 2;
-            icon.x = _label.x + padding + _label.width + 1;
-            _alignForHorizontal(_label, icon);
-            break;
-        }
-      }
-      if (icon != null) renderState.renderDisplayObject(icon);
-      if (_label != null) renderState.renderDisplayObject(_label);
+    if (_currentState != null) renderState.renderDisplayObject(_currentState);
+
+    if (icon != null) {
+      icon.x = (_width - icon.width) / 2;
+      icon.y = (_height - icon.height) / 2;
     }
+    if (_text != null && _label == null && _textRenderer != null) {
+      _label = _textRenderer(_text, _format);
+    }
+    if (_label != null) {
+      _label.x = (_width - _label.width) / 2;
+      _label.y = (_height - _label.height) / 2;
+    }
+    if (icon != null && _label != null) {
+      var w = icon.width + _label.width,
+          h = icon.height + icon.height;
+      switch (_textIconRelation) {
+        case TextImageRelation.IMAGE_ABOVE_TEXT:
+          icon.y = (_height - h) / 2;
+          _label.y = icon.y + padding + icon.height + 1;
+          _alignForVertical();
+          break;
+        case TextImageRelation.IMAGE_BEFORE_TEXT:
+          icon.x = (_width - w) / 2;
+          _label.x = icon.x + padding + icon.width + 1;
+          _alignForHorizontal(icon, _label);
+          break;
+        case TextImageRelation.OVERLAY:
+          break;
+        case TextImageRelation.TEXT_ABOVE_IMAGE:
+          _label.y = (_height - h) / 2;
+          icon.y = _label.y + padding + _label.height + 1;
+          _alignForVertical();
+          break;
+        case TextImageRelation.TEXT_BEFORE_IMAGE:
+          _label.x = (_width - w) / 2;
+          icon.x = _label.x + padding + _label.width + 1;
+          _alignForHorizontal(_label, icon);
+          break;
+      }
+    }
+    if (icon != null) renderState.renderDisplayObject(icon);
+    if (_label != null) renderState.renderDisplayObject(_label);
   }
 
   void _alignForHorizontal(DisplayObject first, DisplayObject second) {
@@ -206,7 +205,7 @@ class Button extends Skinnable {
       first.x = padding;
       second.x = first.x + first.width + padding;
     } else if (_align == HorizontalAlign.RIGHT) {
-      second.x = _currentState.width - padding - second.width;
+      second.x = _width - padding - second.width;
       first.x = second.x - first.width - padding;
     }
   }
@@ -215,8 +214,8 @@ class Button extends Skinnable {
     if (_align == HorizontalAlign.LEFT) {
       icon.x = _label.x = padding;
     } else if (_align == HorizontalAlign.RIGHT) {
-      icon.x = _currentState.width - icon.width - padding;
-      _label.x = _currentState.width - _label.width - padding;
+      icon.x = _width - icon.width - padding;
+      _label.x = _width - _label.width - padding;
     }
   }
 

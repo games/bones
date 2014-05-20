@@ -9,7 +9,7 @@ class NavigationBar extends Skinnable {
   List<DisplayObject> _right;
   String _title;
   TextRenderer textRenderer;
-  DisplayObject background;
+  DisplayObject _background;
   int gap;
 
   NavigationBar({this.gap: 0, Skin skin})
@@ -20,6 +20,14 @@ class NavigationBar extends Skinnable {
   set title(String val) {
     _title = val;
     invalidate();
+  }
+
+  DisplayObject get background => _background;
+
+  void set background(DisplayObject val) {
+    if (_background != null) _background.removeFromParent();
+    _background = val;
+    addChild(_background);
   }
 
   addLeft(DisplayObject item) {
@@ -35,7 +43,7 @@ class NavigationBar extends Skinnable {
   @override
   initialize() {
     super.initialize();
-    addChild(background);
+    addChild(_background);
   }
 
   @override
@@ -43,7 +51,7 @@ class NavigationBar extends Skinnable {
     super.repaint();
     removeChildren();
 
-    addChild(background);
+    addChild(_background);
     var nx = gap;
     _left.forEach((item) {
       item.x = nx;
