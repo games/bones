@@ -15,11 +15,13 @@ class ButtonSkin extends Skin {
   apply() {
     var btn = target as Button;
 
-    var up, over, down, hit, ellipse = 8;
+    var up,
+        over,
+        down,
+        hit,
+        ellipse = 8;
     if (upState == null) {
       up = DisplayObjectHelper.createRound(DefaultTheme.BUTTON_FACE, ellipse, border: false, borderColor: Color.Gray);
-      btn.width = 150;
-      btn.height = 40;
     } else {
       up = upState;
     }
@@ -39,7 +41,7 @@ class ButtonSkin extends Skin {
     if (hitTestState == null) hit = up; else hit = hitTestState;
     if (icon != null) btn.icon = icon;
 
-    if (upState == null) {
+    if (upState == null && (btn.width == 0 || btn.height == 0)) {
       btn.width = 150;
       btn.height = 40;
     }
