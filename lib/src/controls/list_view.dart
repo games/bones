@@ -19,7 +19,7 @@ class ListView extends Skinnable {
   int _selectedIndex = -1;
   DisplayObject _selectedItem;
 
-  ListView([List data, Skin skin])
+  ListView({List data, Skin skin})
       : _data = data,
         divider = true,
         super(skin) {

@@ -80,7 +80,7 @@ class TestScreen extends Screen {
     addChild(new ScrollView()
         ..size(150, 100)
         ..move(30, 100)
-        ..content = new ListView([{
+        ..content = new ListView(data:[{
             "label": "CLOSE MENU",
             "icon": new Box(32, 32, Color.Red)
           }, {
