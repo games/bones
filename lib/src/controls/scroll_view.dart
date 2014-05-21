@@ -6,7 +6,7 @@ class ScrollView extends Component {
   static const OVER_SCROLL_IF_CONTENT_SCROLLS = 1;
   static const OVER_SCROLL_NEVER = 2;
 
-  int _overScrollModel = OVER_SCROLL_ALWAYS;
+  int _overScrollModel = OVER_SCROLL_IF_CONTENT_SCROLLS;
   DisplayObject _content;
   Point _lastPos;
   int _backgroundColor = Color.White;
