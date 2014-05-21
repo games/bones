@@ -58,9 +58,17 @@ class TestScreen extends Screen {
         ..move(400, 50);
     addChild(countdown);
 
+    var label = new Label();
+    label.description = "计时：";
+    label
+        ..move(300, 350)
+        ..size(150, 30);
+    addChild(label);
+
     var t = new Timer.periodic(new Duration(milliseconds: 33), (t) {
       progressBar.step();
       countdown.step();
+      label.text = "${countdown.value} 秒";
     });
 
     addChild(new ScrollBar()
@@ -80,7 +88,7 @@ class TestScreen extends Screen {
     addChild(new ScrollView()
         ..size(150, 100)
         ..move(30, 100)
-        ..content = new ListView(data:[{
+        ..content = new ListView(data: [{
             "label": "CLOSE MENU",
             "icon": new Box(32, 32, Color.Red)
           }, {
@@ -104,10 +112,6 @@ class TestScreen extends Screen {
           }]
         ..move(50, 210);
     addChild(listView);
-
-    var label = new Label(text: "我是Label");
-    label.move(300, 350);
-    addChild(label);
 
     var navigationBar = new NavigationBar();
     navigationBar.title = "Navigation Bar";
