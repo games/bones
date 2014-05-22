@@ -41,16 +41,25 @@ class DisplayObjectHelper {
     return toScale9Bitmap(shape, new Rectangle(ellipse + 1, ellipse + 1, gap - 2, gap - 2));
   }
 
+
   static void removeChildren(DisplayObjectContainer container) {
     var l = container.numChildren;
     for (var i = l - 1; i >= 0; i--) {
-      var child = container.getChildAt(i);
-      if (child is Component) {
-        child.destroy();
-      } else if (child is DisplayObject) {
-        child.removeCache();
-      }
+      dispose(container.getChildAt(i));
       container.removeChildAt(i);
+    }
+  }
+
+  //refer : https://github.com/bp74/StageXL/issues/106
+  static void dispose(DisplayObject target) {
+    if (target is Component) {
+      target.destroy();
+    } else if (target is TextField) {
+      target.renderTexture.dispose();
+      //    } else if (target is Bitmap) {
+      //      target.bitmapData.renderTexture.dispose();
+    } else if (target is DisplayObject) {
+      target.removeCache();
     }
   }
 }

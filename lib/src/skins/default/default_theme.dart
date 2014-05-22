@@ -2,7 +2,7 @@ part of bones;
 
 
 
-
+// TODO: Should be cache all bitmapData, instead of create new one every time.
 class DefaultTheme extends Theme {
   static int BACKGROUND = 0XFFCCCCCC;
   static int HIGHLIGHT = 0xFF4BD763;
@@ -19,6 +19,7 @@ class DefaultTheme extends Theme {
   static int LIST_DIVIDER = 0xFFEAEAEA;
 
   DefaultTheme(): super() {
+    // TODO: should not create instance right now.
     register(Theme.LABEL_SKIN, new LabelSkin());
     register(Theme.ALERT_SKIN, new AlertSkin());
     register(Theme.BUTTON_SKIN, new ButtonSkin());
