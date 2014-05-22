@@ -39,13 +39,14 @@ class LinearProgressBarSkin extends Skin {
 class CountdownSkin extends Skin {
   int _size;
   int _border;
+  int _textSize;
   TextField _label;
   num _halfSize;
 
   Shape _background;
   Shape _progress;
 
-  CountdownSkin([this._size = 120, this._border = 10]) {
+  CountdownSkin([this._size = 120, this._border = 10, this._textSize = 50]) {
     _halfSize = _size / 2;
   }
 
@@ -70,7 +71,7 @@ class CountdownSkin extends Skin {
     _label = new TextField()
         ..defaultTextFormat.bold = true
         ..defaultTextFormat.color = Color.White
-        ..defaultTextFormat.size = 50
+        ..defaultTextFormat.size = _textSize
         ..autoSize = TextFieldAutoSize.CENTER
         ..text = "-";
     bar.addChild(_label);
