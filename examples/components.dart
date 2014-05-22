@@ -1,5 +1,6 @@
 import 'dart:html' as html;
 import 'dart:async';
+import 'dart:math';
 import 'package:stagexl/stagexl.dart';
 import 'package:stats/stats.dart';
 import 'package:bones/bones.dart';
@@ -117,7 +118,19 @@ class TestScreen extends Screen {
     navigationBar.title = "Navigation Bar";
     addChild(navigationBar);
 
-    addChild(new Switch()..move(350, 250));
+    var rand = new Random();
+    addChild(new Switch()
+        ..move(350, 250)
+        ..onChange.listen((e) => listView.data = [{
+            "label": rand.nextInt(10000).toString(),
+            "icon": new Box(32, 32, Color.Red)
+          }, {
+            "label": rand.nextInt(10000).toString(),
+            "icon": new Box(32, 32, Color.Blue)
+          }, {
+            "label": rand.nextInt(10000).toString(),
+            "icon": new Box(32, 32, Color.Green)
+          }]));
   }
 
   @override

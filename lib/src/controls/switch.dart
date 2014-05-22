@@ -3,7 +3,11 @@ part of bones;
 
 
 
+const EventStreamProvider<Event> changeEvent = const EventStreamProvider<Event>(Event.CHANGE);
+
 class Switch extends Skinnable {
+
+  EventStream<Event> get onChange => changeEvent.forTarget(this);
 
   DisplayObject offState;
   DisplayObject onState;
@@ -57,11 +61,11 @@ class Switch extends Skinnable {
     if (_isOff) return offState; else return onState;
   }
 
-
   @override
   String get skinName => Theme.SWITCH_SKIN;
 
   void _pressedHandler(e) {
     _isOff = !_isOff;
+    dispatchEvent(new Event(Event.CHANGE));
   }
 }
