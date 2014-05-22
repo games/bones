@@ -117,6 +117,7 @@ class Label extends Skinnable {
       background.height = _height;
     }
     if (content != null) {
+      content.removeCache();
       content.removeFromParent();
     }
     if (_text != null) {

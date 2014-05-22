@@ -101,6 +101,7 @@ class Component extends Sprite {
   }
 
   destroy() {
+    removeCache();
     forEach((i, child) {
       if (child is Component) {
         child.destroy();
