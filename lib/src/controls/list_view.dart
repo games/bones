@@ -45,9 +45,9 @@ class ListView extends Skinnable {
   @override
   repaint() {
     super.repaint();
-    //refer : https://github.com/bp74/StageXL/issues/106
-    //DisplayObjectHelper.removeChildren(this);
-    removeChildren();
+    // TODO : https://github.com/bp74/StageXL/issues/106
+    //    removeChildren();
+    DisplayObjectHelper.removeChildren(this);
     if (_data != null && itemRenderer != null) {
       _width = 0;
       _height = 0;
