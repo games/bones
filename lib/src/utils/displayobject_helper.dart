@@ -30,7 +30,8 @@ class DisplayObjectHelper {
   }
 
   static Scale9Bitmap createRound(int color, num ellipse, {bool border: false, int borderColor: 0, int borderSize: 1}) {
-    var gap = 5, size = ellipse * 2 + gap;
+    var gap = 5,
+        size = ellipse * 2 + gap;
     var shape = new Shape()
         ..graphics.rectRound(0, 0, size, size, ellipse, ellipse)
         ..graphics.fillColor(color);
@@ -38,5 +39,18 @@ class DisplayObjectHelper {
       shape.graphics.strokeColor(borderColor, borderSize);
     }
     return toScale9Bitmap(shape, new Rectangle(ellipse + 1, ellipse + 1, gap - 2, gap - 2));
+  }
+
+  static void removeChildren(DisplayObjectContainer container) {
+    var l = container.numChildren;
+    for (var i = l - 1; i >= 0; i--) {
+      var child = container.getChildAt(i);
+      if (child is Component) {
+        child.destroy();
+      } else if (child is DisplayObject) {
+        child.removeCache();
+      }
+      container.removeChildAt(i);
+    }
   }
 }
