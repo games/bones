@@ -7,6 +7,8 @@ class ScrollView extends Component {
   static const OVER_SCROLL_NEVER = 2;
 
   int _overScrollModel = OVER_SCROLL_IF_CONTENT_SCROLLS;
+  bool horizontalScrollToMax = false;
+  bool verticalScrollToMax = false;
   DisplayObject _content;
   Point _lastPos;
   int _backgroundColor = Color.White;
@@ -106,12 +108,27 @@ class ScrollView extends Component {
       removeChild(_content);
     }
     _content = val;
-    _content.on(Event.RESIZE).listen((e) => _adjustViewport());
-    _content
-        ..x = 0
-        ..y = 0;
+    _content.on(Event.RESIZE).listen((e) {
+      _adjustViewport();
+      _scrollToMax();
+    });
+
     addChildAt(_content, 0);
     _adjustViewport();
+    _scrollToMax();
+  }
+
+  _scrollToMax() {
+    if (_content == null) return;
+    var sx = 0,
+        sy = 0;
+    if (horizontalScrollToMax) {
+      sx = width - _content.width;
+    }
+    if (verticalScrollToMax) {
+      sy = height - _content.height;
+    }
+    scrollTo(sx, sy);
   }
 
   int get backgroundColor => _backgroundColor;
