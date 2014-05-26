@@ -106,6 +106,7 @@ class Button extends Skinnable {
   set enabled(bool val) {
     useHandCursor = val;
     _enabled = val;
+    _currentState = _upState;
   }
 
   get enabled => _enabled;
