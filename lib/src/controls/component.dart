@@ -101,7 +101,6 @@ class Component extends Sprite {
   }
 
   destroy() {
-    DisplayObjectHelper.dispose(this);
     forEach((i, child) {
       if (child is Component) {
         child.destroy();
