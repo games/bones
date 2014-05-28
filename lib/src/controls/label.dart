@@ -80,6 +80,10 @@ class Label extends Skinnable {
     }
     if (width == 0) width = content.width + 2 * gap;
     if (height == 0) height = content.height;
+    if (background != null) {
+      background.width = _width;
+      background.height = _height;
+    }
     _layout.order(this);
     validate();
   }
