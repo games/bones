@@ -2,7 +2,6 @@ part of bones;
 
 
 
-typedef String PickerLabelFactory(ListPicker picker, data);
 
 class ListPicker extends Component {
 
@@ -10,7 +9,7 @@ class ListPicker extends Component {
   Skin buttonSkin;
   PopupList list;
   Button button;
-  PickerLabelFactory labelFactory;
+  LabelFactory labelFactory;
   String defaultLabel = "Pick";
 
   List _data;
@@ -28,7 +27,7 @@ class ListPicker extends Component {
     super.initialize();
     if (listSkin == null) listSkin = ThemeManager.theme.takeFor(Theme.LIST_VIEW_SKIN);
     if (buttonSkin == null) buttonSkin = ThemeManager.theme.takeFor(Theme.BUTTON_SKIN);
-    if (labelFactory == null) labelFactory = (p, d) => d.toString();
+    if (labelFactory == null) labelFactory = (d) => d.toString();
 
     list = new PopupList(skin: listSkin)
         ..data = _data
@@ -40,6 +39,8 @@ class ListPicker extends Component {
         ..text = defaultLabel;
 
     addChild(button);
+
+    size(button.width, button.height);
   }
 
   @override
@@ -59,7 +60,7 @@ class ListPicker extends Component {
 
   void _updateButtonLabel() {
     var d = list.selectedData;
-    if (d != null) button.text = labelFactory(this, d); else button.text = defaultLabel;
+    if (d != null) button.text = labelFactory(d); else button.text = defaultLabel;
   }
 }
 
@@ -84,8 +85,6 @@ class PopupList extends ListView implements Popup {
     dispatchEvent(new Event(Event.CLOSE));
   }
 }
-
-
 
 
 

@@ -9,7 +9,7 @@ class ListViewSkin extends Skin {
   int itemDownColor;
   int dividerColor;
 
-  ListViewSkin({this.renderer, this.dividerRenderer, this.itemUpColor, this.itemOverColor, this.itemDownColor, this.dividerColor}): super();
+  ListViewSkin({this.renderer, this.dividerRenderer, this.itemUpColor, this.itemOverColor, this.itemDownColor, this.dividerColor}) : super();
 
   @override
   apply() {
@@ -31,6 +31,8 @@ class ListViewSkin extends Skin {
         }
         if (item.containsKey("label")) {
           btn.text = item["label"];
+        } else {
+          btn.text = item.toString();
         }
         if (item.containsKey("height")) {
           btn.height = item["height"];

@@ -69,7 +69,7 @@ class _PopupScreen extends Screen {
   DisplayObject renderBackground() {
     return new Sprite()
         ..graphics.rect(0, 0, stage.sourceWidth, stage.sourceHeight)
-        ..graphics.fillColor(ColorHelper.fromRgba(0, 0, 0, 0.2))
+        ..graphics.fillColor(ColorHelper.fromRgba(0, 0, 0, 0.4))
         ..applyCache(0, 0, stage.sourceWidth, stage.sourceHeight);
   }
 }

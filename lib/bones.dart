@@ -60,7 +60,7 @@ const EventStreamProvider<Event> pressedEvent = const EventStreamProvider<Event>
 
 
 
-
+typedef String LabelFactory(data);
 
 
 
