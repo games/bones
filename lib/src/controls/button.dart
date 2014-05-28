@@ -3,7 +3,6 @@ part of bones;
 
 
 
-const EventStreamProvider<Event> pressedEvent = const EventStreamProvider<Event>(Button.PRESSED);
 
 class Button extends Skinnable {
   static const String PRESSED = "BUTTON_PRESSED";

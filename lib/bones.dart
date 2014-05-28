@@ -28,6 +28,9 @@ part 'src/controls/toast.dart';
 part 'src/controls/label.dart';
 part 'src/controls/navigation_bar.dart';
 part 'src/controls/switch.dart';
+part 'src/controls/list_picker.dart';
+part 'src/controls/popup.dart';
+
 
 part 'src/skins/theme.dart';
 part 'src/skins/default/default_theme.dart';
@@ -52,7 +55,8 @@ capitalize(String str) => str[0].toUpperCase() + str.substring(1);
 
 
 
-
+const EventStreamProvider<Event> closeEvent = const EventStreamProvider<Event>(Event.CLOSE);
+const EventStreamProvider<Event> pressedEvent = const EventStreamProvider<Event>(Button.PRESSED);
 
 
 

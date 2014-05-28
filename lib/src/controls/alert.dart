@@ -2,7 +2,7 @@ part of bones;
 
 
 
-class Alert extends Skinnable {
+class Alert extends Skinnable implements Popup {
   static final List<ButtonDef> BUTTONS_OK = [const ButtonDef(label: "OK", event: Event.OKAY)];
   static final List<ButtonDef> BUTTONS_OK_CANCEL = [const ButtonDef(label: "OK", event: Event.OKAY), const ButtonDef(label: "CANCEL", event: Event.CANCEL)];
 
@@ -69,7 +69,7 @@ class Alert extends Skinnable {
   }
 
 
-  Alert(this.message, {this.title: null, this.isModal: true, this.cover: true, List<ButtonDef> buttonDefs, this.bodyWidth: null, this.bodyHeight: null, Skin skin: null}): super(skin) {
+  Alert(this.message, {this.title: null, this.isModal: true, this.cover: true, List<ButtonDef> buttonDefs, this.bodyWidth: null, this.bodyHeight: null, Skin skin: null}) : super(skin) {
     if (buttonDefs != null) {
       buttons = new ButtonGroup(buttonDefs);
       buttons.onSelected.listen((e) {
@@ -95,45 +95,14 @@ class Alert extends Skinnable {
 
   @override
   String get skinName => Theme.ALERT_SKIN;
-}
-
-class PopupManager {
-
-  static Alert message(String message, {String title: null, bool isModal: true, bool cover: true, List<ButtonDef> buttonsDefs: null, Skin skin: null, num bodyWidth: null, num bodyHeight: null}) {
-    var alert = Alert.make(message: message, title: title, isModal: isModal, cover: cover, buttonsDefs: buttonsDefs, skin: skin, bodyWidth: bodyWidth, bodyHeight: bodyHeight);
-    show(alert);
-    return alert;
-  }
-
-  static show(Alert alert) {
-    Application.instance.push(new _PopupScreen(alert));
-  }
-}
-
-class _PopupScreen extends Screen {
-  Alert alert;
-  _PopupScreen(this.alert);
 
   @override
-  enter() {
-    if (alert.cover) {
-      addChild(renderBackground());
-    }
-    addChild(alert);
-    alert.x = (stage.sourceWidth - alert.width) / 2;
-    alert.y = (stage.sourceHeight - alert.height) / 2;
-    alert.on(Event.CLOSE).listen((e) => Application.instance.remove(this));
-  }
+  EventStream<Event> get onClose => closeEvent.forTarget(this);
 
   @override
-  exit() {
-    removeChild(alert);
-  }
+  HorizontalAlign get hAlign => HorizontalAlign.CENTER;
 
-  DisplayObject renderBackground() {
-    return new Sprite()
-        ..graphics.rect(0, 0, stage.sourceWidth, stage.sourceHeight)
-        ..graphics.fillColor(ColorHelper.fromRgba(0, 0, 0, 0.2))
-        ..applyCache(0, 0, stage.sourceWidth, stage.sourceHeight);
-  }
+  @override
+  VerticalAlign get vAlign => VerticalAlign.MIDDLE;
 }
+

@@ -36,7 +36,6 @@ class TestScreen extends Screen {
 
     var toast = new Toast()..move(300, 300);
     toast.show("Welcome!!");
-    addChild(toast);
 
     addChild(new Button()
         ..text = "Click Me!!"
@@ -121,16 +120,28 @@ class TestScreen extends Screen {
     var rand = new Random();
     addChild(new Switch()
         ..move(350, 250)
-        ..onChange.listen((e) => listView.data = [{
-            "label": rand.nextInt(10000).toString(),
-            "icon": new Box(32, 32, Color.Red)
-          }, {
-            "label": rand.nextInt(10000).toString(),
-            "icon": new Box(32, 32, Color.Blue)
-          }, {
-            "label": rand.nextInt(10000).toString(),
-            "icon": new Box(32, 32, Color.Green)
-          }]));
+        ..onChange.listen((e) => listView.data = _generateListData()));
+
+    addChild(new ListPicker()
+        ..move(300, 300)
+        ..data = _generateListData());
+    
+
+    addChild(toast);
+  }
+
+  _generateListData() {
+    var rand = new Random();
+    var len = rand.nextInt(5) + 1;
+    var result = [];
+    for (var i = 0; i < len; i++) {
+      var c = rand.nextInt(0xFFFFFFFF);
+      result.add({
+        "label": ColorHelper.toRgba(c).toString(),
+        "icon": new Box(32, 32, c)
+      });
+    }
+    return result;
   }
 
   @override
