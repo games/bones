@@ -23,7 +23,7 @@ class Label extends Skinnable {
   DisplayObject background;
   DisplayObject content;
 
-  Label({String text, HorizontalAlign hAlign: HorizontalAlign.CENTER, VerticalAlign vAlign: VerticalAlign.MIDDLE, TextRenderer textRenderer, Skin skin}): super(skin) {
+  Label({String text, HorizontalAlign hAlign: HorizontalAlign.CENTER, VerticalAlign vAlign: VerticalAlign.MIDDLE, TextRenderer textRenderer, Skin skin}) : super(skin) {
     _text = text;
     _hAlign = hAlign;
     _vAlign = vAlign;
@@ -92,9 +92,11 @@ class Label extends Skinnable {
     var t, d;
     if (_text != null) {
       t = textRenderer(_text, textFormat);
+      DisplayObjectHelper.disableInteractive(t);
     }
     if (_description != null) {
       var c = new Sprite();
+      DisplayObjectHelper.disableInteractive(c);
       d = descriptionRenderer(_description, descriptionFormat);
       c.addChild(d);
 
