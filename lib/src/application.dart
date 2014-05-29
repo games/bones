@@ -33,18 +33,19 @@ class Application extends EventDispatcher {
     _injector.map(ResourceManager).asSingleton();
   }
 
-  replace(Screen scr) {
+  replace(Screen scr, [intent]) {
     pop();
-    push(scr);
+    push(scr, intent);
   }
 
-  push(Screen scr) {
+  push(Screen scr, [intent]) {
     if (_screens.length > 0) {
       screen.unfocus();
     }
     _screens.add(scr);
     _stage.addChild(scr);
     _injector.inject(scr);
+    scr.intent = intent;
     scr.enter();
     scr.focus();
     dispatchEvent(new Event(SCREEN_ADDED));
@@ -78,7 +79,6 @@ class Application extends EventDispatcher {
     _screens.forEach((scr) => scr.dispatchEvent(event));
   }
 }
-
 
 
 
