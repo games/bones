@@ -62,4 +62,9 @@ class DisplayObjectHelper {
       target.removeCache();
     }
   }
+
+  static void disableInteractive(DisplayObject target) {
+    if (target is InteractiveObject) target.mouseEnabled = false;
+    if (target is DisplayObjectContainer) target.mouseChildren = false;
+  }
 }
