@@ -11,6 +11,7 @@ part 'src/screen.dart';
 part 'src/utils/color_helper.dart';
 part 'src/utils/displayobject_helper.dart';
 part 'src/utils/once.dart';
+part 'src/utils/scale9_textures.dart';
 
 part 'src/controls/component.dart';
 part 'src/controls/container.dart';
