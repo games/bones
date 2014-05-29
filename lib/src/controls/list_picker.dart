@@ -5,6 +5,8 @@ part of bones;
 
 class ListPicker extends Component {
 
+  EventStream<Event> get onItemSelected => itemSelectedEvent.forTarget(this);
+
   Skin listSkin;
   Skin buttonSkin;
   PopupList list;
@@ -14,7 +16,10 @@ class ListPicker extends Component {
 
   List _data;
 
-  ListPicker({this.listSkin, this.buttonSkin}) : super();
+  ListPicker({this.listSkin, this.buttonSkin}) : super() {
+    button = new Button();
+    list = new PopupList();
+  }
 
   void set data(List val) {
     _data = val;
@@ -29,14 +34,18 @@ class ListPicker extends Component {
     if (buttonSkin == null) buttonSkin = ThemeManager.theme.takeFor(Theme.BUTTON_SKIN);
     if (labelFactory == null) labelFactory = (d) => d.toString();
 
-    list = new PopupList(skin: listSkin)
+    list
+        ..skin = listSkin
         ..data = _data
         ..itemWidth = stage.sourceWidth
         ..onItemSelected.listen(_listItemSelectedHandler);
 
-    button = new Button(skin: buttonSkin)
+    button
+        ..skin = buttonSkin
         ..onPressed.listen(_pressButtonHandler)
         ..text = defaultLabel;
+    if (width != 0) button.width = width;
+    if (height != 0) button.height = height;
 
     addChild(button);
 
@@ -49,9 +58,16 @@ class ListPicker extends Component {
     _updateButtonLabel();
   }
 
+  int get selectedIndex => list.selectedIndex;
+  
+  DisplayObject get selectedItem => list.selectedItem;
+  
+  get selectedData => list.selectedData;
+
   void _listItemSelectedHandler(Event event) {
     list.close();
     _updateButtonLabel();
+    dispatchEvent(new Event(ListView.EVENT_ITEM_SELECTED));
   }
 
   void _pressButtonHandler(Event event) {
@@ -59,7 +75,7 @@ class ListPicker extends Component {
   }
 
   void _updateButtonLabel() {
-    var d = list.selectedData;
+    var d = selectedData;
     if (d != null) button.text = labelFactory(d); else button.text = defaultLabel;
   }
 }
@@ -85,10 +101,6 @@ class PopupList extends ListView implements Popup {
     dispatchEvent(new Event(Event.CLOSE));
   }
 }
-
-
-
-
 
 
 
