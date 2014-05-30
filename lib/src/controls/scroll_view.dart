@@ -15,7 +15,7 @@ class ScrollView extends Component {
   ScrollBar _hbar, _vbar;
   Point<num> _viewport;
 
-  ScrollView(): super() {
+  ScrollView() : super() {
     _hbar = new ScrollBar(orientation: Orientation.HORIZONTAL)..visible = false;
     addChild(_hbar);
     _vbar = new ScrollBar(orientation: Orientation.VERTICAL)..visible = false;
@@ -34,7 +34,7 @@ class ScrollView extends Component {
 
   void _startDrag(e) {
     if (stage != null) {
-      _stopScrolling();
+      _stopDrag();
       _lastPos.setTo(e.stageX, e.stageY);
       stage.onTouchMove.listen(_stageMoveHandler);
       stage.onTouchEnd.listen(_stageUpHandler);
@@ -43,7 +43,8 @@ class ScrollView extends Component {
     }
   }
 
-  void _stopScrolling() {
+  void _stopDrag() {
+    mouseChildren = true;
     _showScrollBars();
     stage.removeEventListener(TouchEvent.TOUCH_MOVE, _stageMoveHandler);
     stage.removeEventListener(TouchEvent.TOUCH_END, _stageUpHandler);
@@ -52,13 +53,14 @@ class ScrollView extends Component {
   }
 
   void _stageMoveHandler(e) {
+    mouseChildren = false;
     var delta = new Point(e.stageX, e.stageY) - _lastPos;
     scrollTo(_content.x + delta.x, _content.y + delta.y);
     _lastPos.setTo(e.stageX, e.stageY);
   }
 
-  void _stageUpHandler(e) {
-    _stopScrolling();
+  void _stageUpHandler(Event e) {
+    _stopDrag();
   }
 
   void _resizeHandler(Event event) {
