@@ -17,12 +17,30 @@ class Application extends EventDispatcher {
   RenderLoop _renderLoop;
   List<Screen> _screens;
   Injector _injector;
+  bool _isIos = false,
+      _isAndroid = false,
+      _isBlackberry = false,
+      _isWindows = false,
+      _isMobile = false;
+
+  bool get isIos => _isIos;
+  bool get isAndroid => _isAndroid;
+  bool get isBlackberry => _isBlackberry;
+  bool get isWindows => _isWindows;
+  bool get isMobile => _isMobile;
 
   Application._internal() {
     _screens = [];
   }
 
   startup(Stage stage) {
+    _isMobile = Stage.isMobile;
+    if (_isMobile) {
+      _isIos = Html.window.navigator.userAgent.contains(new RegExp("iPad|iPhone|iPod"));
+      _isAndroid = Html.window.navigator.userAgent.contains("Android");
+      _isBlackberry = Html.window.navigator.userAgent.contains("BlackBerry");
+      _isWindows = Html.window.navigator.userAgent.contains("IEMobile");
+    }
     _stage = stage;
     _stage.onResize.listen(_resizeHandler);
     _renderLoop = new RenderLoop();
@@ -79,10 +97,3 @@ class Application extends EventDispatcher {
     _screens.forEach((scr) => scr.dispatchEvent(event));
   }
 }
-
-
-
-
-
-
-

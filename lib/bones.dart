@@ -1,6 +1,7 @@
 library bones;
 
 
+import 'dart:html' as Html;
 import 'dart:math' as Math;
 
 import 'package:stagexl/stagexl.dart';
