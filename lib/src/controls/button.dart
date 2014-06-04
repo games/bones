@@ -169,8 +169,8 @@ class Button extends Skinnable {
       _label.y = (_height - _label.height) / 2;
     }
     if (icon != null && _label != null) {
-      var w = icon.width + _label.width,
-          h = icon.height + icon.height;
+      var w = icon.width + _label.width + padding,
+          h = icon.height + icon.height + padding;
       switch (_textIconRelation) {
         case TextImageRelation.IMAGE_ABOVE_TEXT:
           icon.y = (_height - h) / 2;
